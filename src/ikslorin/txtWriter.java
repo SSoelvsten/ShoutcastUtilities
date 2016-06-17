@@ -23,7 +23,7 @@ public final class txtWriter {
      * @param filename The file "abc.txt" that is the target
      * @param content The string to write to the file
      */
-    public void write(String filename, String content)  {
+    public static void write(String filename, String content)  {
         FileWriter writer = null;
 
         //Attempt to open file
@@ -43,14 +43,15 @@ public final class txtWriter {
             return;
         }
 
+        //System.out.println("Writer wrote: " + content + ", to : " + filename);
     }
 
     /**
-     * Reads a file and returns it as a singular string.
+     * Reads a file and returns it as a singular string without any linebreaks.
      * @param filename The file to be read
      * @return The content of the file as a string
      */
-    public String read(String filename)  {
+    public static String read(String filename)  {
         Scanner in = null;
 
         //Open the file
@@ -64,7 +65,8 @@ public final class txtWriter {
         //Read the whole file
         String res = "";
         while(in.hasNextLine()){
-            res = res + in.nextLine() + "\n";
+            res = res + in.nextLine();
+            //res = res + in.nextLine() + "\n";
         }
         in.close();
 

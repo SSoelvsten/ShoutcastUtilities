@@ -10,53 +10,61 @@ import java.awt.event.ActionListener;
  * Creates a window to input and quickly change two teams A and B
  */
 public class TeamManager {
-
     //Teams A and B
-    Team teamA;
-    Team teamB;
+    private Team teamA;
+    private Team teamB;
+
+    //Size for the text fields
+    private int teamSize;
+    private int scoreSize;
 
     //The panels for the teams A and B
-    JTextField teamNameA;
-    JTextField teamTagA;
-    JTextField teamScoreA;
+    private JTextField teamNameA;
+    private JTextField teamTagA;
+    private JTextField teamScoreA;
 
-    JTextField teamNameB;
-    JTextField teamTagB;
-    JTextField teamScoreB;
+    private JTextField teamNameB;
+    private JTextField teamTagB;
+    private JTextField teamScoreB;
 
     /**
      * Constructs the team objects and the window
      */
-    public TeamManager() {
+    public TeamManager(int teamSize, int scoreSize) {
         //Create the two teams
         teamA = new Team("A");
         teamB = new Team("B");
 
-        //Create the window
-        JFrame frame = new JFrame();
-        frame.setLayout(new BorderLayout(3, 3));
+        //Save the team sizes in the variables - this is only for not hardcoding sizes several times
+        this.teamSize = teamSize;
+        this.scoreSize = scoreSize;
 
-        //Create the panel for Team A
-        teamNameA = new JTextField(32);
-        teamNameA.setText("Team A");
+        //Create the team panels
+        teamNameA = new JTextField(teamSize);
+        teamNameA.setText(txtWriter.read("A_name.txt"));
+        teamNameA.setEditable(true);
 
-        teamTagA = new JTextField(32);
-        teamTagA.setText("A");
+        teamTagA = new JTextField(teamSize);
+        teamTagA.setText(txtWriter.read("A_tag.txt"));
+        teamTagA.setEditable(true);
 
-        teamScoreA = new JTextField(8);
-        teamScoreA.setText("0");
+        teamScoreA = new JTextField(scoreSize);
+        teamScoreA.setText(txtWriter.read("A_score.txt"));
+        teamScoreA.setEditable(true);
 
         JPanel panelA = createTeamPanel(teamA, teamNameA, teamTagA, teamScoreA);
 
-        //Create the panel for Team B
-        teamNameB = new JTextField(32);
-        teamNameB.setText("Team B");
+        teamNameB = new JTextField(teamSize);
+        teamNameB.setText(txtWriter.read("B_name.txt"));
+        teamNameB.setEditable(true);
 
-        teamTagB = new JTextField(32);
-        teamTagB.setText("B");
+        teamTagB = new JTextField(teamSize);
+        teamTagB.setText(txtWriter.read("B_tag.txt"));
+        teamTagB.setEditable(true);
 
-        teamScoreB = new JTextField(8);
-        teamScoreB.setText("0");
+        teamScoreB = new JTextField(scoreSize);
+        teamScoreB.setText(txtWriter.read("B_score.txt"));
+        teamScoreB.setEditable(true);
 
         JPanel panelB = createTeamPanel(teamB, teamNameB, teamTagB, teamScoreB);
 
@@ -64,7 +72,11 @@ public class TeamManager {
         JPanel panelG = createGlobalPanel();
 
         //Put everything into the final frame
-        frame.add(new JLabel("-==| Live Team Manager |==-"), BorderLayout.NORTH)
+        JFrame frame = new JFrame();
+        frame.setLayout(new BorderLayout(3, 3));
+
+        frame.add(new JLabel("|===========| Live Team Manager |===========|",
+                SwingConstants.CENTER), BorderLayout.NORTH);
         frame.add(panelA, BorderLayout.WEST);
         frame.add(panelB, BorderLayout.EAST);
         frame.add(panelG, BorderLayout.SOUTH);
@@ -82,55 +94,41 @@ public class TeamManager {
      */
     private JPanel createTeamPanel(Team team, JTextField teamName, JTextField teamTag, JTextField teamScore) {
         //Create teamName panel
-        teamName = new JTextField(32);
-        teamName.setEditable(true);
-
         JPanel namePanel = new JPanel();
         namePanel.add(new JLabel("Name: "));
         namePanel.add(teamName);
 
         //Create teamTag panel
-        teamTag = new JTextField(32);
-        teamTag.setEditable(true);
-
         JPanel tagPanel = new JPanel();
-        tagPanel.add(new JLabel("Tag: "));
+        tagPanel.add(new JLabel("    Tag: "));
+
         tagPanel.add(teamTag);
 
         //Insert this into one panel beneath eachother
-        JPanel leftPanel = new JPanel();
-        leftPanel.setLayout(new BorderLayout());
+        JPanel namingPanel = new JPanel();
+        namingPanel.setLayout(new BorderLayout());
 
-        leftPanel.add(namePanel, BorderLayout.NORTH);
-        leftPanel.add(namePanel, BorderLayout.SOUTH);
-
-        //The top of the score panel containing the current score
-        teamScore = new JTextField(8);
-
-        JPanel scorePanel = new JPanel();
-        scorePanel.add(new JLabel("Score: "));
-        scorePanel.add(teamScore);
+        namingPanel.add(namePanel, BorderLayout.NORTH);
+        namingPanel.add(tagPanel, BorderLayout.SOUTH);
 
         //Incrementing buttons
         JButton ButtScoreInc = createScoreIncrementer(teamScore, 1);
         JButton ButtScoreDec = createScoreIncrementer(teamScore, -1);
 
-        //Add everything to the right side for the full score panel
-        JPanel rightPanel = new JPanel();
-        rightPanel.setLayout(new BorderLayout());
-
-        rightPanel.add(scorePanel, BorderLayout.NORTH);
-        rightPanel.add(ButtScoreDec, BorderLayout.WEST);
-        rightPanel.add(ButtScoreInc, BorderLayout.EAST);
+        JPanel scorePanel = new JPanel();
+        scorePanel.add(new JLabel("Score: "));
+        scorePanel.add(teamScore);
+        scorePanel.add(ButtScoreDec);
+        scorePanel.add(ButtScoreInc);
 
         //Let's collect all this together in one big panel!
         JPanel finalPanel = new JPanel();
         finalPanel.setLayout(new BorderLayout(2, 2));
 
-        finalPanel.add(new JLabel("-- Team: " + team.getIdentifier() + " --"), BorderLayout.NORTH);
+        finalPanel.add(new JLabel("Team: " + team.getIdentifier(), SwingConstants.CENTER), BorderLayout.NORTH);
 
-        finalPanel.add(leftPanel, BorderLayout.WEST);
-        finalPanel.add(rightPanel, BorderLayout.EAST);
+        finalPanel.add(namingPanel, BorderLayout.CENTER);
+        finalPanel.add(scorePanel, BorderLayout.SOUTH);
 
         return finalPanel;
     }
@@ -140,7 +138,7 @@ public class TeamManager {
         JButton updateButt = new JButton("Update");
         updateButt.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent event) {
                 updateTeams();
             }
         });
@@ -149,23 +147,10 @@ public class TeamManager {
         JButton swapButt = new JButton("Swap");
         swapButt.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                //Save everything from A
-                String aName = teamNameA.getText();
-                String aTag = teamTagA.getText();
-                String aScore = teamScoreA.getText();
+            public void actionPerformed(ActionEvent event) {
+                swapTeams();
 
-                //Overwrite A with content from B
-                teamNameA.setText(teamNameB.getText());
-                teamTagA.setText(teamTagB.getText());
-                teamScoreA.setText(teamScoreB.getText());
-
-                //Use the backup to insert A onto B
-                teamNameB.setText(aName);
-                teamTagB.setText(aTag);
-                teamScoreB.setText(aScore);
-
-                //The swap button could also imidiatly update, but this seems more safe in a life setting
+                //The swap button could also immediately update, but this seems more safe in a life setting
                 //updateTeams();
             }
         });
@@ -174,7 +159,7 @@ public class TeamManager {
         JPanel finalPanel = new JPanel();
         finalPanel.setLayout(new BorderLayout());
 
-        finalPanel.add(new JLabel("-- Global --", BorderLayout.NORTH);
+        //finalPanel.add(new JLabel("Global", SwingConstants.CENTER), BorderLayout.NORTH);
 
         finalPanel.add(swapButt, BorderLayout.WEST);
         finalPanel.add(updateButt, BorderLayout.EAST);
@@ -198,6 +183,23 @@ public class TeamManager {
         }
     }
 
+    private void swapTeams() {
+        //Save everything from A
+        String aName = teamNameA.getText();
+        String aTag = teamTagA.getText();
+        String aScore = teamScoreA.getText();
+
+        //Overwrite A with content from B
+        teamNameA.setText(teamNameB.getText());
+        teamTagA.setText(teamTagB.getText());
+        teamScoreA.setText(teamScoreB.getText());
+
+        //Use the backup to insert A onto B
+        teamNameB.setText(aName);
+        teamTagB.setText(aTag);
+        teamScoreB.setText(aScore);
+    }
+
     /**
      * Increments the value in the textfield by a specific value or resets it to 0, if it
      * doesn't contain integers.
@@ -209,7 +211,7 @@ public class TeamManager {
         JButton result = new JButton("" + inc);
         result.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent event) {
                 int value = 0;
                 try{
                     value = Integer.parseInt(teamScore.getText());

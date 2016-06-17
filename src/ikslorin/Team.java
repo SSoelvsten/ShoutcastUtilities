@@ -5,9 +5,6 @@ package ikslorin;
  */
 public class Team {
 
-    // The txtWriter to use
-    private txtWriter writer;
-
     // The identifier to use
     private String identifier;
 
@@ -22,12 +19,6 @@ public class Team {
 
     public Team(String identifier){
         this.identifier = identifier;
-        this.writer = new txtWriter();
-    }
-
-    public Team(String identifier, txtWriter writer){
-        this.identifier = identifier;
-        this.writer = writer;
     }
 
     public String getIdentifier() { return identifier; }
@@ -42,7 +33,7 @@ public class Team {
      */
     public void setName(String name){
         this.name = name;
-        this.writer.write(identifier + "_name.txt", name);
+        txtWriter.write(identifier + "_name.txt", name);
     }
 
     public String getTag() { return tag; }
@@ -53,7 +44,7 @@ public class Team {
      */
     public void setTag(String tag) {
         this.tag = tag;
-        this.writer.write(identifier + "_tag.txt", tag);
+        txtWriter.write(identifier + "_tag.txt", tag);
     }
 
     public int getScore() { return score; }
@@ -64,7 +55,7 @@ public class Team {
      */
     public void setScore(int score){
         this.score = score;
-        this.writer.write(identifier + "_score.txt", "" + score);
+        txtWriter.write(identifier + "_score.txt", "" + score);
     }
 
     public void increaseScore() {
