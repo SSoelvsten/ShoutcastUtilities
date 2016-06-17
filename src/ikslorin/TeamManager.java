@@ -1,7 +1,6 @@
 package ikslorin;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,10 +12,6 @@ public class TeamManager {
     //Teams A and B
     private Team teamA;
     private Team teamB;
-
-    //Size for the text fields
-    private int teamSize;
-    private int scoreSize;
 
     //The panels for the teams A and B
     private JTextField teamNameA;
@@ -31,41 +26,48 @@ public class TeamManager {
      * Constructs the team objects and the window
      */
     public TeamManager(int teamSize, int scoreSize) {
-        //Create the two teams
+        //Create the two teams loading in the values from last session
         teamA = new Team("A");
         teamB = new Team("B");
 
-        //Save the team sizes in the variables - this is only for not hardcoding sizes several times
-        this.teamSize = teamSize;
-        this.scoreSize = scoreSize;
+        teamA.setName(txtWriter.read("A_name.txt"));
+        teamB.setName(txtWriter.read("B_name.txt"));
 
-        //Create the team panels
+        teamA.setTag(txtWriter.read("A_tag.txt"));
+        teamB.setTag(txtWriter.read("B_tag.txt"));
+
+        try{
+            teamA.setScore(Integer.parseInt(txtWriter.read("A_score.txt")));
+            teamB.setScore(Integer.parseInt(txtWriter.read("B_score.txt")));
+        } catch(NumberFormatException e) {
+            System.err.println("There was a noninteger in the teamScore field");
+            teamA.setScore(0);
+            teamB.setScore(0);
+        }
+
+        //Create the textfields
         teamNameA = new JTextField(teamSize);
-        teamNameA.setText(txtWriter.read("A_name.txt"));
         teamNameA.setEditable(true);
 
         teamTagA = new JTextField(teamSize);
-        teamTagA.setText(txtWriter.read("A_tag.txt"));
         teamTagA.setEditable(true);
 
         teamScoreA = new JTextField(scoreSize);
-        teamScoreA.setText(txtWriter.read("A_score.txt"));
         teamScoreA.setEditable(true);
 
-        JPanel panelA = createTeamPanel(teamA, teamNameA, teamTagA, teamScoreA);
-
         teamNameB = new JTextField(teamSize);
-        teamNameB.setText(txtWriter.read("B_name.txt"));
         teamNameB.setEditable(true);
 
         teamTagB = new JTextField(teamSize);
-        teamTagB.setText(txtWriter.read("B_tag.txt"));
         teamTagB.setEditable(true);
 
         teamScoreB = new JTextField(scoreSize);
-        teamScoreB.setText(txtWriter.read("B_score.txt"));
         teamScoreB.setEditable(true);
 
+        reloadTeams();
+
+        //Create the textpanel
+        JPanel panelA = createTeamPanel(teamA, teamNameA, teamTagA, teamScoreA);
         JPanel panelB = createTeamPanel(teamB, teamNameB, teamTagB, teamScoreB);
 
         //Create the special buttonPanel
@@ -155,18 +157,28 @@ public class TeamManager {
             }
         });
 
+        JButton reloadButt = new JButton("Reload");
+        reloadButt.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                reloadTeams();
+            }
+        });
+
         //Create the final panel and add everything to it
         JPanel finalPanel = new JPanel();
         finalPanel.setLayout(new BorderLayout());
 
-        //finalPanel.add(new JLabel("Global", SwingConstants.CENTER), BorderLayout.NORTH);
-
         finalPanel.add(swapButt, BorderLayout.WEST);
-        finalPanel.add(updateButt, BorderLayout.EAST);
+        finalPanel.add(updateButt, BorderLayout.CENTER);
+        finalPanel.add(reloadButt, BorderLayout.EAST);
 
         return finalPanel;
     }
 
+    /**
+     * Sends the new information to the team
+     */
     private void updateTeams(){
         teamA.setName(teamNameA.getText());
         teamB.setName(teamNameB.getText());
@@ -183,6 +195,22 @@ public class TeamManager {
         }
     }
 
+    /**
+     * Resets the content to the last accepted value saved in the Team objects
+     */
+    private void reloadTeams() {
+        teamNameA.setText(teamA.getName());
+        teamTagA.setText(teamA.getTag());
+        teamScoreA.setText("" + teamA.getScore());
+
+        teamNameB.setText(teamB.getName());
+        teamTagB.setText(teamB.getTag());
+        teamScoreB.setText("" + teamB.getScore());
+    }
+
+    /**
+     * Swaps the name, tag and score fields respectively
+     */
     private void swapTeams() {
         //Save everything from A
         String aName = teamNameA.getText();

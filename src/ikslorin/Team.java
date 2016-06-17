@@ -58,11 +58,7 @@ public class Team {
         txtWriter.write(identifier + "_score.txt", "" + score);
     }
 
-    public void increaseScore() {
-        setScore(this.score + 1);
-    }
-
-    public void decreaseScore() {
-        setScore(this.score - 1);
+    public void increaseScore(int i) {
+        setScore(this.score + i);
     }
 }
