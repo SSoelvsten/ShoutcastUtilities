@@ -3,7 +3,7 @@ These are a collection of programs I've made to make the running of a stream a l
 
 ## Global shortcuts
 By using JNativeHook a keylogger is implemented, which reacts to certain key-combinations. Change the overlay without having to actually defocus the game!
-The keybinds are rebindable, though you have to know the integercodes for the key you wish to rebind for. Rebindings can be done in "bindings.txt" in exactly the same order as specified below in the standard bindings.
+The keybinds are rebindable, though you have to use the codes you can find in KeyReference.txt. Rebindings can be done in "bindings.cfg" in exactly the same order as specified below in the standard bindings.
 
 - ALT GR: Universal meta-key as identifier. This key has to be pressed for the others to work.
 - Numpad 0: Commit the current values in ALL of the programs linked
