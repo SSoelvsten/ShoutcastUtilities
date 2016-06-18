@@ -1,4 +1,4 @@
-# Shoutcast_txt_Manager
+# Shoutcast .txt Manager
 
 A small java program to manage the .txt files used for the text on an overlay during a shoutcast for both teams:
 
