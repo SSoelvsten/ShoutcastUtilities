@@ -13,4 +13,4 @@ These can be changed before commiting to the the .txt files, making for a better
 
 Link the .txt files outputted into OBS and you're ready to go!
 
-![Alt text](/example.png?raw=true "OBS using the output of the program")
+![Alt text](/TeamScoreManager.png?raw=true "OBS using the output of the program")
