@@ -6,7 +6,7 @@ By using JNativeHook a keylogger is implemented, which reacts to certain key-com
 The keybinds are rebindable, though you have to know the integercodes for the key you wish to rebind for. Rebindings can be done in "bindings.txt" in exactly the same order as specified below in the standard bindings.
 
 - ALT GR: Universal meta-key as identifier. This key has to be pressed for the others to work.
-- Numpad 0: Apply changes
+- Numpad 0: Commit changes in ALL programs
 - Numpad 7: Team Score Manager: Increase score for Team A
 - Numpad 4: Team Score Manager: Decrease score for Team A
 - Numpad 9: Team Score Manager: Increase score for Team B
