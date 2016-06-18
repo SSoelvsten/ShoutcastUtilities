@@ -15,7 +15,7 @@ The keybinds are rebindable, though you have to know the integercodes for the ke
 
 ## Team Score .txt Manager
 A small java program to manage the .txt files used for the text on an overlay during a shoutcast for both teams. This includes full name of the teams, their tags and the current score.
-These can be changed before commiting to the the .txt files, making for a better viewing experience. It also offers a score incrementer and also a swap button, which is handy when the players switch colors and/or sides.
+These can be changed before commiting to the .txt files, making for a better viewing experience. It also offers a score incrementer and also a swap button, which is handy when the players switch colors and/or sides.
 
 Link the .txt files outputted into OBS and you're ready to go!
 
