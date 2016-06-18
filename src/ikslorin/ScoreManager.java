@@ -61,11 +61,13 @@ public class ScoreManager {
         JFrame frame = new JFrame();
         frame.setLayout(new BorderLayout(3, 3));
 
-        frame.add(new JLabel("|===========| Team Score Manager |===========|",
-                SwingConstants.CENTER), BorderLayout.NORTH);
         frame.add(panelA, BorderLayout.WEST);
         frame.add(panelB, BorderLayout.EAST);
         frame.add(panelG, BorderLayout.SOUTH);
+
+        //Give the window a title and an icon (though the latter doesn't want to work
+        frame.setTitle("Team Score Manager");
+        frame.setIconImage(new ImageIcon("icon.png").getImage());
 
         //Usual stuff
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
