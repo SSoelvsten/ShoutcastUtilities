@@ -33,7 +33,7 @@ public class Team {
      */
     public void setName(String name){
         this.name = name;
-        txtWriter.write(identifier + "_name.txt", name);
+        TXTManager.writeFullFile(identifier + "_name.txt", name);
     }
 
     public String getTag() { return tag; }
@@ -44,7 +44,7 @@ public class Team {
      */
     public void setTag(String tag) {
         this.tag = tag;
-        txtWriter.write(identifier + "_tag.txt", tag);
+        TXTManager.writeFullFile(identifier + "_tag.txt", tag);
     }
 
     public int getScore() { return score; }
@@ -55,7 +55,7 @@ public class Team {
      */
     public void setScore(int score){
         this.score = score;
-        txtWriter.write(identifier + "_score.txt", "" + score);
+        TXTManager.writeFullFile(identifier + "_score.txt", "" + score);
     }
 
     public void increaseScore(int i) {

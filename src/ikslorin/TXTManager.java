@@ -9,21 +9,46 @@ import java.util.Scanner;
 /**
  * Class to manage writing the txts
  */
-public final class txtWriter {
+public final class TXTManager {
+
+    Scanner in;
 
     /**
-     * Constructor...
+     * Constructor for when you want to readFullFile the file line for line, but
      */
-    public txtWriter(){
-        // Nothing to construct :>
+    public TXTManager(String filename){
+        in = null;
+
+        //Open the file
+        try {
+            in = new Scanner(new FileReader(filename));
+        } catch (FileNotFoundException e) {
+            System.err.println("Could not find: " + filename);
+        }
     }
+
+    public String readLine(){
+        if (in == null){
+            return "";
+        } else {
+            return in.nextLine();
+        }
+    }
+
+    public void close() {
+        if (in != null){
+            in.close();
+        }
+    }
+
+
 
     /**
      * Writes a specific string to a specific file
      * @param filename The file "abc.txt" that is the target
-     * @param content The string to write to the file
+     * @param content The string to writeFullFile to the file
      */
-    public static void write(String filename, String content)  {
+    public static void writeFullFile(String filename, String content)  {
         FileWriter writer = null;
 
         //Attempt to open file
@@ -39,7 +64,7 @@ public final class txtWriter {
             writer.write(content);
             writer.close();
         } catch (IOException e) {
-            System.err.println("Could not write to: " + filename);
+            System.err.println("Could not writeFullFile to: " + filename);
             return;
         }
 
@@ -48,10 +73,10 @@ public final class txtWriter {
 
     /**
      * Reads a file and returns it as a singular string without any linebreaks.
-     * @param filename The file to be read
+     * @param filename The file to be readFullFile
      * @return The content of the file as a string
      */
-    public static String read(String filename)  {
+    public static String readFullFile(String filename)  {
         Scanner in = null;
 
         //Open the file

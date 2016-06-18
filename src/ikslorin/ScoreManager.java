@@ -84,6 +84,10 @@ public class ScoreManager {
         teamScoreB.setText(aScore);
     }
 
+    public Team getTeamA(){ return teamA; }
+
+    public Team getTeamB(){ return teamB; }
+
     /**
      * Creates the window
      * @param teamSize The size of the name and tag fields
@@ -137,7 +141,7 @@ public class ScoreManager {
     }
 
     /**
-     * Constructs a panel to write changes for a single team. Notice, that the textfields are global,
+     * Constructs a panel to writeFullFile changes for a single team. Notice, that the textfields are global,
      * so they are not constructed here, but have to be arguments.
      * @param team The team to change
      * @param teamName The corresponding textfield to interact with

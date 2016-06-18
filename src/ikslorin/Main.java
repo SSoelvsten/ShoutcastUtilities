@@ -3,6 +3,9 @@ package ikslorin;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -15,6 +18,7 @@ public class Main {
         ScoreManager sm = new ScoreManager(tA, tB, 12, 2);
 
         //Setup global shortcuts
+        Logger.getLogger(GlobalScreen.class.getPackage().getName()).setLevel(Level.WARNING);
         try{
             GlobalScreen.registerNativeHook();
         } catch (NativeHookException e) {
@@ -29,15 +33,15 @@ public class Main {
      * @param tB Team B
      */
     private static void setupTeams(Team tA, Team tB){
-        tA.setName(txtWriter.read("A_name.txt"));
-        tB.setName(txtWriter.read("B_name.txt"));
+        tA.setName(TXTManager.readFullFile("A_name.txt"));
+        tB.setName(TXTManager.readFullFile("B_name.txt"));
 
-        tA.setTag(txtWriter.read("A_tag.txt"));
-        tB.setTag(txtWriter.read("B_tag.txt"));
+        tA.setTag(TXTManager.readFullFile("A_tag.txt"));
+        tB.setTag(TXTManager.readFullFile("B_tag.txt"));
 
         try{
-            tA.setScore(Integer.parseInt(txtWriter.read("A_score.txt")));
-            tB.setScore(Integer.parseInt(txtWriter.read("B_score.txt")));
+            tA.setScore(Integer.parseInt(TXTManager.readFullFile("A_score.txt")));
+            tB.setScore(Integer.parseInt(TXTManager.readFullFile("B_score.txt")));
         } catch(NumberFormatException e) {
             System.err.println("There was a noninteger in the teamScore field");
             tA.setScore(0);
