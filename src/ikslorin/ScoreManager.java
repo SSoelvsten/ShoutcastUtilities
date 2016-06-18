@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 /**
  * Creates a window to input and quickly change two teams A and B
  */
-public class TeamManager {
+public class ScoreManager {
     //Teams A and B
     private Team teamA;
     private Team teamB;
@@ -25,25 +25,9 @@ public class TeamManager {
     /**
      * Constructs the team objects and the window
      */
-    public TeamManager(int teamSize, int scoreSize) {
-        //Create the two teams loading in the values from last session
-        teamA = new Team("A");
-        teamB = new Team("B");
-
-        teamA.setName(txtWriter.read("A_name.txt"));
-        teamB.setName(txtWriter.read("B_name.txt"));
-
-        teamA.setTag(txtWriter.read("A_tag.txt"));
-        teamB.setTag(txtWriter.read("B_tag.txt"));
-
-        try{
-            teamA.setScore(Integer.parseInt(txtWriter.read("A_score.txt")));
-            teamB.setScore(Integer.parseInt(txtWriter.read("B_score.txt")));
-        } catch(NumberFormatException e) {
-            System.err.println("There was a noninteger in the teamScore field");
-            teamA.setScore(0);
-            teamB.setScore(0);
-        }
+    public ScoreManager(Team teamA, Team teamB, int teamSize, int scoreSize) {
+        this.teamA = teamA;
+        this.teamB = teamB;
 
         //Create the textfields
         teamNameA = new JTextField(teamSize);
@@ -77,7 +61,7 @@ public class TeamManager {
         JFrame frame = new JFrame();
         frame.setLayout(new BorderLayout(3, 3));
 
-        frame.add(new JLabel("|===========| Live Team Manager |===========|",
+        frame.add(new JLabel("|===========| Team Score Manager |===========|",
                 SwingConstants.CENTER), BorderLayout.NORTH);
         frame.add(panelA, BorderLayout.WEST);
         frame.add(panelB, BorderLayout.EAST);
