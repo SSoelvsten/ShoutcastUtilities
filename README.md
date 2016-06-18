@@ -1,7 +1,7 @@
 # Shoutcast Utilities
 These are a collection of programs I've made to make the running of a stream a little less cumbersome. Currently it only consists of one program.
 
-## Shoutcast Team score .txt Manager
+## Team Score .txt Manager
 
 A small java program to manage the .txt files used for the text on an overlay during a shoutcast for both teams:
 
