@@ -36,8 +36,8 @@ public class GlobalShortcuts implements NativeKeyListener {
         //Connect to the managers
         this.sm = sm;
 
-        //Open the bindings.txt and set keybindings buttons
-        TXTManager reader = new TXTManager("bindings.txt");
+        //Open the bindings.cfg and set keybindings buttons
+        TXTManager reader = new TXTManager("bindings.cfg");
 
         modifier = Integer.parseInt(reader.readLine());
         modifierB = false;
