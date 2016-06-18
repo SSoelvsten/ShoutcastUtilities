@@ -1,8 +1,9 @@
 # Shoutcast Utilities
-These are a collection of programs I've made to make the running of a stream a little less cumbersome. Currently it only consists of one program.
+These are a collection of programs I've made to make the running of a stream a little less cumbersome. Currently it only consists of two program.
 
 ## Global shortcuts
-By using JNativeHook a keylogger is implemented, which reacts to certain key-combinations. Change the overlay without having to actually defocus the game!
+By using JNativeHook a keylogger is implemented, which reacts to certain key-combinations. This way you can interact with the software without having to actually defocus the game!
+
 The keybinds are rebindable, though you have to use the codes you can find in "keyReference.txt". Rebindings can be done in "bindings.cfg" in exactly the same order as specified below in the standard bindings.
 
 - ALT GR: Universal meta-key as identifier. This key has to be pressed for the others to work.
