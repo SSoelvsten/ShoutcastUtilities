@@ -43,4 +43,8 @@ public class Config {
         return settings.get(key).equalsIgnoreCase("true");
     }
 
+    public String getString(String key){
+        return settings.get(key);
+    }
+
 }
