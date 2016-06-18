@@ -6,7 +6,6 @@ By using JNativeHook is also a keylogger implemented, which reacts to certain ke
 ## Team Score .txt Manager
 
 A small java program to manage the .txt files used for the text on an overlay during a shoutcast for both teams:
-
 - Full team name
 - Team tag
 - Score
@@ -14,7 +13,6 @@ A small java program to manage the .txt files used for the text on an overlay du
 These can be changed before commiting to the the .txt files, making for a better viewing experience. It also offers a score incrementer and also a swap button, which is handy when the players switch colors and/or sides.
 
 Shortcuts (Global)
-
 - alt + f1 : Swap teams
 - alt + f2 : Update .txt files
 
