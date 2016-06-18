@@ -1,5 +1,6 @@
 package ikslorin;
 
+import ikslorin.config.Config;
 import javafx.scene.input.KeyCode;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
@@ -36,19 +37,19 @@ public class GlobalShortcuts implements NativeKeyListener {
         //Connect to the managers
         this.sm = sm;
 
-        //Open the bindings.cfg and set keybindings buttons
-        TXTManager reader = new TXTManager("bindings.cfg");
+        //Set keybindings buttons
 
-        modifier = Integer.parseInt(reader.readLine());
+        Config conf = Config.getInstance();
+
+        modifier = conf.getInteger("modifier_key");
         modifierB = false;
 
-        update = Integer.parseInt(reader.readLine());
-        incA = Integer.parseInt(reader.readLine());
-        decA = Integer.parseInt(reader.readLine());
-        incB = Integer.parseInt(reader.readLine());
-        decB = Integer.parseInt(reader.readLine());
-        swap = Integer.parseInt(reader.readLine());
-        reader.close();
+        update = conf.getInteger("commit_key");
+        incA = conf.getInteger("team_a_increment_key");
+        decA = conf.getInteger("team_a_decrement_key");
+        incB = conf.getInteger("team_b_increment_key");
+        decB = conf.getInteger("team_b_decrement_key");
+        swap = conf.getInteger("switch_teams_key");
     }
 
     /**

@@ -1,5 +1,6 @@
 package ikslorin;
 
+import ikslorin.config.Config;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 
@@ -8,7 +9,11 @@ import java.util.logging.Logger;
 
 public class Main {
 
+
     public static void main(String[] args) {
+        Config conf = Config.getInstance(); //This makes sure that the config
+        //file is loaded as the first thing the program does
+
         //Create the two teams to manage
         Team tA = new Team("A");
         Team tB = new Team("B");
@@ -17,14 +22,16 @@ public class Main {
         //Setup score manager
         ScoreManager sm = new ScoreManager(tA, tB, 12, 2);
 
-        //Setup global shortcuts
-        Logger.getLogger(GlobalScreen.class.getPackage().getName()).setLevel(Level.WARNING);
-        try{
-            GlobalScreen.registerNativeHook();
-        } catch (NativeHookException e) {
-            System.err.println("The global shortcuts could not be created");
+        if(conf.getBoolean("enable_keybindings")) {
+            //Setup global shortcuts
+            Logger.getLogger(GlobalScreen.class.getPackage().getName()).setLevel(Level.WARNING);
+            try {
+                GlobalScreen.registerNativeHook();
+            } catch (NativeHookException e) {
+                System.err.println("The global shortcuts could not be created");
+            }
+            GlobalScreen.addNativeKeyListener(new GlobalShortcuts(sm));
         }
-        GlobalScreen.addNativeKeyListener(new GlobalShortcuts(sm));
     }
 
     /**

@@ -90,8 +90,8 @@ public final class TXTManager {
         //Read the whole file
         String res = "";
         while(in.hasNextLine()){
-            res = res + in.nextLine();
-            //res = res + in.nextLine() + "\n";
+            //res = res + in.nextLine();
+            res = res + in.nextLine() + "\n";
         }
         in.close();
 
