@@ -1,5 +1,8 @@
 package ikslorin;
 
+import org.jnativehook.GlobalScreen;
+import org.jnativehook.NativeHookException;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -8,8 +11,16 @@ public class Main {
         Team tB = new Team("B");
         setupTeams(tA, tB);
 
-        // Start score manager
+        //Setup score manager
         ScoreManager sm = new ScoreManager(tA, tB, 12, 2);
+
+        //Setup global shortcuts
+        try{
+            GlobalScreen.registerNativeHook();
+        } catch (NativeHookException e) {
+            System.err.println("The global shortcuts could not be created");
+        }
+        GlobalScreen.addNativeKeyListener(new GlobalShortcuts(sm));
     }
 
     /**

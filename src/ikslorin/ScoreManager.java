@@ -29,6 +29,67 @@ public class ScoreManager {
         this.teamA = teamA;
         this.teamB = teamB;
 
+        createWindow(teamSize, scoreSize);
+    }
+
+    /**
+     * Applies the current text in the fields to the teams
+     */
+    public void updateTeams(){
+        teamA.setName(teamNameA.getText());
+        teamB.setName(teamNameB.getText());
+
+        teamA.setTag(teamTagA.getText());
+        teamB.setTag(teamTagB.getText());
+
+        try{
+            teamA.setScore(Integer.parseInt(teamScoreA.getText()));
+            teamB.setScore(Integer.parseInt(teamScoreB.getText()));
+        } catch(NumberFormatException e) {
+            teamA.setScore(0);
+            teamB.setScore(0);
+        }
+    }
+
+    /**
+     * Resets the content to the last accepted value saved in the Team objects
+     */
+    public void reloadTeams() {
+        teamNameA.setText(teamA.getName());
+        teamTagA.setText(teamA.getTag());
+        teamScoreA.setText("" + teamA.getScore());
+
+        teamNameB.setText(teamB.getName());
+        teamTagB.setText(teamB.getTag());
+        teamScoreB.setText("" + teamB.getScore());
+    }
+
+    /**
+     * Swaps the name, tag and score fields respectively between Team A and B
+     */
+    public void swapTeams() {
+        //Save everything from A
+        String aName = teamNameA.getText();
+        String aTag = teamTagA.getText();
+        String aScore = teamScoreA.getText();
+
+        //Overwrite A with content from B
+        teamNameA.setText(teamNameB.getText());
+        teamTagA.setText(teamTagB.getText());
+        teamScoreA.setText(teamScoreB.getText());
+
+        //Use the backup to insert A onto B
+        teamNameB.setText(aName);
+        teamTagB.setText(aTag);
+        teamScoreB.setText(aScore);
+    }
+
+    /**
+     * Creates the window
+     * @param teamSize The size of the name and tag fields
+     * @param scoreSize The size of the score field
+     */
+    private void createWindow(int teamSize, int scoreSize){
         //Create the textfields
         teamNameA = new JTextField(teamSize);
         teamNameA.setEditable(true);
@@ -55,7 +116,7 @@ public class ScoreManager {
         JPanel panelB = createTeamPanel(teamB, teamNameB, teamTagB, teamScoreB);
 
         //Create the special buttonPanel
-        JPanel panelG = createGlobalPanel();
+        JPanel panelG = createLowerPanel();
 
         //Put everything into the final frame
         JFrame frame = new JFrame();
@@ -76,9 +137,13 @@ public class ScoreManager {
     }
 
     /**
-     * Constructs a panel for a team
-     * @param team
-     * @return
+     * Constructs a panel to write changes for a single team. Notice, that the textfields are global,
+     * so they are not constructed here, but have to be arguments.
+     * @param team The team to change
+     * @param teamName The corresponding textfield to interact with
+     * @param teamTag The corresponding textfield to interact with
+     * @param teamScore The corresponding textfield to interact witw
+     * @return A JPanel with inpuht for a single team
      */
     private JPanel createTeamPanel(Team team, JTextField teamName, JTextField teamTag, JTextField teamScore) {
         //Create teamName panel
@@ -121,7 +186,11 @@ public class ScoreManager {
         return finalPanel;
     }
 
-    private JPanel createGlobalPanel() {
+    /**
+     * Constructs a panel with the buttons "Swap" "Apply" and "Reload"
+     * @return A JPanel consisting of 3 buttons
+     */
+    private JPanel createLowerPanel() {
         //Create update button
         JButton updateButt = new JButton("Update");
         updateButt.addActionListener(new ActionListener() {
@@ -160,58 +229,6 @@ public class ScoreManager {
         finalPanel.add(reloadButt, BorderLayout.EAST);
 
         return finalPanel;
-    }
-
-    /**
-     * Sends the new information to the team
-     */
-    private void updateTeams(){
-        teamA.setName(teamNameA.getText());
-        teamB.setName(teamNameB.getText());
-
-        teamA.setTag(teamTagA.getText());
-        teamB.setTag(teamTagB.getText());
-
-        try{
-            teamA.setScore(Integer.parseInt(teamScoreA.getText()));
-            teamB.setScore(Integer.parseInt(teamScoreB.getText()));
-        } catch(NumberFormatException e) {
-            teamA.setScore(0);
-            teamB.setScore(0);
-        }
-    }
-
-    /**
-     * Resets the content to the last accepted value saved in the Team objects
-     */
-    private void reloadTeams() {
-        teamNameA.setText(teamA.getName());
-        teamTagA.setText(teamA.getTag());
-        teamScoreA.setText("" + teamA.getScore());
-
-        teamNameB.setText(teamB.getName());
-        teamTagB.setText(teamB.getTag());
-        teamScoreB.setText("" + teamB.getScore());
-    }
-
-    /**
-     * Swaps the name, tag and score fields respectively
-     */
-    private void swapTeams() {
-        //Save everything from A
-        String aName = teamNameA.getText();
-        String aTag = teamTagA.getText();
-        String aScore = teamScoreA.getText();
-
-        //Overwrite A with content from B
-        teamNameA.setText(teamNameB.getText());
-        teamTagA.setText(teamTagB.getText());
-        teamScoreA.setText(teamScoreB.getText());
-
-        //Use the backup to insert A onto B
-        teamNameB.setText(aName);
-        teamTagB.setText(aTag);
-        teamScoreB.setText(aScore);
     }
 
     /**
