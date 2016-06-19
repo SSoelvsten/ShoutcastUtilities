@@ -49,15 +49,15 @@ public class Main {
     private static void setupTeams(Team tA, Team tB){
         Config conf = Config.getInstance();
 
-        tA.setName(TXTManager.readFullFile(conf.getString("file_A_name")));
-        tB.setName(TXTManager.readFullFile(conf.getString("file_B_name")));
+        tA.setName(TXTManager.readFirstLine(conf.getString("file_A_name")));
+        tB.setName(TXTManager.readFirstLine(conf.getString("file_B_name")));
 
-        tA.setTag(TXTManager.readFullFile(conf.getString("file_A_tag")));
-        tB.setTag(TXTManager.readFullFile(conf.getString("file_A_tag")));
+        tA.setTag(TXTManager.readFirstLine(conf.getString("file_A_tag")));
+        tB.setTag(TXTManager.readFirstLine(conf.getString("file_A_tag")));
 
         try{
-            tA.setScore(Integer.parseInt(TXTManager.readFullFile(conf.getString("file_A_score"))));
-            tB.setScore(Integer.parseInt(TXTManager.readFullFile(conf.getString("file_B_score"))));
+            tA.setScore(Integer.parseInt(TXTManager.readFirstLine(conf.getString("file_A_score"))));
+            tB.setScore(Integer.parseInt(TXTManager.readFirstLine(conf.getString("file_B_score"))));
         } catch(NumberFormatException e) {
             System.err.println("There was a noninteger in the teamScore field");
             tA.setScore(0);

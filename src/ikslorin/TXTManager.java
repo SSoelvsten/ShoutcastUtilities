@@ -14,7 +14,8 @@ public final class TXTManager {
     Scanner in;
 
     /**
-     * Constructor for when you want to readFullFile the file line for line, but
+     * Constructor for when you want to read the file line for line, but need to do it in various calls.
+     * Not really necessary anymore, but too interesting not to keep.
      */
     public TXTManager(String filename){
         in = null;
@@ -72,7 +73,34 @@ public final class TXTManager {
     }
 
     /**
-     * Reads a file and returns it as a singular string without any linebreaks.
+     * Reads the first line of a file
+     * @param filename The file to be readFullFile
+     * @return The content of the file as a string
+     */
+    public static String readFirstLine(String filename)  {
+        Scanner in = null;
+
+        //Open the file
+        try {
+            in = new Scanner(new FileReader(filename));
+        } catch (FileNotFoundException e) {
+            System.err.println("Could not find: " + filename);
+            return "Error!";
+        }
+
+        String res = "";
+        //Read the whole file
+        if(in.hasNextLine()){
+            res = in.nextLine();
+        }
+
+        in.close();
+
+        return res;
+    }
+
+    /**
+     * Reads a file and returns it as a singular string with linebreaks.
      * @param filename The file to be readFullFile
      * @return The content of the file as a string
      */
