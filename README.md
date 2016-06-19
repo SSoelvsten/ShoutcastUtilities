@@ -23,6 +23,6 @@ Link the .txt files outputted into OBS and you're ready to go!
 ![Alt text](/TeamScoreManager.png?raw=true "OBS using the output of the program")
 
 ## Clock
-A small java program to output the current time of day or a countdown into two .txt files.
+A small java program to output the current time of day and/or a countdown into two .txt files. This might be stressful on a harddrive, but it works.
 
 ![Alt text](/Clock.png?raw=true "The timer")
