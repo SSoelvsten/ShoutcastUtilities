@@ -28,7 +28,7 @@ public class ClockManager {
 
     public ClockManager(){
         clock = new Clock();
-        countdown = new Countdown();
+        countdown = new Countdown(this);
 
         timer = new Timer();
 
@@ -56,7 +56,9 @@ public class ClockManager {
         startClockButt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                timer.scheduleAtFixedRate(clock, 0, 1000);
+                if(!clockActive) {
+                    timer.scheduleAtFixedRate(clock, 0, 1000);
+                }
             }
         });
 
@@ -72,17 +74,19 @@ public class ClockManager {
         startCountButt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                try{
-                    int h = Integer.parseInt(hours.getText());
-                    int m = Integer.parseInt(minutes.getText());
-                    int s = Integer.parseInt(seconds.getText());
+                if(!countActive) {
+                    try {
+                        int h = Integer.parseInt(hours.getText());
+                        int m = Integer.parseInt(minutes.getText());
+                        int s = Integer.parseInt(seconds.getText());
 
-                    countdown.setCountDown(h, m, s);
+                        countdown.setCountDown(h, m, s);
 
-                    timer.scheduleAtFixedRate(countdown, 0, 1000);
-                } catch(NumberFormatException e){
-                    reloadCounters();
-                    hours.setText("" + 0);
+                        timer.scheduleAtFixedRate(countdown, 0, 1000);
+                    } catch (NumberFormatException e) {
+                        reloadCounters();
+                        hours.setText("" + 0);
+                    }
                 }
             }
         });
@@ -92,6 +96,7 @@ public class ClockManager {
             @Override
             public void actionPerformed(ActionEvent event) {
                 countdown.cancel();
+                reloadCounters();
             }
         });
 
@@ -119,7 +124,7 @@ public class ClockManager {
         frame.add(buttPanel, BorderLayout.EAST);
 
         //Give the window a title and an icon (though the latter doesn't want to work)
-        frame.setTitle("Clock and Countdown");
+        frame.setTitle("Countdowner and Countdown");
         frame.setIconImage(new ImageIcon("icon.png").getImage());
 
         //Usual stuff
@@ -128,15 +133,9 @@ public class ClockManager {
         frame.setVisible(true);
     }
 
-    private void reloadCounters(){
+    public void reloadCounters(){
         hours.setText("" + countdown.getHours());
         minutes.setText("" + countdown.getMinutes());
         seconds.setText("" + countdown.getSeconds());
-    }
-
-    private void startClock(){
-        if(!clockActive){
-            //TODO:
-        }
     }
 }

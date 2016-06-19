@@ -13,14 +13,19 @@ public class Countdown extends TimerTask {
     // The files to read and write
     private String countfile;
 
+    //The manager
+    ClockManager cm;
+
     //Fields set for the countdown
     int hours;
     int minutes;
     int seconds;
 
-    public Countdown(){
+    public Countdown(ClockManager cm){
         Config conf = Config.getInstance();
         this.countfile = conf.getString("file_countdown");
+
+        this.cm = cm;
 
         this.hours = 0;
         this.minutes = 0;
@@ -64,6 +69,7 @@ public class Countdown extends TimerTask {
             }
         }
         //Add in hours here easily...
+        cm.reloadCounters();
         TXTManager.writeFullFile(countfile, minutes + ":" + seconds);
     }
 
