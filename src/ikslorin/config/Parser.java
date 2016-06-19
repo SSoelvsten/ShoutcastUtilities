@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 public class Parser {
 
     private String configfilepath;
-    private static final Pattern SETTING_PATTERN = Pattern.compile("^[ |\\t]*(\\w+)[ |\\t]*:[ |\\t]*([^ |^\\t][^\\n]*[^ |^\\t])[ |\\t]*$",Pattern.MULTILINE);
+    private static final Pattern SETTING_PATTERN = Pattern.compile("^[ |\\t]*(\\w+)[ |\\t]*:[ |\\t]*([^ |^\\t][^\\n]*[\\S])[ |\\t]*$",Pattern.MULTILINE);
 
     public Parser(String configfile){
         configfilepath = configfile;
