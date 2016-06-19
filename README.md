@@ -1,5 +1,5 @@
 # Shoutcast Utilities
-These are a collection of programs I've made to make the running of a stream a little less cumbersome. Currently it only consists of two program.
+These are a collection of programs I've made to make the running of a stream a little less cumbersome. Currently it only consists of two programs and also a subservice. Many thanks to Kristian 'Yurippe' for his massive amount of help - especially for his implementation of a proper configuration file.
 
 ## Global shortcuts
 By using JNativeHook a keylogger is implemented, which reacts to certain key-combinations. This way you can interact with the software without having to actually defocus the game!
