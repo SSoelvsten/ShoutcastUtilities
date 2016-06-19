@@ -58,6 +58,7 @@ public class ClockManager {
             public void actionPerformed(ActionEvent event) {
                 if(!clockActive) {
                     timer.scheduleAtFixedRate(clock, 0, 1000);
+                    clockActive = true;
                 }
             }
         });
@@ -67,6 +68,7 @@ public class ClockManager {
             @Override
             public void actionPerformed(ActionEvent event) {
                 clock.cancel();
+                clockActive = false;
             }
         });
 
@@ -83,6 +85,7 @@ public class ClockManager {
                         countdown.setCountDown(h, m, s);
 
                         timer.scheduleAtFixedRate(countdown, 0, 1000);
+                        countActive = true;
                     } catch (NumberFormatException e) {
                         reloadCounters();
                         hours.setText("" + 0);
@@ -96,6 +99,7 @@ public class ClockManager {
             @Override
             public void actionPerformed(ActionEvent event) {
                 countdown.cancel();
+                countActive = false;
                 reloadCounters();
             }
         });
