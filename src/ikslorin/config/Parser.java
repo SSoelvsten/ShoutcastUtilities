@@ -2,14 +2,13 @@ package ikslorin.config;
 
 import ikslorin.TXTManager;
 
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by Kristian on 6/18/2016.
+ * Created by Yurippe on 6/18/2016.
  */
 public class Parser {
 
@@ -30,9 +29,14 @@ public class Parser {
         }
 
         return outp;
-
     }
 
+    /**
+     * Creates a string, that is without any comments. Here it goes through all lines,
+     * and stops appending the text when reaching a # until again hitting the next line.
+     * @param input
+     * @return
+     */
     private static String stripComments(String input){
         char[] inp = input.toCharArray();
         StringBuilder sb = new StringBuilder();
@@ -41,28 +45,32 @@ public class Parser {
         boolean w = false;
 
         while(i < inp.length){
+            //Currently reading through a comment
             if(w){
+                //Just hit the end or still reading?
                 if(inp[i] == '\n'){
                     w = false;
                     c = i;
-                    continue;
+                } else {
+                    i++;
                 }
             }
-
-            if(inp[i] == '#'){
+            //Have we just begun reading a comment?
+            else if(inp[i] == '#'){
                 sb.append(input.substring(c,i));
                 i++;
                 w = true;
-                continue;
+            }
+            //We are just merrily reading
+            else {
+                i++;
             }
 
-            i++;
         }
-
+        //Strings only got appended, when a comment is found, but possibly it ends with no comment
         if(c < i && !w){
             sb.append(input.substring(c,i));
         }
-
         return sb.toString();
     }
 

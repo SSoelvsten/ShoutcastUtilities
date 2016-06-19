@@ -5,8 +5,10 @@ package ikslorin;
  */
 public class Team {
 
-    // The identifier to use
-    private String identifier;
+    // The files to read and write
+    private String namefile;
+    private String tagfile;
+    private String scorefile;
 
     // Full name of team
     private String name;
@@ -17,11 +19,15 @@ public class Team {
     //Current score
     private int score;
 
-    public Team(String identifier){
-        this.identifier = identifier;
-    }
+    public Team(String namefile, String tagfile, String scorefile){
+        this.namefile = namefile;
+        this.tagfile = tagfile;
+        this.scorefile = scorefile;
 
-    public String getIdentifier() { return identifier; }
+        name = namefile;
+        tag = tagfile;
+        score = 0;
+    }
 
     public String getName(){
         return name;
@@ -33,7 +39,7 @@ public class Team {
      */
     public void setName(String name){
         this.name = name;
-        TXTManager.writeFullFile(identifier + "_name.txt", name);
+        TXTManager.writeFullFile(namefile, name);
     }
 
     public String getTag() { return tag; }
@@ -44,7 +50,7 @@ public class Team {
      */
     public void setTag(String tag) {
         this.tag = tag;
-        TXTManager.writeFullFile(identifier + "_tag.txt", tag);
+        TXTManager.writeFullFile(tagfile, tag);
     }
 
     public int getScore() { return score; }
@@ -55,7 +61,7 @@ public class Team {
      */
     public void setScore(int score){
         this.score = score;
-        TXTManager.writeFullFile(identifier + "_score.txt", "" + score);
+        TXTManager.writeFullFile(scorefile, "" + score);
     }
 
     public void increaseScore(int i) {

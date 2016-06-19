@@ -1,6 +1,7 @@
 package ikslorin;
 
 import ikslorin.config.Config;
+
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 
@@ -11,19 +12,25 @@ public class Main {
 
 
     public static void main(String[] args) {
-        Config conf = Config.getInstance(); //This makes sure that the config
-        //file is loaded as the first thing the program does
+        //Load the config file
+        Config conf = Config.getInstance();
 
         //Create the two teams to manage
-        Team tA = new Team("A");
-        Team tB = new Team("B");
+        Team tA = new Team(conf.getString("file_A_name"),
+                conf.getString("file_A_tag"),
+                conf.getString("file_A_score"));
+
+        Team tB = new Team(conf.getString("file_B_name"),
+                conf.getString("file_B_tag"),
+                conf.getString("file_B_score"));
+
         setupTeams(tA, tB);
 
         //Setup score manager
         ScoreManager sm = new ScoreManager(tA, tB, 12, 2);
 
+        //Setup global shortcuts
         if(conf.getBoolean("enable_keybindings")) {
-            //Setup global shortcuts
             Logger.getLogger(GlobalScreen.class.getPackage().getName()).setLevel(Level.WARNING);
             try {
                 GlobalScreen.registerNativeHook();
@@ -40,15 +47,17 @@ public class Main {
      * @param tB Team B
      */
     private static void setupTeams(Team tA, Team tB){
-        tA.setName(TXTManager.readFullFile("A_name.txt"));
-        tB.setName(TXTManager.readFullFile("B_name.txt"));
+        Config conf = Config.getInstance();
 
-        tA.setTag(TXTManager.readFullFile("A_tag.txt"));
-        tB.setTag(TXTManager.readFullFile("B_tag.txt"));
+        tA.setName(TXTManager.readFullFile(conf.getString("file_A_name")));
+        tB.setName(TXTManager.readFullFile(conf.getString("file_B_name")));
+
+        tA.setTag(TXTManager.readFullFile(conf.getString("file_A_tag")));
+        tB.setTag(TXTManager.readFullFile(conf.getString("file_A_tag")));
 
         try{
-            tA.setScore(Integer.parseInt(TXTManager.readFullFile("A_score.txt")));
-            tB.setScore(Integer.parseInt(TXTManager.readFullFile("B_score.txt")));
+            tA.setScore(Integer.parseInt(TXTManager.readFullFile(conf.getString("file_A_score"))));
+            tB.setScore(Integer.parseInt(TXTManager.readFullFile(conf.getString("file_B_score"))));
         } catch(NumberFormatException e) {
             System.err.println("There was a noninteger in the teamScore field");
             tA.setScore(0);

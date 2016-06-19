@@ -3,7 +3,7 @@ package ikslorin.config;
 import java.util.Map;
 
 /**
- * Created by Kristian on 6/18/2016.
+ * Created by Yurippe on 6/18/2016.
  */
 
 public class Config {
@@ -46,5 +46,4 @@ public class Config {
     public String getString(String key){
         return settings.get(key);
     }
-
 }

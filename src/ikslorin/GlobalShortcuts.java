@@ -1,7 +1,7 @@
 package ikslorin;
 
 import ikslorin.config.Config;
-import javafx.scene.input.KeyCode;
+
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
 
@@ -16,8 +16,12 @@ public class GlobalShortcuts implements NativeKeyListener {
     private ScoreManager sm;
 
     //Flags for keys
-    private int modifier;   //Global modifier, that is necessary for the rest to run
-    private boolean modifierB;
+    private int numberOfModifiers;
+
+    private int modifier1;
+    private boolean modifier1B;
+    private int modifier2;
+    private boolean modifier2B;
 
     private int update;
 
@@ -38,11 +42,14 @@ public class GlobalShortcuts implements NativeKeyListener {
         this.sm = sm;
 
         //Set keybindings buttons
-
         Config conf = Config.getInstance();
 
-        modifier = conf.getInteger("modifier_key");
-        modifierB = false;
+        numberOfModifiers = conf.getInteger("number_modifiers");
+
+        modifier1 = conf.getInteger("modifier1_key");
+        modifier1B = false;
+        modifier2 = conf.getInteger("modifier2_key");
+        modifier2B = false;
 
         update = conf.getInteger("commit_key");
         incA = conf.getInteger("team_a_increment_key");
@@ -58,27 +65,38 @@ public class GlobalShortcuts implements NativeKeyListener {
      */
     public void nativeKeyPressed(NativeKeyEvent e){
         //Listen for all the keys we use and set flags
-        if (modifier == e.getKeyCode()) { modifierB = true; }
+        if (modifier1 == e.getKeyCode()) { modifier1B = true; }
+        if (modifier2 == e.getKeyCode()) { modifier2B = true; }
 
-        //Check if a combination is achieved
-        if (modifierB) {
-            if (incA == e.getKeyCode()) {
-                sm.getTeamA().increaseScore(1);
-                sm.reloadTeams();
-            } else if (decA == e.getKeyCode()) {
-                sm.getTeamA().increaseScore(-1);
-                sm.reloadTeams();
-            } else if (incB == e.getKeyCode()) {
-                sm.getTeamB().increaseScore(1);
-                sm.reloadTeams();
-            } else if (decB == e.getKeyCode()) {
-                sm.getTeamB().increaseScore(-1);
-                sm.reloadTeams();
-            } else if (swap == e.getKeyCode()) {
-                sm.swapTeams();
-            } else if (update == e.getKeyCode()) {
-                sm.updateTeams();
-            }
+        //Check if enough modifiers are currently pressed
+        if (numberOfModifiers == 2 && modifier1B && modifier2B
+                || numberOfModifiers == 1 && modifier1B
+                || numberOfModifiers == 0) {
+            executeShortcut(e.getKeyCode());
+        }
+    }
+
+    /**
+     *
+     * @param keycode
+     */
+    private void executeShortcut(int keycode){
+        if (incA == keycode) {
+            sm.getTeamA().increaseScore(1);
+            sm.reloadTeams();
+        } else if (decA == keycode) {
+            sm.getTeamA().increaseScore(-1);
+            sm.reloadTeams();
+        } else if (incB == keycode) {
+            sm.getTeamB().increaseScore(1);
+            sm.reloadTeams();
+        } else if (decB == keycode) {
+            sm.getTeamB().increaseScore(-1);
+            sm.reloadTeams();
+        } else if (swap == keycode) {
+            sm.swapTeams();
+        } else if (update == keycode) {
+            sm.updateTeams();
         }
     }
 
@@ -87,7 +105,8 @@ public class GlobalShortcuts implements NativeKeyListener {
      * @param e The key pressed, which is handled by the framework
      */
     public void nativeKeyReleased(NativeKeyEvent e){
-        if (e.getKeyCode() == NativeKeyEvent.VC_ALT_L) { modifierB = false; }
+        if (e.getKeyCode() == NativeKeyEvent.VC_ALT_L) { modifier1B = false; }
+        if (e.getKeyCode() == NativeKeyEvent.VC_ALT_L) { modifier2B = false; }
     }
 
     /**

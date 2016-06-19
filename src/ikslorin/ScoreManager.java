@@ -141,7 +141,7 @@ public class ScoreManager {
     }
 
     /**
-     * Constructs a panel to writeFullFile changes for a single team. Notice, that the textfields are global,
+     * Constructs a panel to write changes for a single team. Notice, that the textfields are global,
      * so they are not constructed here, but have to be arguments.
      * @param team The team to change
      * @param teamName The corresponding textfield to interact with
@@ -181,8 +181,6 @@ public class ScoreManager {
         //Let's collect all this together in one big panel!
         JPanel finalPanel = new JPanel();
         finalPanel.setLayout(new BorderLayout(2, 2));
-
-        finalPanel.add(new JLabel("Team: " + team.getIdentifier(), SwingConstants.CENTER), BorderLayout.NORTH);
 
         finalPanel.add(namingPanel, BorderLayout.CENTER);
         finalPanel.add(scorePanel, BorderLayout.SOUTH);
