@@ -4,7 +4,7 @@ These are a collection of programs I've made to make the running of a stream a l
 ## Global shortcuts
 By using JNativeHook a keylogger is implemented, which reacts to certain key-combinations. This way you can interact with the software without having to actually defocus the game!
 
-The keybinds are rebindable, though you have to use the codes you can find in "keyReference.txt". Rebindings can be done in "bindings.cfg" in exactly the same order as specified below in the standard bindings.
+The keybinds are rebindable, though you have to use the codes you can find in "keyReference.txt". Rebindings can be done in "config.cfg". The following are the standard bindings
 
 - ALT GR: Universal meta-key as identifier. This key has to be pressed for the others to work.
 - Numpad 0: Commit the current values in ALL of the programs linked
@@ -22,6 +22,7 @@ Link the .txt files outputted into OBS and you're ready to go!
 
 ![Alt text](/TeamScoreManager.png?raw=true "OBS using the output of the program")
 
-## Future projects
-- Create proper configuration file (Debugging)
-- Countdown timer (Not started)
+## Clock
+A small java program to output the current time of day or a countdown into two .txt files.
+
+![Alt text](/Timer.png?raw=true "The timer")
