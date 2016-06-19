@@ -13,24 +13,29 @@ import java.util.regex.Pattern;
 public class Parser {
 
     private String configfilepath;
-    private static final Pattern SETTING_PATTERN = Pattern.compile("^[ |\\t]*(\\w+)[ |\\t]*:[ |\\t]*([^ |^\\t][^\\n]*[\\S])[ |\\t]*$",Pattern.MULTILINE);
-
+    private static final Pattern SETTING_PATTERN = Pattern.compile("^[ |\\t]*(\\w+)[ |\\t]*:[ |\\t]*([\\S][^\\n]*[\\S])[ |\\t]*$",Pattern.MULTILINE);
+    private static final Pattern SETTING_VAL_LENGTH_1 = Pattern.compile("^[ |\\t]*(\\w+)[ |\\t]*:[ |\\t]*([\\S])[ |\\t]*$",Pattern.MULTILINE);
     public Parser(String configfile){
         configfilepath = configfile;
     }
 
     public Map<String, String> parse(){
-        String content = TXTManager.readFullFile(configfilepath);
-        Map<String, String> outp = new HashMap<String, String>();
+        String content = stripComments(TXTManager.readFullFile(configfilepath));
+        Map<String, String> outp = new HashMap<>();
 
-        Matcher m = SETTING_PATTERN.matcher(stripComments(content));
+        Matcher m = SETTING_PATTERN.matcher(content);
         while(m.find()){
+            //System.out.println("\"" + m.group(1) + "\" \"" + m.group(2) + "\"");
             outp.put(m.group(1), m.group(2));
         }
 
+        m = SETTING_VAL_LENGTH_1.matcher(content);
+        while(m.find()){
+            //System.out.println("\"" + m.group(1) + "\" \"" + m.group(2) + "\"");
+            outp.put(m.group(1), m.group(2));
+        }
         return outp;
     }
-
     /**
      * Creates a string, that is without any comments. Here it goes through all lines,
      * and stops appending the text when reaching a # until again hitting the next line.
