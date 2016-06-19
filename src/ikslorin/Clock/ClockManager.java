@@ -143,7 +143,7 @@ public class ClockManager {
         frame.add(buttPanel, BorderLayout.EAST);
 
         //Give the window a title and an icon (though the latter doesn't want to work)
-        frame.setTitle("Countdowner and Countdown");
+        frame.setTitle("Clock and Countdown");
         frame.setIconImage(new ImageIcon("icon.png").getImage());
 
         //Usual stuff
