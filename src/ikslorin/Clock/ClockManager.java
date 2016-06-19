@@ -15,6 +15,9 @@ public class ClockManager {
     private Clock clock;
     private Countdown countdown;
 
+    //A very hacky solution, but a solution...
+    private ClockManager cm;
+
     private Timer timer;
 
     //Are they already running?
@@ -28,7 +31,9 @@ public class ClockManager {
 
     public ClockManager(){
         clock = new Clock();
-        countdown = new Countdown(this);
+
+        cm = this;
+        countdown = new Countdown(cm);
 
         timer = new Timer();
 
@@ -69,6 +74,7 @@ public class ClockManager {
             public void actionPerformed(ActionEvent event) {
                 clock.cancel();
                 clockActive = false;
+                clock = new Clock();
             }
         });
 
@@ -101,6 +107,15 @@ public class ClockManager {
                 countdown.cancel();
                 countActive = false;
                 reloadCounters();
+
+                //Create a new countdown
+                countdown = new Countdown(cm);
+
+                int h = Integer.parseInt(hours.getText());
+                int m = Integer.parseInt(minutes.getText());
+                int s = Integer.parseInt(seconds.getText());
+                countdown.setCountDown(h, m, s);
+
             }
         });
 
