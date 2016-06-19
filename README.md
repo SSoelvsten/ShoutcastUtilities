@@ -25,4 +25,4 @@ Link the .txt files outputted into OBS and you're ready to go!
 ## Clock
 A small java program to output the current time of day or a countdown into two .txt files.
 
-![Alt text](/Timer.png?raw=true "The timer")
+![Alt text](/Clock.png?raw=true "The timer")
