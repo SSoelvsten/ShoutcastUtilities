@@ -1,5 +1,9 @@
 package ikslorin;
 
+import ikslorin.Clock.ClockManager;
+import ikslorin.GlobalShortcuts.GlobalShortcuts;
+import ikslorin.TeamScoreManager.ScoreManager;
+import ikslorin.TeamScoreManager.Team;
 import ikslorin.config.Config;
 
 import org.jnativehook.GlobalScreen;
@@ -28,6 +32,9 @@ public class Main {
 
         //Setup score manager
         ScoreManager sm = new ScoreManager(tA, tB, 12, 2);
+
+        //Setup Clockmanager
+        ClockManager cm = new ClockManager();
 
         //Setup global shortcuts
         if(conf.getBoolean("enable_keybindings")) {

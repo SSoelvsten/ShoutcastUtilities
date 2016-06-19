@@ -1,4 +1,4 @@
-package ikslorin;
+package ikslorin.TeamScoreManager;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,4 +1,6 @@
-package ikslorin;
+package ikslorin.TeamScoreManager;
+
+import ikslorin.TXTManager;
 
 /**
  * A class to keep track of the names of all

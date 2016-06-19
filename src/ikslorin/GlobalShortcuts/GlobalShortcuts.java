@@ -1,5 +1,6 @@
-package ikslorin;
+package ikslorin.GlobalShortcuts;
 
+import ikslorin.TeamScoreManager.ScoreManager;
 import ikslorin.config.Config;
 
 import org.jnativehook.keyboard.NativeKeyEvent;
