@@ -42,8 +42,6 @@ public final class TXTManager {
         }
     }
 
-
-
     /**
      * Writes a specific string to a specific file
      * @param filename The file "abc.txt" that is the target
@@ -105,7 +103,7 @@ public final class TXTManager {
      * @return The content of the file as a string
      */
     public static String readFullFile(String filename)  {
-        Scanner in = null;
+        Scanner in;
 
         //Open the file
         try {
@@ -118,7 +116,6 @@ public final class TXTManager {
         //Read the whole file
         String res = "";
         while(in.hasNextLine()){
-            //res = res + in.nextLine();
             res = res + in.nextLine() + "\n";
         }
         in.close();
