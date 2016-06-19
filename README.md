@@ -21,3 +21,7 @@ These can be changed before commiting to the .txt files, making for a better vie
 Link the .txt files outputted into OBS and you're ready to go!
 
 ![Alt text](/TeamScoreManager.png?raw=true "OBS using the output of the program")
+
+## Future projects
+- Create proper configuration file (Debugging)
+- Countdown timer (Not started)
