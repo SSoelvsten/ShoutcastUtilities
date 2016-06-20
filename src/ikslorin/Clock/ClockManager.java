@@ -1,6 +1,7 @@
 package ikslorin.Clock;
 
-import java.util.Timer;
+import ikslorin.TXTManager;
+import ikslorin.config.Config;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,18 +12,10 @@ import java.awt.event.ActionListener;
  * A window to manage the time.
  */
 public class ClockManager {
-    //The clock and countdown
-    private Clock clock;
-    private Countdown countdown;
+    //The countdownClock and countdown
+    private Clock countdownClock;
+    private Clock timeClock;
 
-    //A very hacky solution, but a solution...
-    private ClockManager cm;
-
-    private Timer timer;
-
-    //Are they already running?
-    private boolean clockActive;
-    private boolean countActive;
 
     //The fields
     private JTextField hours;
@@ -30,17 +23,14 @@ public class ClockManager {
     private JTextField seconds;
 
     public ClockManager(){
-        clock = new Clock();
-
-        cm = this;
-        countdown = new Countdown(cm);
-
-        timer = new Timer();
-
-        clockActive = false;
-        countActive = false;
-
         createWindow();
+        initializeTimes();
+    }
+
+    private void initializeTimes(){
+        seconds.setText("0");
+        minutes.setText("0");
+        hours.setText("0");
     }
 
     private void createWindow(){
@@ -54,17 +44,33 @@ public class ClockManager {
         seconds = new JTextField(3);
         seconds.setEditable(true);
 
-        reloadCounters();
 
         //Create the four buttons
         JButton startClockButt = new JButton("Start Clock");
         startClockButt.addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent event) {
-                if(!clockActive) {
-                    timer.scheduleAtFixedRate(clock, 0, 1000);
-                    clockActive = true;
+
+                if (timeClock != null){
+                    timeClock.stop();
                 }
+
+                final String outfile = Config.getInstance().getString("file_clock");
+                timeClock = new Clock();
+                timeClock.setEventHandler(new ClockEvent() {
+                    @Override
+                    public void onUpdate(Clock clock) {
+                        TXTManager.writeFullFile(outfile, clock.toString());
+                    }
+
+                    @Override
+                    public void onFinish(Clock clock){
+
+                    }
+                });
+
+                timeClock.startClock();
             }
         });
 
@@ -72,49 +78,55 @@ public class ClockManager {
         stopClockButt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                clock.cancel();
-                clockActive = false;
-                clock = new Clock();
+                if(timeClock != null){
+                    timeClock.stop();
+                }
             }
         });
 
         JButton startCountButt = new JButton("Start Countdown");
         startCountButt.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                if(!countActive) {
-                    try {
-                        int h = Integer.parseInt(hours.getText());
-                        int m = Integer.parseInt(minutes.getText());
-                        int s = Integer.parseInt(seconds.getText());
+             @Override
+             public void actionPerformed(ActionEvent event) {
 
-                        countdown.setCountDown(h, m, s);
+                 if (countdownClock != null) {
+                     countdownClock.stop();
+                 }
 
-                        timer.scheduleAtFixedRate(countdown, 0, 1000);
-                        countActive = true;
-                    } catch (NumberFormatException e) {
-                        reloadCounters();
-                        hours.setText("" + 0);
-                    }
-                }
-            }
-        });
+                 try {
+                     int h = Integer.parseInt(hours.getText());
+                     int m = Integer.parseInt(minutes.getText());
+                     int s = Integer.parseInt(seconds.getText());
+                     final String outfile = Config.getInstance().getString("file_countdown");
+                     countdownClock = new Clock();
+                     countdownClock.setTime(h, m, s);
+                     countdownClock.setEventHandler(new ClockEvent() {
+                         @Override
+                         public void onUpdate(Clock clock) {
+                             hours.setText("" + clock.getHours());
+                             minutes.setText("" + clock.getMinutes());
+                             seconds.setText("" + clock.getSeconds());
+                             TXTManager.writeFullFile(outfile, clock.toString());
+                         }
+                     });
+
+                     countdownClock.startCountdown();
+
+                 } catch (NumberFormatException e) {
+                     System.out.println(e);
+                 }
+
+
+             }
+         });
 
         JButton stopCountButt = new JButton("Stop Countdown");
         stopCountButt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                countdown.cancel();
-                countActive = false;
-                reloadCounters();
-
-                //Create a new countdown
-                countdown = new Countdown(cm);
-
-                int h = Integer.parseInt(hours.getText());
-                int m = Integer.parseInt(minutes.getText());
-                int s = Integer.parseInt(seconds.getText());
-                countdown.setCountDown(h, m, s);
+                if (countdownClock != null) {
+                    countdownClock.stop();
+                }
 
             }
         });
@@ -150,11 +162,5 @@ public class ClockManager {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
-    }
-
-    public void reloadCounters(){
-        hours.setText("" + countdown.getHours());
-        minutes.setText("" + countdown.getMinutes());
-        seconds.setText("" + countdown.getSeconds());
     }
 }
