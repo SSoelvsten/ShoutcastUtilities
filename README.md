@@ -29,3 +29,4 @@ A small java program to output the current time of day and/or a countdown into t
 
 ## TODO:
 - Make the amount of clocks customizable
+- Recreate this software in Python
