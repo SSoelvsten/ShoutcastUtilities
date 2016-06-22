@@ -28,5 +28,6 @@ A small java program to output the current time of day and/or a countdown into t
 ![Alt text](/Clock.png?raw=true "The timer")
 
 ## TODO:
+- Add pause .txt that contains text for team A or B or is empty
 - Make the amount of clocks customizable
 - Recreate this software in Python
