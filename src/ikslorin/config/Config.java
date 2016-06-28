@@ -1,4 +1,4 @@
-package ikslorin.config;
+package ikslorin.Config;
 
 import java.util.Map;
 
@@ -24,7 +24,7 @@ public class Config {
     }
 
     public void reparse() {
-        Parser parser = new Parser("config.cfg");
+        Parser parser = new Parser("Config.cfg");
         settings = parser.parse();
         validate();
     }

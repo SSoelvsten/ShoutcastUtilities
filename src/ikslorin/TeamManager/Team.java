@@ -1,4 +1,4 @@
-package ikslorin.TeamScoreManager;
+package ikslorin.TeamManager;
 
 import ikslorin.TXTManager;
 
@@ -11,6 +11,7 @@ public class Team {
     private String namefile;
     private String tagfile;
     private String scorefile;
+    private String pausefile;
 
     // Full name of team
     private String name;
@@ -21,14 +22,26 @@ public class Team {
     //Current score
     private int score;
 
-    public Team(String namefile, String tagfile, String scorefile){
+    public Team(String namefile, String tagfile, String scorefile, String pausefile){
         this.namefile = namefile;
         this.tagfile = tagfile;
         this.scorefile = scorefile;
+        this.pausefile = pausefile;
 
         name = namefile;
         tag = tagfile;
         score = 0;
+    }
+
+    /**
+     * Writes to the pause.txt file with reason, if the input string is not empty
+     */
+    public void makePaused(String reason){
+        String output = "Game paused by " + name;
+        if(!reason.equals("")) {
+            output += ", reason: " + reason;
+        }
+        TXTManager.writeFullFile(pausefile, output);
     }
 
     public String getName(){

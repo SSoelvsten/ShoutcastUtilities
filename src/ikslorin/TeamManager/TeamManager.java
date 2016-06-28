@@ -1,6 +1,10 @@
-package ikslorin.TeamScoreManager;
+package ikslorin.TeamManager;
+
+import ikslorin.Config.Config;
+import ikslorin.TXTManager;
 
 import javax.swing.*;
+import javax.swing.border.EtchedBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,7 +12,7 @@ import java.awt.event.ActionListener;
 /**
  * Creates a window to input and quickly change two teams A and B
  */
-public class ScoreManager {
+public class TeamManager {
     //Teams A and B
     private Team teamA;
     private Team teamB;
@@ -25,7 +29,7 @@ public class ScoreManager {
     /**
      * Constructs the team objects and the window
      */
-    public ScoreManager(Team teamA, Team teamB, int teamSize, int scoreSize) {
+    public TeamManager(Team teamA, Team teamB, int teamSize, int scoreSize) {
         this.teamA = teamA;
         this.teamB = teamB;
 
@@ -119,8 +123,8 @@ public class ScoreManager {
         JPanel panelA = createTeamPanel(teamA, teamNameA, teamTagA, teamScoreA);
         JPanel panelB = createTeamPanel(teamB, teamNameB, teamTagB, teamScoreB);
 
-        //Create the special buttonPanel
-        JPanel panelG = createLowerPanel();
+        //Create the lower panel
+        JPanel panelM = createLowerPanel();
 
         //Put everything into the final frame
         JFrame frame = new JFrame();
@@ -128,10 +132,10 @@ public class ScoreManager {
 
         frame.add(panelA, BorderLayout.WEST);
         frame.add(panelB, BorderLayout.EAST);
-        frame.add(panelG, BorderLayout.SOUTH);
+        frame.add(panelM, BorderLayout.SOUTH);
 
         //Give the window a title and an icon (though the latter doesn't want to work
-        frame.setTitle("Team Score Manager");
+        frame.setTitle("Team Manager");
         frame.setIconImage(new ImageIcon("icon.png").getImage());
 
         //Usual stuff
@@ -185,16 +189,34 @@ public class ScoreManager {
         finalPanel.add(namingPanel, BorderLayout.CENTER);
         finalPanel.add(scorePanel, BorderLayout.SOUTH);
 
+        finalPanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
+
         return finalPanel;
     }
 
     /**
-     * Constructs a panel with the buttons "Swap" "Apply" and "Reload"
-     * @return A JPanel consisting of 3 buttons
+     * Create a panel consisting of metakeys and pause
+     * @return A JPanel
      */
     private JPanel createLowerPanel() {
+        JPanel finalPanel = new JPanel();
+        finalPanel.setLayout(new BorderLayout());
+
+        finalPanel.add(createScoreMetaPanel(), BorderLayout.NORTH);
+        finalPanel.add(createPausePanel(), BorderLayout.CENTER);
+
+        return finalPanel;
+    }
+
+    /**
+     * Constructs a panel with the buttons "Swap" "Apply" and "Reload" and the pause panel below
+     * @return A JPanel consisting of 3 buttons
+     */
+    private JPanel createScoreMetaPanel() {
+        //Add header
+
         //Create update button
-        JButton updateButt = new JButton("Update");
+        JButton updateButt = new JButton("Update .txt files");
         updateButt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -203,7 +225,7 @@ public class ScoreManager {
         });
 
         //Create swap button
-        JButton swapButt = new JButton("Swap");
+        JButton swapButt = new JButton("Swap teams");
         swapButt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -214,7 +236,7 @@ public class ScoreManager {
             }
         });
 
-        JButton reloadButt = new JButton("Reload");
+        JButton reloadButt = new JButton("Reload teams");
         reloadButt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -229,6 +251,51 @@ public class ScoreManager {
         finalPanel.add(swapButt, BorderLayout.WEST);
         finalPanel.add(updateButt, BorderLayout.CENTER);
         finalPanel.add(reloadButt, BorderLayout.EAST);
+
+        finalPanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
+
+        return finalPanel;
+    }
+
+    private JPanel createPausePanel(){
+        Config conf = Config.getInstance();
+
+        JTextField reasonField = new JTextField(24);
+
+        JButton aButt = new JButton("Pause: Team A");
+        aButt.addActionListener(createPauseActionListener(teamA, reasonField));
+
+        JButton bButt = new JButton("Pause: Team B");
+        bButt.addActionListener(createPauseActionListener(teamB, reasonField));
+
+        JButton resetButt = new JButton("No Pause");
+        resetButt.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TXTManager.writeFullFile(conf.getString("file_pause"), "");
+            }
+        });
+
+        //Always empty the pause file, when starting the software
+        resetButt.doClick();
+
+        //Create a panel with "Pause Reason: " tag and jlabel
+        JPanel topPanel = new JPanel();
+        topPanel.setLayout(new BorderLayout());
+
+        topPanel.add(new JLabel("Pause Notification: ", SwingConstants.RIGHT), BorderLayout.WEST);
+        topPanel.add(reasonField, BorderLayout.EAST);
+
+        //Create the final panel and add everything to it
+        JPanel finalPanel = new JPanel();
+        finalPanel.setLayout(new BorderLayout());
+
+        finalPanel.add(topPanel, BorderLayout.NORTH);
+        finalPanel.add(aButt, BorderLayout.WEST);
+        finalPanel.add(resetButt, BorderLayout.CENTER);
+        finalPanel.add(bButt, BorderLayout.EAST);
+
+        finalPanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 
         return finalPanel;
     }
@@ -257,5 +324,20 @@ public class ScoreManager {
             }
         });
         return result;
+    }
+
+    /**
+     * Creates an ActionListener for the two pause buttons
+     * @param team The team to write the pause
+     * @param reasonField The reasonfield found in createPausePanel
+     * @return
+     */
+    private ActionListener createPauseActionListener(Team team, JTextField reasonField){
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                team.makePaused(reasonField.getText());
+            }
+        };
     }
 }

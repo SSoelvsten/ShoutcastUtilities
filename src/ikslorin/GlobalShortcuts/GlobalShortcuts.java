@@ -1,7 +1,7 @@
 package ikslorin.GlobalShortcuts;
 
-import ikslorin.TeamScoreManager.ScoreManager;
-import ikslorin.config.Config;
+import ikslorin.TeamManager.TeamManager;
+import ikslorin.Config.Config;
 
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
@@ -14,7 +14,7 @@ import org.jnativehook.keyboard.NativeKeyListener;
 public class GlobalShortcuts implements NativeKeyListener {
 
     //The managers to send the shortcuts to.
-    private ScoreManager sm;
+    private TeamManager sm;
 
     //Flags for keys
     private int numberOfModifiers;
@@ -36,7 +36,7 @@ public class GlobalShortcuts implements NativeKeyListener {
      * Constructor setting up connections to the objects to control with the power of shortcuts
      * @param sm
      */
-    public GlobalShortcuts(ScoreManager sm){
+    public GlobalShortcuts(TeamManager sm){
         super();
 
         //Connect to the managers

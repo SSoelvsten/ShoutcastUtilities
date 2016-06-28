@@ -2,9 +2,9 @@ package ikslorin;
 
 import ikslorin.Clock.ClockManager;
 import ikslorin.GlobalShortcuts.GlobalShortcuts;
-import ikslorin.TeamScoreManager.ScoreManager;
-import ikslorin.TeamScoreManager.Team;
-import ikslorin.config.Config;
+import ikslorin.TeamManager.TeamManager;
+import ikslorin.TeamManager.Team;
+import ikslorin.Config.Config;
 
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
@@ -16,22 +16,24 @@ public class Main {
 
 
     public static void main(String[] args) {
-        //Load the config file
+        //Load the Config file
         Config conf = Config.getInstance();
 
         //Create the two teams to manage
         Team tA = new Team(conf.getString("file_A_name"),
                 conf.getString("file_A_tag"),
-                conf.getString("file_A_score"));
+                conf.getString("file_A_score"),
+                conf.getString("file_pause"));
 
         Team tB = new Team(conf.getString("file_B_name"),
                 conf.getString("file_B_tag"),
-                conf.getString("file_B_score"));
+                conf.getString("file_B_score"),
+                conf.getString("file_pause"));
 
         setupTeams(tA, tB);
 
         //Setup score manager
-        ScoreManager sm = new ScoreManager(tA, tB, 12, 2);
+        TeamManager sm = new TeamManager(tA, tB, 12, 2);
 
         //Setup Clockmanager
         ClockManager cm = new ClockManager();

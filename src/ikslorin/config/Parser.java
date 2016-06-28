@@ -1,4 +1,4 @@
-package ikslorin.config;
+package ikslorin.Config;
 
 import ikslorin.TXTManager;
 
