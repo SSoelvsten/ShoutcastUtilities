@@ -22,12 +22,29 @@ Link the .txt files outputted into OBS and you're ready to go!
 
 ![Alt text](/TeamScoreManager.png?raw=true "OBS using the output of the program")
 
+With 0.1.1b this software also includes a pause notification, which automatically includes the teamname and has an optional pause description available. When there's no pause notification, the .txt file is empty.
+
 ## Clock
 A small java program to output the current time of day and/or a countdown into two .txt files. This might be stressful on a harddrive, but it works.
 
 ![Alt text](/Clock.png?raw=true "The timer")
 
+## Minimalist Changelog
+The following is a small overview of the implemented features
+
+### Pre 0.1.0
+- Team Score manager implemented
+- Basic keylogger included
+
+### 0.1.0
+- Configuration file for output and keys properly implemented (Thanks Yurippe)
+
+### 0.1.1
+- Countdown / Clock implemented
+
+### 0.1.1b
+- Pause notification included
+
 ## TODO:
-- Add pause .txt that contains text for team A or B or is empty
 - Make the amount of clocks customizable
 - Recreate this software in Python
