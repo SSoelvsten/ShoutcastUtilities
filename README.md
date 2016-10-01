@@ -24,6 +24,8 @@ Link the .txt files outputted into OBS and you're ready to go!
 
 With 0.1.1b this software also includes a pause notification, which automatically includes the teamname and has an optional pause description available. When there's no pause notification, the .txt file is empty to not show the text on the pause screen.
 
+With 0.1.2b this software also includes a BO X output, calculating the current game number based on the sum of the scores and a custom series size.
+
 ## Clock
 A small java program to output the current time of day and/or a countdown into two .txt files. This might be stressful on a harddrive, but it works.
 
@@ -43,6 +45,12 @@ The following is a small overview of the implemented features
 ### 0.1.1b
 - Pause notification included
 
+### 0.1.2b
+- Game number and BO X output added
+- Added default values for missing values in .cfg file
+- Added check for the correct valuetypes in .cfg file
+
 ## TODO:
 - Make the amount of clocks customizable
+- Put everything into one singular window?
 - Recreate this software in Python ( <3 )
