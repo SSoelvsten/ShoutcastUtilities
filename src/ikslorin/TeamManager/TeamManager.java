@@ -13,6 +13,9 @@ import java.awt.event.ActionListener;
  * Creates a window to input and quickly change two teams A and B
  */
 public class TeamManager {
+    //Config
+    private Config conf;
+
     //Teams A and B
     private Team teamA;
     private Team teamB;
@@ -26,12 +29,16 @@ public class TeamManager {
     private JTextField teamTagB;
     private JTextField teamScoreB;
 
+    private JTextField gamesInSeries;
+
     /**
      * Constructs the team objects and the window
      */
     public TeamManager(Team teamA, Team teamB, int teamSize, int scoreSize) {
         this.teamA = teamA;
         this.teamB = teamB;
+
+        this.conf = Config.getInstance();
 
         createWindow(teamSize, scoreSize);
     }
@@ -40,18 +47,33 @@ public class TeamManager {
      * Applies the current text in the fields to the teams
      */
     public void updateTeams(){
+        //Set teamnames
         teamA.setName(teamNameA.getText());
         teamB.setName(teamNameB.getText());
 
         teamA.setTag(teamTagA.getText());
         teamB.setTag(teamTagB.getText());
 
+        //Set team score
         try{
             teamA.setScore(Integer.parseInt(teamScoreA.getText()));
             teamB.setScore(Integer.parseInt(teamScoreB.getText()));
         } catch(NumberFormatException e) {
             teamA.setScore(0);
             teamB.setScore(0);
+        }
+
+        //Update the BO X .txt file
+        int game = teamA.getScore() + teamB.getScore();
+        try{
+            int bo = Integer.parseInt(gamesInSeries.getText());
+            if(bo == 0){
+                TXTManager.writeFullFile(conf.getString("file_game_number"), "Game " + game);
+            } else {
+                TXTManager.writeFullFile(conf.getString("file_game_number"), "Game " + game + " of " + bo);
+            }
+        } catch(NumberFormatException e) {
+            TXTManager.writeFullFile(conf.getString("file_game_number"), "Game " + game);
         }
     }
 
@@ -213,7 +235,15 @@ public class TeamManager {
      * @return A JPanel consisting of 3 buttons
      */
     private JPanel createScoreMetaPanel() {
-        //Add header
+        //Create BO X Field
+        gamesInSeries = new JTextField(3);
+        gamesInSeries.setText("0");
+
+        JPanel topPanel = new JPanel();
+        topPanel.setLayout(new BorderLayout());
+
+        topPanel.add(new JLabel("Games in series: ", SwingConstants.RIGHT), BorderLayout.WEST);
+        topPanel.add(gamesInSeries, BorderLayout.CENTER);
 
         //Create update button
         JButton updateButt = new JButton("Update .txt files");
@@ -248,6 +278,8 @@ public class TeamManager {
         JPanel finalPanel = new JPanel();
         finalPanel.setLayout(new BorderLayout());
 
+        finalPanel.add(topPanel, BorderLayout.NORTH);
+
         finalPanel.add(swapButt, BorderLayout.WEST);
         finalPanel.add(updateButt, BorderLayout.CENTER);
         finalPanel.add(reloadButt, BorderLayout.EAST);
@@ -258,8 +290,6 @@ public class TeamManager {
     }
 
     private JPanel createPausePanel(){
-        Config conf = Config.getInstance();
-
         JTextField reasonField = new JTextField(24);
 
         JButton aButt = new JButton("Pause: Team A");

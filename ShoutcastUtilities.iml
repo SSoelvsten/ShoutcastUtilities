@@ -7,7 +7,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Stream_txt_Manager" level="project" />
-    <orderEntry type="library" name="ShoutcastUtilities" level="project" />
+    <orderEntry type="library" name="jnativehook-2.0.3" level="project" />
   </component>
 </module>
