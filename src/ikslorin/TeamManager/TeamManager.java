@@ -64,7 +64,7 @@ public class TeamManager {
         }
 
         //Update the BO X .txt file
-        int game = teamA.getScore() + teamB.getScore();
+        int game = teamA.getScore() + teamB.getScore() + 1;
         try{
             int bo = Integer.parseInt(gamesInSeries.getText());
             if(bo == 0){
