@@ -57,11 +57,11 @@ public class GlobalShortcuts implements NativeKeyListener {
         decA = conf.getInteger("team_a_decrement_key");
         incB = conf.getInteger("team_b_increment_key");
         decB = conf.getInteger("team_b_decrement_key");
-        swap = conf.getInteger("switch_teams_key");
+        swap = conf.getInteger("swap_teams_key");
     }
 
     /**
-     * For every button you press, it checks if it is one of the hardcoded shortcuts
+     * For every button you press, it checks if it is one of the shortcuts
      * @param e The key pressed, which is handled by the framework
      */
     public void nativeKeyPressed(NativeKeyEvent e){

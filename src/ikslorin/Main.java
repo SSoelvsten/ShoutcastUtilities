@@ -14,7 +14,6 @@ import java.util.logging.Logger;
 
 public class Main {
 
-
     public static void main(String[] args) {
         //Load the Config file
         Config conf = Config.getInstance();

@@ -56,6 +56,9 @@ public final class TXTManager {
         } catch (IOException e) {
             System.err.println("Could not open: " + filename);
             return;
+        } catch (NullPointerException e) {
+            System.err.println("The filename is null");
+            return;
         }
 
         //Write to file
@@ -64,6 +67,9 @@ public final class TXTManager {
             writer.close();
         } catch (IOException e) {
             System.err.println("Could not writeFullFile to: " + filename);
+            return;
+        } catch (NullPointerException e) {
+            System.err.println("The filename is null");
             return;
         }
 
@@ -83,7 +89,10 @@ public final class TXTManager {
             in = new Scanner(new FileReader(filename));
         } catch (FileNotFoundException e) {
             System.err.println("Could not find: " + filename);
-            return "Error!";
+            return "No File Found";
+        } catch (NullPointerException e) {
+            System.err.println("The filename is null");
+            return "Null Pointer";
         }
 
         String res = "";
@@ -111,6 +120,9 @@ public final class TXTManager {
         } catch (FileNotFoundException e) {
             System.err.println("Could not find: " + filename);
             return "Error!";
+        } catch (NullPointerException e) {
+            System.err.println("The filename is null");
+            return "Null Pointer";
         }
 
         //Read the whole file

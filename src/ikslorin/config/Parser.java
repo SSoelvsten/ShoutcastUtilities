@@ -8,13 +8,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by Yurippe on 6/18/2016.
+ * Created by Yurippe.
+ * Based on regular expression finds all the settings in config.cfg
  */
 public class Parser {
 
     private String configfilepath;
     private static final Pattern SETTING_PATTERN = Pattern.compile("^[ |\\t]*(\\w+)[ |\\t]*:[ |\\t]*([\\S][^\\n]*[\\S])[ |\\t]*$",Pattern.MULTILINE);
     private static final Pattern SETTING_VAL_LENGTH_1 = Pattern.compile("^[ |\\t]*(\\w+)[ |\\t]*:[ |\\t]*([\\S])[ |\\t]*$",Pattern.MULTILINE);
+
     public Parser(String configfile){
         configfilepath = configfile;
     }
