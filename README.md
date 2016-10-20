@@ -50,6 +50,9 @@ The following is a small overview of the implemented features
 - Added default values for missing values in .cfg file
 - Added check for the correct valuetypes in .cfg file
 
+### 0.1.3a
+- Victor or draw output into victor.txt
+
 ## TODO:
 - victory.txt outputting the winning team based on score
 - Make the amount of clocks customizable

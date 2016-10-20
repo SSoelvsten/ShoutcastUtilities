@@ -41,6 +41,7 @@ public class Config {
         settings.putIfAbsent("file_B_score", "txt/B_score.txt");
 
         settings.putIfAbsent("file_game_number", "txt/game_number.txt");
+        settings.putIfAbsent("file_victor", "txt/victor.txt");
 
         settings.putIfAbsent("file_pause", "txt/pause.txt");
 

@@ -75,6 +75,15 @@ public class TeamManager {
         } catch(NumberFormatException e) {
             TXTManager.writeFullFile(conf.getString("file_game_number"), "Game " + game);
         }
+
+        //Update the victor .txt file
+        if(teamA.getScore() < teamB.getScore()){
+            TXTManager.writeFullFile(conf.getString("file_victor"), teamB.getName());
+        } else if(teamA.getScore() == teamB.getScore()){
+            TXTManager.writeFullFile(conf.getString("file_victor"), "draw");
+        } else {
+            TXTManager.writeFullFile(conf.getString("file_victor"), teamA.getName());
+        }
     }
 
     /**
