@@ -54,7 +54,6 @@ The following is a small overview of the implemented features
 - Victor or draw output into victor.txt
 
 ## TODO:
-- victory.txt outputting the winning team based on score
 - Make the amount of clocks customizable
 - Put everything into one singular window?
 - Recreate this software in Python ( <3 )
