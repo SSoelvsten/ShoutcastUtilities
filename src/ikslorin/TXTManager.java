@@ -63,7 +63,7 @@ public final class TXTManager {
 
         //Write to file
         try {
-            writer.write(content);
+            writer.write(" " + content);
             writer.close();
         } catch (IOException e) {
             System.err.println("Could not writeFullFile to: " + filename);
