@@ -15,7 +15,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class TestCFGConfig {
 
-    private StandardConfig sc;
+    private StandardConfig sc = new StandardConfig();
     private Config config;
 
     @Before
@@ -25,6 +25,8 @@ public class TestCFGConfig {
 
     @Test
     public void ShouldHaveTeamAFiles(){
-        assertThat(config.getString(sc.file_A_name), is(sc.getString(sc.file_A_name)));
+        assertThat(
+                config.getString(sc.file_A_name),
+                is(sc.getString(sc.file_A_name)));
     }
 }

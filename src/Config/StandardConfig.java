@@ -2,7 +2,6 @@ package Config;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 
 /**
@@ -51,12 +50,12 @@ public class StandardConfig implements Config {
     }
 
     public static final String file_A_name = "file_A_name";
-    public static final String file_A_tag = "file_A_name";
-    public static final String file_A_score = "file_A_name";
+    public static final String file_A_tag = "file_A_tag";
+    public static final String file_A_score = "file_A_score";
 
     public static final String file_B_name = "file_B_name";
-    public static final String file_B_tag = "file_B_name";
-    public static final String file_B_score = "file_B_name";
+    public static final String file_B_tag = "file_B_tag";
+    public static final String file_B_score = "file_B_score";
 
     public static final String file_game_number = "file_game_number";
     public static final String file_victor = "file_victor";
