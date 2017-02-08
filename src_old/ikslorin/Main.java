@@ -1,10 +1,10 @@
 package ikslorin;
 
 import ikslorin.Clock.ClockManager;
-import ikslorin.GlobalShortcuts.GlobalShortcuts;
+import GlobalShortcuts.GlobalShortcuts;
 import ikslorin.TeamManager.TeamManager;
 import ikslorin.TeamManager.Team;
-import ikslorin.Config.Config;
+import Config.Config;
 
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 public class Main {
 
     public static void main(String[] args) {
-        //Load the Config file
+        //Load the CFGConfig file
         Config conf = Config.getInstance();
 
         //Create the two teams to manage

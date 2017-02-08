@@ -1,6 +1,6 @@
 package Config;
 
-import ikslorin.TXTManager;
+import ReadWrite.ReadWriteStrategy;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,36 +8,35 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by Yurippe.
- * Based on regular expression finds all the settings in config.cfg
+ * Created by Kristian 'Yurippe' Gausel. Modified for compositional
+ * design by Steffan 'Ikslorin' Sølvsten.
+ * Based on regular expression finds all the settings in config.cfg,
+ * and then contains the global settings as found in config.cfg.
  */
-public class Parser {
 
-    private String configfilepath;
+public class CFGConfig implements Config {
+
+    private Map<String,String> settings = new HashMap<>();
+    private String configfile = "config.cfg";
+
     private static final Pattern SETTING_PATTERN = Pattern.compile("^[ |\\t]*(\\w+)[ |\\t]*:[ |\\t]*([\\S][^\\n]*[\\S])[ |\\t]*$",Pattern.MULTILINE);
     private static final Pattern SETTING_VAL_LENGTH_1 = Pattern.compile("^[ |\\t]*(\\w+)[ |\\t]*:[ |\\t]*([\\S])[ |\\t]*$",Pattern.MULTILINE);
 
-    public Parser(String configfile){
-        configfilepath = configfile;
-    }
+    public CFGConfig(ReadWriteStrategy rws) {
+        String content = stripComments(rws.read(configfile));
 
-    public Map<String, String> parse(){
-        String content = stripComments(TXTManager.readFullFile(configfilepath));
-        Map<String, String> outp = new HashMap<>();
-
+        //Regular Expression magic... Ask Yurippe for more
         Matcher m = SETTING_PATTERN.matcher(content);
         while(m.find()){
-            //System.out.println("\"" + m.group(1) + "\" \"" + m.group(2) + "\"");
-            outp.put(m.group(1), m.group(2));
+            settings.put(m.group(1), m.group(2));
         }
 
         m = SETTING_VAL_LENGTH_1.matcher(content);
         while(m.find()){
-            //System.out.println("\"" + m.group(1) + "\" \"" + m.group(2) + "\"");
-            outp.put(m.group(1), m.group(2));
+            settings.put(m.group(1), m.group(2));
         }
-        return outp;
     }
+
     /**
      * Creates a string, that is without any comments. Here it goes through all lines,
      * and stops appending the text when reaching a # until again hitting the next line.
@@ -81,4 +80,28 @@ public class Parser {
         return sb.toString();
     }
 
+    @Override
+    public int getInteger(String key){
+        return Integer.parseInt(settings.get(key));
+    }
+
+    @Override
+    public boolean getBoolean(String key){
+        return settings.get(key).equalsIgnoreCase("true");
+    }
+
+    @Override
+    public String getString(String key){
+        return settings.get(key);
+    }
+
+    @Override
+    public void put(String key, String value) {
+        settings.put(key, value);
+    }
+
+    @Override
+    public void putIfAbsent(String key, String value) {
+        settings.putIfAbsent(key, value);
+    }
 }

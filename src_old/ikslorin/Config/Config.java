@@ -1,4 +1,4 @@
-package ikslorin.Config;
+package Config;
 
 import java.util.Map;
 

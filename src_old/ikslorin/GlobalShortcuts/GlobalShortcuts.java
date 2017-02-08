@@ -1,7 +1,7 @@
-package ikslorin.GlobalShortcuts;
+package GlobalShortcuts;
 
 import ikslorin.TeamManager.TeamManager;
-import ikslorin.Config.Config;
+import Config.Config;
 
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
@@ -65,7 +65,7 @@ public class GlobalShortcuts implements NativeKeyListener {
      * @param e The key pressed, which is handled by the framework
      */
     public void nativeKeyPressed(NativeKeyEvent e){
-        //Listen for all the keys we use and set flags
+        //Listen for all the keys we use and put flags
         if (modifier1 == e.getKeyCode()) { modifier1B = true; }
         if (modifier2 == e.getKeyCode()) { modifier2B = true; }
 

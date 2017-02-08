@@ -1,7 +1,7 @@
 package ikslorin.Clock;
 
 import ikslorin.TXTManager;
-import ikslorin.Config.Config;
+import Config.Config;
 
 import javax.swing.*;
 import java.awt.*;

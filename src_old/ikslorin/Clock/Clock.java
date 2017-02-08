@@ -11,7 +11,7 @@ public class Clock {
     //Field for current time
     Date date;
 
-    //Fields set for the countdown
+    //Fields put for the countdown
     private int hours;
     private int minutes;
     private int seconds;

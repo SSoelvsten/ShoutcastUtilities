@@ -1,6 +1,6 @@
 package ikslorin.TeamManager;
 
-import ikslorin.Config.Config;
+import Config.Config;
 import ikslorin.TXTManager;
 
 import javax.swing.*;
@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
  * Creates a window to input and quickly change two teams A and B
  */
 public class TeamManager {
-    //Config
+    //CFGConfig
     private Config conf;
 
     //Teams A and B
