@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 
 public class CFGConfig implements Config {
 
-    private Map<String,String> settings = new HashMap<>();
+    private Map<String,String> settings = new HashMap<String,String>();
     private String configfile = "config.cfg";
 
     private static final Pattern SETTING_PATTERN = Pattern.compile("^[ |\\t]*(\\w+)[ |\\t]*:[ |\\t]*([\\S][^\\n]*[\\S])[ |\\t]*$",Pattern.MULTILINE);
@@ -40,8 +40,8 @@ public class CFGConfig implements Config {
     /**
      * Creates a string, that is without any comments. Here it goes through all lines,
      * and stops appending the text when reaching a # until again hitting the next line.
-     * @param input
-     * @return
+     * @param input A piece of text
+     * @return The input without any comments (starting with #)
      */
     private static String stripComments(String input){
         char[] inp = input.toCharArray();
