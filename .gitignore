@@ -1,12 +1,37 @@
-# Windows image file caches
-Thumbs.db
-ehthumbs.db
+# =========================
+# Files
+# =========================
+config.cfg
 
+# =========================
+# Folders
+# =========================
+txt/
+out/
+.idea/
+*.iml
+
+# =========================
+# Ant
+# =========================
+TEST-RESULT/
+
+# ==================================================
+# Operating System Files
+# ==================================================
+
+# =========================
+# Windows
+# =========================
 # Folder config file
 Desktop.ini
 
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
 
 # Windows Installer files
 *.cab
@@ -18,9 +43,6 @@ $RECYCLE.BIN/
 *.lnk
 
 # =========================
-# Operating System Files
-# =========================
-
 # OSX
 # =========================
 
@@ -45,9 +67,3 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
-
-config.cfg
-txt/
-out/
-.idea/
-*.iml
