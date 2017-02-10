@@ -13,7 +13,7 @@ public class TestPreSpaceDecorator {
 
     @Before
     public void setup(){
-        this.testSpy = new ReadWriteStrategySpy();
+        this.testSpy = new ReadWriteStrategySpy1();
         this.uut = new PreSpaceReadWriteStrategyDecorator(testSpy);
     }
 

@@ -1,9 +1,6 @@
 package Format;
 
-import Config.ConfigStub;
-import Config.StandardConfig;
-import Config.StandardValidator;
-import Config.Validator;
+import Config.*;
 import GameState.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -96,7 +93,7 @@ public class TestStandardGameStateFormatting {
 
     @Test
     public void prefixCanBeChangedThroughTheConfig(){
-        config.put(StandardConfig.string_pre_game_number, "Tomato");
+        config.put(ConfigKeys.string_pre_game_number, "Tomato");
 
         setGameScore(1,1);
         gameState.setSeriesLength(0);

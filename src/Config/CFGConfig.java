@@ -2,6 +2,7 @@ package Config;
 
 import ReadWrite.ReadWriteStrategy;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -93,6 +94,11 @@ public class CFGConfig implements Config {
     @Override
     public String getString(String key){
         return settings.get(key);
+    }
+
+    @Override
+    public Collection<String> getKeys() {
+        return settings.keySet();
     }
 
     @Override

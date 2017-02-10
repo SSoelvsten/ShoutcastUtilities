@@ -40,7 +40,7 @@ public interface ModifiableGameState extends GameState {
     /**
      * Set the length of the series. 0 means no
      * precondition: length >= 0
-     * @param length 
+     * @param length >= 0
      */
     public void setSeriesLength(int length);
 

@@ -1,8 +1,7 @@
 package Config;
 
-/**
- * Created by Steffan on 08-02-2017.
- */
+import java.util.Collection;
+
 public interface Config {
 
     public int getInteger(String key);
@@ -10,6 +9,8 @@ public interface Config {
     public boolean getBoolean(String key);
 
     public String getString(String key);
+
+    public Collection<String> getKeys();
 
     public void put(String key, String value);
 

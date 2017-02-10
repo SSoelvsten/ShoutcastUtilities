@@ -5,26 +5,31 @@ package Config;
  */
 public class StandardValidator implements Validator {
 
+    private Config toCompare;
+
+    public StandardValidator(Config toCompare){
+        this.toCompare = toCompare;
+    }
+
     @Override
     public void ValidateConfig(Config toValidate){
         //Check that all values of the Standard config are
         //in the given Config. Put in from Standard if absent
-        StandardConfig sc = new StandardConfig();
-        for(String s : sc.getKeys()){
-            toValidate.putIfAbsent(s, sc.getString(s));
+        for(String s : toCompare.getKeys()){
+            toValidate.putIfAbsent(s, toCompare.getString(s));
         }
 
         //Check type of bindings
-        checkBoolean(toValidate, sc.enable_keybindings, sc.getBoolean(sc.enable_keybindings));
-        checkInteger(toValidate, sc.number_modifiers, sc.getInteger(sc.number_modifiers));
-        checkInteger(toValidate, sc.modifier1_key, sc.getInteger(sc.modifier1_key));
-        checkInteger(toValidate, sc.modifier2_key, sc.getInteger(sc.modifier2_key));
-        checkInteger(toValidate, sc.commit_key, sc.getInteger(sc.commit_key));
-        checkInteger(toValidate, sc.team_a_increment_key, sc.getInteger(sc.team_a_increment_key));
-        checkInteger(toValidate, sc.team_a_decrement_key, sc.getInteger(sc.team_b_decrement_key));
-        checkInteger(toValidate, sc.team_b_increment_key, sc.getInteger(sc.team_b_increment_key));
-        checkInteger(toValidate, sc.team_b_decrement_key, sc.getInteger(sc.team_b_decrement_key));
-        checkInteger(toValidate, sc.swap_teams_key, sc.getInteger(sc.swap_teams_key));
+        checkBoolean(toValidate, ConfigKeys.enable_keybindings, toCompare.getBoolean(ConfigKeys.enable_keybindings));
+        checkInteger(toValidate, ConfigKeys.number_modifiers, toCompare.getInteger(ConfigKeys.number_modifiers));
+        checkInteger(toValidate, ConfigKeys.modifier1_key, toCompare.getInteger(ConfigKeys.modifier1_key));
+        checkInteger(toValidate, ConfigKeys.modifier2_key, toCompare.getInteger(ConfigKeys.modifier2_key));
+        checkInteger(toValidate, ConfigKeys.commit_key, toCompare.getInteger(ConfigKeys.commit_key));
+        checkInteger(toValidate, ConfigKeys.team_a_increment_key, toCompare.getInteger(ConfigKeys.team_a_increment_key));
+        checkInteger(toValidate, ConfigKeys.team_a_decrement_key, toCompare.getInteger(ConfigKeys.team_b_decrement_key));
+        checkInteger(toValidate, ConfigKeys.team_b_increment_key, toCompare.getInteger(ConfigKeys.team_b_increment_key));
+        checkInteger(toValidate, ConfigKeys.team_b_decrement_key, toCompare.getInteger(ConfigKeys.team_b_decrement_key));
+        checkInteger(toValidate, ConfigKeys.swap_teams_key, toCompare.getInteger(ConfigKeys.swap_teams_key));
     }
 
     private void checkBoolean(Config config, String key, boolean defBool){
