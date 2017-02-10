@@ -1,7 +1,5 @@
 package GameState;
 
-import Observer.GameStateObserver;
-
 /**
  * A standard implementation of a game state
  */
@@ -10,11 +8,46 @@ public class StandardGameState implements ModifiableGameState {
     private ModifiableTeam teamA = new StandardTeam("Team A", "A", 0);
     private ModifiableTeam teamB = new StandardTeam("Team B", "B", 0);
 
+    private Pause pause;
+
+    private int seriesLength;
+
     @Override
     public void swapTeams() {
-        ModifiableTeam backup = this.teamB;
+        ModifiableTeam temp = this.teamB;
         this.teamB = this.teamA;
-        this.teamA = backup;
+        this.teamA = temp;
+    }
+
+    @Override
+    public Team getWinner() {
+        if(teamA.getPoints() > teamB.getPoints()){
+            return teamA;
+        } else if(teamA.getPoints() < teamB.getPoints()) {
+            return teamB;
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public int getGameNumber() {
+        return teamA.getPoints() + teamB.getPoints() + 1;
+    }
+
+    @Override
+    public void setPauseTeamA(String reason) {
+        this.pause = new StandardPause(teamA, reason);
+    }
+
+    @Override
+    public void setPauseTeamB(String reason) {
+        this.pause = new StandardPause(teamB, reason);
+    }
+
+    @Override
+    public void unpause() {
+        this.pause = null;
     }
 
     @Override
@@ -50,7 +83,22 @@ public class StandardGameState implements ModifiableGameState {
     }
 
     @Override
-    public void subscribe(GameStateObserver o) {
+    public Pause getPause() {
+        return this.pause;
+    }
 
+    @Override
+    public void setSeriesLength(int length) {
+        this.seriesLength = length;
+    }
+
+    @Override
+    public int getSeriesLength() {
+        return this.seriesLength;
+    }
+
+    @Override
+    public void subscribe(GameStateObserver o) {
+        //TODO: Yet no tests to require anything here. Will happen with GUI
     }
 }

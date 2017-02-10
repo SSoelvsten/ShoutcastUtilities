@@ -1,7 +1,7 @@
 package GameState;
 
 /**
- * Objects on which you also can change the current gamestate.
+ * Objects on which you also can change the current game state.
  */
 public interface ModifiableGameState extends GameState {
 
@@ -27,4 +27,25 @@ public interface ModifiableGameState extends GameState {
     public void setTeamAPoints(int points);
 
     public void setTeamBPoints(int points);
+
+    /**
+     * Sets the game to be marked as paused.
+     * @param reason The reason for the pause.
+     *               Can be set to null
+     */
+    public void setPauseTeamA(String reason);
+
+    public void setPauseTeamB(String reason);
+
+    /**
+     * Set the length of the series. 0 means no
+     * precondition: length >= 0
+     * @param length 
+     */
+    public void setSeriesLength(int length);
+
+    /**
+     * Sets the Game State to unpaused
+     */
+    public void unpause();
 }

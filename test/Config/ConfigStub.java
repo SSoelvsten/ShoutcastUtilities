@@ -5,11 +5,11 @@ import junit.framework.TestFailure;
 
 import java.util.HashMap;
 
-public class ConfigValidationSpy implements Config{
+public class ConfigStub implements Config{
 
     private HashMap<String, String> settings;
 
-    public ConfigValidationSpy(){
+    public ConfigStub(){
         settings = new HashMap<>();
         put(StandardConfig.enable_keybindings, "tomato");   //Should NOT stay after verification (not bool)
         put(StandardConfig.file_B_tag, "tomato");           //Should stay after verification

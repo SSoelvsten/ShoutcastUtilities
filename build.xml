@@ -38,7 +38,6 @@
     <property name="jacoco.exec"
               value="${test-output-directory}/jacoco.exec"/>
 
-
     <!-- define the class path -->
     <path id="class-path">
         <pathelement location="${build-directory}"/>
@@ -156,7 +155,7 @@
             <executiondata>
                 <file file="${jacoco.exec}"/>
             </executiondata>
-            <structure name="HotCiv Test">
+            <structure name="ShoutcastUtilities Test">
                 <classfiles>
                     <fileset dir="${build-directory}">
                         <include name="**/*.class"/>

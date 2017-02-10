@@ -29,7 +29,7 @@ public class StandardValidator implements Validator {
 
     private void checkBoolean(Config config, String key, boolean defBool){
         if( !(config.getString(key).equals("true") || config.getString(key).equals("false")) ) {
-            System.err.println("Not bool keybinding: " + key + " was " + config.getString(key) + ", set to: " + defBool);
+            //System.err.println("Not bool keybinding: " + key + " was " + config.getString(key) + ", set to: " + defBool);
             config.put(key, "" + defBool);
         }
     }
@@ -38,7 +38,7 @@ public class StandardValidator implements Validator {
         try{
             Integer.parseInt(config.getString(key));
         } catch(NumberFormatException e){
-            System.err.println("Not int keybinding: " + key + " was " + config.getString(key) + ", set to: " + defInt);
+            //System.err.println("Not int keybinding: " + key + " was " + config.getString(key) + ", set to: " + defInt);
             config.put(key, "" + defInt);
         }
     }

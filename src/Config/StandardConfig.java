@@ -29,6 +29,9 @@ public class StandardConfig implements Config {
         settings.put(file_countdown, "txt/clock_countdown.txt");
         settings.put(file_time, "txt/clock_time.txt");
 
+        //Strings
+        settings.put("string_pre_game_number", "Map");
+
         //Keybindings
         settings.put(enable_keybindings, "true");
 
@@ -64,6 +67,8 @@ public class StandardConfig implements Config {
 
     public static final String file_countdown = "file_countdown";
     public static final String file_time = "file_time";
+
+    public static final String string_pre_game_number = "string_pre_game_number";
 
     public static final String enable_keybindings = "enable_keybindings";
 

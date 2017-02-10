@@ -1,4 +1,4 @@
-package Observer;
+package GameState;
 
 import GameState.GameState;
 

@@ -14,27 +14,27 @@ public class TestStandardValidator {
 
     @Before
     public void setup(){
-        this.spy = new ConfigValidationSpy();
+        this.spy = new ConfigStub();
         this.validator = new StandardValidator();
         validator.ValidateConfig(spy);
     }
 
     @Test
-    public void ShouldAddMissingValues(){
-        //ConfigValidationSpy only got enable_keybindings and file_B_tag set
+    public void shouldAddMissingValues(){
+        //ConfigStub only got enable_keybindings and file_B_tag set
         //So the validator should add all the others, such as file_A_name
         assertThat(spy.getString(StandardConfig.file_A_name), IsNull.notNullValue());
     }
 
     @Test
-    public void ShouldNotChangeTypeCorrectExistingValues(){
-        //ConfigValidationSpy already got file_B_tag set correctly to "tomato"
+    public void shouldNotChangeTypeCorrectExistingValues(){
+        //ConfigStub already got file_B_tag set correctly to "tomato"
         assertThat(spy.getString(StandardConfig.file_B_tag), is("tomato"));
     }
 
     @Test
-    public void ShouldSetTypeIncorrectValueToStandard(){
-        //ConfigValidationSpy already got enable_keybindings set, but incorrectly to "tomato"
+    public void shouldSetTypeIncorrectValueToStandard(){
+        //ConfigStub already got enable_keybindings set, but incorrectly to "tomato"
         assertThat(spy.getBoolean(StandardConfig.enable_keybindings), is(true));
     }
 }
