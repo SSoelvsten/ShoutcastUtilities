@@ -6,11 +6,11 @@ package Config;
 public abstract class ConfigKeys {
 
     public static final String file_A_name = "file_A_name";
-    public static final String file_A_tag = "file_A_tag";
+    public static final String file_A_abbreviation = "file_A_abbreviation";
     public static final String file_A_score = "file_A_score";
 
     public static final String file_B_name = "file_B_name";
-    public static final String file_B_tag = "file_B_tag";
+    public static final String file_B_abbreviation = "file_B_abbreviation";
     public static final String file_B_score = "file_B_score";
 
     public static final String file_game_number = "file_game_number";

@@ -20,12 +20,12 @@ public class Main {
 
         //Create the two teams to manage
         Team tA = new Team(conf.getString("file_A_name"),
-                conf.getString("file_A_tag"),
+                conf.getString("file_A_abbreviation"),
                 conf.getString("file_A_score"),
                 conf.getString("file_pause"));
 
         Team tB = new Team(conf.getString("file_B_name"),
-                conf.getString("file_B_tag"),
+                conf.getString("file_B_abbreviation"),
                 conf.getString("file_B_score"),
                 conf.getString("file_pause"));
 
@@ -60,8 +60,8 @@ public class Main {
         tA.setName(TXTManager.readFirstLine(conf.getString("file_A_name")));
         tB.setName(TXTManager.readFirstLine(conf.getString("file_B_name")));
 
-        tA.setTag(TXTManager.readFirstLine(conf.getString("file_A_tag")));
-        tB.setTag(TXTManager.readFirstLine(conf.getString("file_A_tag")));
+        tA.setTag(TXTManager.readFirstLine(conf.getString("file_A_abbreviation")));
+        tB.setTag(TXTManager.readFirstLine(conf.getString("file_A_abbreviation")));
 
         try{
             tA.setScore(Integer.parseInt(TXTManager.readFirstLine(conf.getString("file_A_score"))));

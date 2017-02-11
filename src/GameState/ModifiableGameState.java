@@ -22,10 +22,16 @@ public interface ModifiableGameState extends GameState {
 
     /**
      * Sets the points for a team to a different value.
+     * @precondition: points >= 0
      * @param points The points to set it to
      */
     public void setTeamAPoints(int points);
 
+    /**
+     * Sets the points for a team to a different value.
+     * @precondition: points >= 0
+     * @param points The points to set it to
+     */
     public void setTeamBPoints(int points);
 
     /**
@@ -35,11 +41,16 @@ public interface ModifiableGameState extends GameState {
      */
     public void setPauseTeamA(String reason);
 
+    /**
+     * Sets the game to be marked as paused.
+     * @param reason The reason for the pause.
+     *               Can be set to null
+     */
     public void setPauseTeamB(String reason);
 
     /**
      * Set the length of the series. 0 means no
-     * precondition: length >= 0
+     * @precondition: length >= 0
      * @param length >= 0
      */
     public void setSeriesLength(int length);

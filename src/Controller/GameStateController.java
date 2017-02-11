@@ -2,6 +2,11 @@ package Controller;
 
 import GameState.GameState;
 
+/**
+ * Takes care of orchestrating the filewriting
+ * together with being a facade to the GameState
+ * modification.
+ */
 public interface GameStateController {
 
     /**
@@ -23,6 +28,9 @@ public interface GameStateController {
 
     public void incrementTeamBScore();
     public void decrementTeamBScore();
+
+    //Series Length
+    public void setSeriesLength(int length);
 
     //Pausing
     public void pauseTeamA(String reason);

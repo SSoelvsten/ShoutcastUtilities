@@ -1,8 +1,6 @@
 package Config;
 
 
-import junit.framework.TestFailure;
-
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -13,7 +11,7 @@ public class ConfigStub implements Config{
     public ConfigStub(){
         settings = new HashMap<>();
         put(ConfigKeys.enable_keybindings, "tomato");   //Should NOT stay after verification (not bool)
-        put(ConfigKeys.file_B_tag, "tomato");           //Should stay after verification
+        put(ConfigKeys.file_B_abbreviation, "tomato");           //Should stay after verification
     }
 
     @Override

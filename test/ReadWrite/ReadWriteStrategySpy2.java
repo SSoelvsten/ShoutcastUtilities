@@ -4,11 +4,7 @@ import java.util.HashMap;
 
 public class ReadWriteStrategySpy2 implements ReadWriteStrategy {
 
-    private HashMap<String, String> written;
-
-    public String getOutputForFile(String file){
-        return written.get(file);
-    }
+    private HashMap<String, String> written = new HashMap<>();
 
     @Override
     public void write(String filename, String content) {

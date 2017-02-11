@@ -28,7 +28,7 @@ public class GameStateControllerFactoryStub implements GameStateControllerFactor
 
     @Override
     public ModifiableGameState getGameState() {
-        return this.gameState;
+        return gameState;
     }
 
     public void setValidatedConfig(Config config){
@@ -46,7 +46,7 @@ public class GameStateControllerFactoryStub implements GameStateControllerFactor
 
     @Override
     public ReadWriteStrategy getReadWriteStrategy() {
-        return this.readWriteStrategy;
+        return readWriteStrategy;
     }
 
     public void setGameStateFormattingStrategy(GameStateFormattingStrategy gameStateFormattingStrategy){
@@ -55,6 +55,6 @@ public class GameStateControllerFactoryStub implements GameStateControllerFactor
 
     @Override
     public GameStateFormattingStrategy getFormattingStrategy() {
-        return null;
+        return gameStateFormattingStrategy;
     }
 }

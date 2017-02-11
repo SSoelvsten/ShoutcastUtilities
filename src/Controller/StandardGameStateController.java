@@ -3,7 +3,7 @@ package Controller;
 import AbstractFactory.GameStateControllerFactory;
 import Format.GameStateFormattingStrategy;
 import GameState.*;
-import Config.Config;
+import Config.*;
 import ReadWrite.ReadWriteStrategy;
 
 public class StandardGameStateController implements GameStateController {
@@ -22,7 +22,29 @@ public class StandardGameStateController implements GameStateController {
 
     @Override
     public void printFiles() {
-        //TODO: For later
+        //Team A
+        readWriteStrategy.write(config.getString(ConfigKeys.file_A_name),
+                formattingStrategy.teamAName(gameState));
+        readWriteStrategy.write(config.getString(ConfigKeys.file_A_abbreviation),
+                formattingStrategy.teamAAbbreviation(gameState));
+        readWriteStrategy.write(config.getString(ConfigKeys.file_A_score),
+                formattingStrategy.teamAScore(gameState));
+
+        //Team B
+        readWriteStrategy.write(config.getString(ConfigKeys.file_B_name),
+                formattingStrategy.teamBName(gameState));
+        readWriteStrategy.write(config.getString(ConfigKeys.file_B_abbreviation),
+                formattingStrategy.teamBAbbreviation(gameState));
+        readWriteStrategy.write(config.getString(ConfigKeys.file_B_score),
+                formattingStrategy.teamBScore(gameState));
+
+        //Pause
+        readWriteStrategy.write(config.getString(ConfigKeys.file_pause),
+                formattingStrategy.pause(gameState));
+
+        //Game number
+        readWriteStrategy.write(config.getString(ConfigKeys.file_game_number),
+                formattingStrategy.gameNumber(gameState));
     }
 
     @Override
@@ -56,6 +78,12 @@ public class StandardGameStateController implements GameStateController {
     public void decrementTeamBScore() {
         if(gameState.getTeamB().getPoints() != 0)
             gameState.setTeamBPoints(gameState.getTeamB().getPoints() - 1);
+    }
+
+    @Override
+    public void setSeriesLength(int length) {
+        if(length >= 0)
+            gameState.setSeriesLength(length);
     }
 
     @Override

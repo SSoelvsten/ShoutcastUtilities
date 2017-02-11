@@ -14,11 +14,11 @@ public class StandardConfig implements Config {
     public StandardConfig(){
         //Files
         settings.put(ConfigKeys.file_A_name, "txt/A_name.txt");
-        settings.put(ConfigKeys.file_A_tag, "txt/A_tag.txt");
+        settings.put(ConfigKeys.file_A_abbreviation, "txt/A_abbreviation.txt");
         settings.put(ConfigKeys.file_A_score, "txt/A_score.txt");
 
         settings.put(ConfigKeys.file_B_name, "txt/B_name.txt");
-        settings.put(ConfigKeys.file_B_tag, "txt/B_tag.txt");
+        settings.put(ConfigKeys.file_B_abbreviation, "txt/B_abbreviation.txt");
         settings.put(ConfigKeys.file_B_score, "txt/B_score.txt");
 
         settings.put(ConfigKeys.file_game_number, "txt/game_number.txt");

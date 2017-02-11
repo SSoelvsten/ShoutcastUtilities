@@ -33,11 +33,11 @@ public class Config {
     private void validate(){
         //Set absent settings to default
         settings.putIfAbsent("file_A_name", "txt/A_name.txt");
-        settings.putIfAbsent("file_A_tag", "txt/A_tag.txt");
+        settings.putIfAbsent("file_A_abbreviation", "txt/A_tag.txt");
         settings.putIfAbsent("file_A_score", "txt/A_score.txt");
 
         settings.putIfAbsent("file_B_name", "txt/B_name.txt");
-        settings.putIfAbsent("file_B_tag", "txt/B_tag.txt");
+        settings.putIfAbsent("file_B_abbreviation", "txt/B_tag.txt");
         settings.putIfAbsent("file_B_score", "txt/B_score.txt");
 
         settings.putIfAbsent("file_game_number", "txt/game_number.txt");

@@ -23,10 +23,10 @@ public class OBSStudioGameStateControllerFactory implements GameStateControllerF
         ModifiableGameState gs = new StandardGameState();
 
         ReadWriteStrategy rws = getReadWriteStrategy();
-        gs.setTeamAIdentity(rws.read(ConfigKeys.file_A_name), rws.read(ConfigKeys.file_A_tag));
+        gs.setTeamAIdentity(rws.read(ConfigKeys.file_A_name), rws.read(ConfigKeys.file_A_abbreviation));
         gs.setTeamAPoints(Integer.parseInt(rws.read(ConfigKeys.file_A_score)));
 
-        gs.setTeamBIdentity(rws.read(ConfigKeys.file_B_name), rws.read(ConfigKeys.file_B_tag));
+        gs.setTeamBIdentity(rws.read(ConfigKeys.file_B_name), rws.read(ConfigKeys.file_B_abbreviation));
         gs.setTeamBPoints(Integer.parseInt(rws.read(ConfigKeys.file_B_score)));
 
         return gs;

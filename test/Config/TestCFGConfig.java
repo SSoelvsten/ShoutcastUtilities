@@ -32,7 +32,7 @@ public class TestCFGConfig {
     //If it already got the third team specific file, then it probably also got the others
     @Test
     public void shouldHaveTeamBFiles(){
-        assertThat(config.getString(ConfigKeys.file_B_tag), is(sc.getString(ConfigKeys.file_B_tag)));
+        assertThat(config.getString(ConfigKeys.file_B_abbreviation), is(sc.getString(ConfigKeys.file_B_abbreviation)));
     }
 
     @Test

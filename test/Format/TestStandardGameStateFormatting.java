@@ -11,9 +11,9 @@ import static org.hamcrest.core.Is.is;
 public class TestStandardGameStateFormatting {
 
     private ConfigStub config;
-    StandardGameStateFormattingStrategy format;
+    private StandardGameStateFormattingStrategy format;
 
-    ModifiableGameState gameState;
+    private ModifiableGameState gameState;
     private Team teamA;
     private Team teamB;
 
@@ -103,7 +103,7 @@ public class TestStandardGameStateFormatting {
     }
 
     @Test
-    public void SeriesLengthOf3ShouldResultInOf3Suffix(){
+    public void seriesLengthOf3ShouldResultInOf3Suffix(){
         setGameScore(1,0);
         gameState.setSeriesLength(3);
 
@@ -112,11 +112,20 @@ public class TestStandardGameStateFormatting {
     }
 
     @Test
-    public void SeriesLengthOf5ShouldResultInOf5Suffix(){
+    public void seriesLengthOf5ShouldResultInOf5Suffix(){
         setGameScore(2,1);
         gameState.setSeriesLength(5);
 
         assertThat(format.gameNumber(gameState),
                 is("Map 4 of 5"));
+    }
+
+    @Test
+    public void prefixChangedInConfigApplies(){
+        config.put(ConfigKeys.string_pre_game_number, "Game");
+        setGameScore(1,0);
+
+        assertThat(format.gameNumber(gameState),
+                is("Game 2"));
     }
 }
