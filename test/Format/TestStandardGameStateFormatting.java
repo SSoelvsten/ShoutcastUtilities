@@ -21,7 +21,7 @@ public class TestStandardGameStateFormatting {
     public void setup(){
         //Set up the validated StubConfig
         this.config = new ConfigStub();
-        Validator validator = new StandardValidator();
+        Validator validator = new StandardValidator(new StandardConfig());
         validator.ValidateConfig(config);
 
         //Set up the format

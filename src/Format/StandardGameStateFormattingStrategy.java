@@ -40,7 +40,7 @@ public class StandardGameStateFormattingStrategy implements GameStateFormattingS
 
     @Override
     public String gameNumber(GameState gs) {
-        String res = config.getString(StandardConfig.string_pre_game_number);
+        String res = config.getString(ConfigKeys.string_pre_game_number);
         res += " " + gs.getGameNumber();
 
         if(gs.getSeriesLength() != 0){

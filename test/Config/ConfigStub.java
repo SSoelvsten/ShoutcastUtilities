@@ -3,6 +3,7 @@ package Config;
 
 import junit.framework.TestFailure;
 
+import java.util.Collection;
 import java.util.HashMap;
 
 public class ConfigStub implements Config{
@@ -11,8 +12,8 @@ public class ConfigStub implements Config{
 
     public ConfigStub(){
         settings = new HashMap<>();
-        put(StandardConfig.enable_keybindings, "tomato");   //Should NOT stay after verification (not bool)
-        put(StandardConfig.file_B_tag, "tomato");           //Should stay after verification
+        put(ConfigKeys.enable_keybindings, "tomato");   //Should NOT stay after verification (not bool)
+        put(ConfigKeys.file_B_tag, "tomato");           //Should stay after verification
     }
 
     @Override
@@ -28,6 +29,11 @@ public class ConfigStub implements Config{
     @Override
     public String getString(String key) {
         return settings.get(key);
+    }
+
+    @Override
+    public Collection<String> getKeys() {
+        return settings.keySet();
     }
 
     @Override

@@ -32,27 +32,30 @@ public class StandardGameStateController implements GameStateController {
 
     @Override
     public void resetScore() {
-        //TODO: For later
+        gameState.setTeamAPoints(0);
+        gameState.setTeamBPoints(0);
     }
 
     @Override
     public void incrementTeamAScore() {
-        //TODO: For later
+        gameState.setTeamAPoints(gameState.getTeamA().getPoints() + 1);
     }
 
     @Override
     public void decrementTeamAScore() {
-        //TODO: For later
+        if(gameState.getTeamA().getPoints() != 0)
+            gameState.setTeamAPoints(gameState.getTeamA().getPoints() - 1);
     }
 
     @Override
     public void incrementTeamBScore() {
-        //TODO: For later
+        gameState.setTeamBPoints(gameState.getTeamB().getPoints() + 1);
     }
 
     @Override
     public void decrementTeamBScore() {
-        //TODO: For later
+        if(gameState.getTeamB().getPoints() != 0)
+            gameState.setTeamBPoints(gameState.getTeamB().getPoints() - 1);
     }
 
     @Override
