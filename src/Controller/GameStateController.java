@@ -10,11 +10,6 @@ import GameState.GameState;
 public interface GameStateController {
 
     /**
-     * Print out the Game State to the files
-     */
-    public void printFiles();
-
-    /**
      * Get the 'state of the game'
      * @return The GameState for this controller
      */

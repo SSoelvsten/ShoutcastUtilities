@@ -21,33 +21,6 @@ public class StandardGameStateController implements GameStateController {
     }
 
     @Override
-    public void printFiles() {
-        //Team A
-        readWriteStrategy.write(config.getString(ConfigKeys.file_A_name),
-                formattingStrategy.teamAName(gameState));
-        readWriteStrategy.write(config.getString(ConfigKeys.file_A_abbreviation),
-                formattingStrategy.teamAAbbreviation(gameState));
-        readWriteStrategy.write(config.getString(ConfigKeys.file_A_score),
-                formattingStrategy.teamAScore(gameState));
-
-        //Team B
-        readWriteStrategy.write(config.getString(ConfigKeys.file_B_name),
-                formattingStrategy.teamBName(gameState));
-        readWriteStrategy.write(config.getString(ConfigKeys.file_B_abbreviation),
-                formattingStrategy.teamBAbbreviation(gameState));
-        readWriteStrategy.write(config.getString(ConfigKeys.file_B_score),
-                formattingStrategy.teamBScore(gameState));
-
-        //Pause
-        readWriteStrategy.write(config.getString(ConfigKeys.file_pause),
-                formattingStrategy.pause(gameState));
-
-        //Game number
-        readWriteStrategy.write(config.getString(ConfigKeys.file_game_number),
-                formattingStrategy.gameNumber(gameState));
-    }
-
-    @Override
     public GameState getGameState() {
         return this.gameState;
     }

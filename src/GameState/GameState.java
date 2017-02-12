@@ -1,5 +1,7 @@
 package GameState;
 
+import GameStateObserver.GameStateObserver;
+
 /**
  * Objects from which to read the state of the current game
  */
