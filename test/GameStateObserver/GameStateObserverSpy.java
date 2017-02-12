@@ -2,7 +2,7 @@ package GameStateObserver;
 
 import GameState.GameState;
 
-public class ObserverSpy implements GameStateObserver {
+public class GameStateObserverSpy implements GameStateObserver {
 
     public int onUpdateCalls = 0;
     public int onPauseUpdateCalls = 0;

@@ -10,11 +10,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class TestStandardGameToObserverInteraction {
 
     ModifiableGameState gameState;
-    ObserverSpy observer;
+    GameStateObserverSpy observer;
 
     @Before
     public void setup(){
-        observer = new ObserverSpy();
+        observer = new GameStateObserverSpy();
 
         gameState = new StandardGameState();
         gameState.subscribe(observer);

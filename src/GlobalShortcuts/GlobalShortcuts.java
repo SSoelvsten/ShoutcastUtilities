@@ -2,7 +2,7 @@ package GlobalShortcuts;
 
 import Config.*;
 
-import Controller.GameStateController;
+import GameState.ModifiableGameState;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
 
@@ -15,7 +15,7 @@ import org.jnativehook.keyboard.NativeKeyListener;
 public class GlobalShortcuts implements NativeKeyListener {
 
     //The managers to send the shortcuts to.
-    private GameStateController controller;
+    private ModifiableGameState gameState;
 
     //Flags for keys
     private int numberOfModifiers;
@@ -36,13 +36,13 @@ public class GlobalShortcuts implements NativeKeyListener {
     /**
      * Constructor setting up connections to the objects to control with the power of shortcuts
      * @param config Config to read shortcuts from
-     * @param controller The GameStateController to send the information to.
+     * @param gameState The GameState to modify.
      */
-    public GlobalShortcuts(Config config, GameStateController controller){
+    public GlobalShortcuts(Config config, ModifiableGameState gameState){
         super();
 
         //Connect to the managers
-        this.controller = controller;
+        this.gameState = gameState;
 
         numberOfModifiers = config.getInteger(ConfigKeys.number_modifiers);
 
@@ -78,23 +78,26 @@ public class GlobalShortcuts implements NativeKeyListener {
     }
 
     /**
-     *
-     * @param keycode
+     * Check if the key pressed corresponds to an action
+     * @precondition: Enough modifier keys are pressed
+     * @param keycode The key pressed, which is handled by the framework
      */
     private void executeShortcut(int keycode){
         if (incA == keycode) {
-            controller.incrementTeamAScore();
+            gameState.setTeamAPoints(gameState.getTeamA().getPoints() + 1);
         } else if (decA == keycode) {
-            controller.decrementTeamAScore();
+            if(gameState.getTeamA().getPoints() > 0)
+                gameState.setTeamAPoints(gameState.getTeamA().getPoints() - 1);
         } else if (incB == keycode) {
-            controller.incrementTeamAScore();
+            gameState.setTeamBPoints(gameState.getTeamB().getPoints() + 1);
         } else if (decB == keycode) {
-            controller.decrementTeamBScore();
+            if(gameState.getTeamB().getPoints() > 0)
+                gameState.setTeamBPoints(gameState.getTeamB().getPoints() - 1);
         } else if (swap == keycode) {
-            controller.swapTeams();
-        } else if (update == keycode) {
-            //controller.printFiles();
-        }
+            gameState.swapTeams();
+        } /*else if (update == keycode) {
+            //Committing is now not a thing anymore
+        }*/
     }
 
     /**
