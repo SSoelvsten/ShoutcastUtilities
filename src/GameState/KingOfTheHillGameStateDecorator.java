@@ -1,5 +1,7 @@
 package GameState;
 
+import GameStateObserver.GameStateObserver;
+
 /**
  * A king of the hill decorator, meaning that on the challenger
  * (Team B) gaining a point, the challenger is set to be the

@@ -93,7 +93,7 @@ public class GlobalShortcuts implements NativeKeyListener {
         } else if (swap == keycode) {
             controller.swapTeams();
         } else if (update == keycode) {
-            controller.printFiles();
+            //controller.printFiles();
         }
     }
 
