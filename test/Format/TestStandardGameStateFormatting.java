@@ -132,4 +132,16 @@ public class TestStandardGameStateFormatting {
         assertThat(format.gameNumber(gameState),
                 is("Game 2"));
     }
+
+    @Test
+    public void mapWithoutTypeShouldBeNameAlone(){
+        gameState.setMap(0, new StandardMap("MapName", null));
+        assertThat(format.map(0, gameState), is("MapName"));
+    }
+
+    @Test
+    public void mapWithTypeShouldBePutInParantheses(){
+        gameState.setMap(0, new StandardMap("MapName", "Type"));
+        assertThat(format.map(0, gameState), is("MapName (Type)"));
+    }
 }

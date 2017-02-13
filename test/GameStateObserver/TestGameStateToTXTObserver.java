@@ -5,9 +5,9 @@ import Format.*;
 import GameState.ModifiableGameState;
 
 import GameState.StandardGameState;
+import GameState.StandardMap;
 import GameState.StandardTeam;
-import ReadWrite.ReadWriteStrategy;
-import ReadWrite.ReadWriteStrategySpy2;
+import InputOutput.ReadWriteStrategySpy2;
 import org.hamcrest.core.IsNull;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +19,7 @@ public class TestGameStateToTXTObserver {
 
     private Config config;
     private GameStateFormattingStrategy formattingStrategy;
-    private ReadWriteStrategy readWriteSpy;
+    private ReadWriteStrategySpy2 readWriteSpy;
     private GameStateObserver observer;
     private ModifiableGameState gameState;
     private int teamAIndex;
@@ -34,6 +34,7 @@ public class TestGameStateToTXTObserver {
         this.config = new StandardConfig();
         this.formattingStrategy = new StandardGameStateFormattingStrategy(config);
         this.readWriteSpy = new ReadWriteStrategySpy2();
+
         this.observer = new GameStateToTXTObserver(config, formattingStrategy, readWriteSpy, teamAIndex, teamBIndex);
     }
 
@@ -115,6 +116,19 @@ public class TestGameStateToTXTObserver {
                 IsNull.notNullValue());
         assertThat(readWriteSpy.read(config.getString(ConfigKeys.file_pause)),
                 is(formattingStrategy.pause(gameState)));
+    }
+
+    @Test
+    public void ShouldPrint1MapFileFor1MapInGameState(){
+        gameState.setMap(0, new StandardMap("FirstMap", "CTF"));
+        observer.onMapUpdate(gameState);
+
+        //With only one map, it should be written to map1.txt
+        String filename = config.getString(ConfigKeys.folder_map_dst) + "map1.txt";
+        assertThat(readWriteSpy.read(filename),
+                IsNull.notNullValue());
+        assertThat(readWriteSpy.read(filename),
+                is(formattingStrategy.map(0, gameState)));
     }
 
     @Test

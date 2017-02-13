@@ -2,7 +2,7 @@ package GameState;
 
 import GameStateObserver.GameStateObserver;
 
-import java.util.Iterator;
+import java.util.List;
 
 /**
  * A king of the hill decorator, meaning that on the challenger
@@ -25,6 +25,11 @@ public class KingOfTheHillGameStateDecorator implements ModifiableGameState {
     }
 
     @Override
+    public int getTeamsAmount() {
+        return gameState.getTeamsAmount();
+    }
+
+    @Override
     public int addTeam(ModifiableTeam team) {
         return gameState.addTeam(team);
     }
@@ -35,8 +40,8 @@ public class KingOfTheHillGameStateDecorator implements ModifiableGameState {
     }
 
     @Override
-    public Iterator<Team> getTeamsIterator() {
-        return null;
+    public List<Team> getTeamsList() {
+        return gameState.getTeamsList();
     }
 
     /**
@@ -61,7 +66,14 @@ public class KingOfTheHillGameStateDecorator implements ModifiableGameState {
 
     @Override
     public void shiftTeams() {
-        gameState.shiftTeams(); //This does mess up the kingIndex!
+        gameState.shiftTeams();
+
+        //Need to change the kingIndex accordingly
+        if(kingIndex == 0){
+            kingIndex = getTeamsAmount() - 1;
+        } else {
+            kingIndex--;
+        }
     }
 
     @Override
@@ -90,8 +102,8 @@ public class KingOfTheHillGameStateDecorator implements ModifiableGameState {
     }
 
     @Override
-    public Iterator<Map> getMapsIterator() {
-        return gameState.getMapsIterator();
+    public List<Map> getMapsList() {
+        return gameState.getMapsList();
     }
 
     @Override

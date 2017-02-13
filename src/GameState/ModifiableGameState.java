@@ -70,6 +70,7 @@ public interface ModifiableGameState extends GameState {
     /**
      * Sets a map in the map list, overwriting any map currently at that number.
      * @param number The number in the series. Will overwrite any others at this index
+     *               number >= 0
      * @param map The map to be put in
      */
     public void setMap(int number, Map map);

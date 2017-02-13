@@ -4,7 +4,11 @@ package Config;
  * Class containing all keys expected to be present in a config
  */
 public abstract class ConfigKeys {
+    //Folder
+    public static final String folder_map_src = "folder_map_img_src";
+    public static final String folder_map_dst = "folder_map_img_dst";
 
+    //Files
     public static final String file_A_name = "file_A_name";
     public static final String file_A_abbreviation = "file_A_abbreviation";
     public static final String file_A_score = "file_A_score";
@@ -16,13 +20,17 @@ public abstract class ConfigKeys {
     public static final String file_game_number = "file_game_number";
     public static final String file_victor = "file_victor";
 
+    public static final String file_map_unknown = "file_map_unknown";
+
     public static final String file_pause = "file_pause";
 
     public static final String file_countdown = "file_countdown";
     public static final String file_time = "file_time";
 
+    //Strings
     public static final String string_pre_game_number = "string_pre_game_number";
 
+    //Keybinds
     public static final String enable_keybindings = "enable_keybindings";
 
     public static final String number_modifiers = "number_modifiers";

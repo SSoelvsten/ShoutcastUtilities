@@ -14,7 +14,7 @@ public class StandardGameState implements ModifiableGameState {
     private int seriesLength;
     private HashSet<GameStateObserver> observers = new HashSet<>();
     private ArrayList<ModifiableTeam> teamsList = new ArrayList<>();
-    private HashMap<Integer, Map> mapsMap = new HashMap<>();
+    private ArrayList<Map> mapsList = new ArrayList<>();
 
     @Override
     public void shiftTeams() {
@@ -80,15 +80,17 @@ public class StandardGameState implements ModifiableGameState {
 
     @Override
     public void setTeamIdentity(int teamIndex, String name, String abbreviation) {
-        teamsList.get(teamIndex).setName(name);
-        teamsList.get(teamIndex).setAbbreviation(abbreviation);
+        ModifiableTeam team = teamsList.get(teamIndex);
+        team.setName(name);
+        team.setAbbreviation(abbreviation);
 
         callObserverNameUpdate();
     }
 
     @Override
     public void setTeamPoints(int teamIndex, int points) {
-        teamsList.get(teamIndex).setPoints(points);
+        ModifiableTeam team = teamsList.get(teamIndex);
+        team.setPoints(points);
 
         callObserverScoreUpdate();
     }
@@ -100,24 +102,33 @@ public class StandardGameState implements ModifiableGameState {
     }
 
     @Override
-    public Iterator<Team> getTeamsIterator() {
-        //TODO: What to do? Drink hot chocolate and be happy :)
-        return null;
+    public int getTeamsAmount() {
+        return teamsList.size();
+    }
+
+    @Override
+    public List<Team> getTeamsList() {
+        return (new ArrayList<Team>(teamsList));
     }
 
     @Override
     public void setMap(int number, Map map) {
-        mapsMap.put(number, map);
+        if(number < mapsList.size()){
+            mapsList.remove(number);
+        }
+        mapsList.add(number, map);
+
+        callObserverMapUpdate();
     }
 
     @Override
     public Map getMap(int mapIndex) {
-        return mapsMap.get(mapIndex);
+        return mapsList.get(mapIndex);
     }
 
     @Override
-    public Iterator<Map> getMapsIterator() {
-        return mapsMap.values().iterator();
+    public List<Map> getMapsList() {
+        return (List<Map>) mapsList.clone();
     }
 
     @Override
@@ -161,6 +172,12 @@ public class StandardGameState implements ModifiableGameState {
     private void callObserverPauseUpdate(){
         for(GameStateObserver o : observers){
             o.onPauseUpdate(this);
+        }
+    }
+
+    private void callObserverMapUpdate(){
+        for(GameStateObserver o : observers){
+            o.onMapUpdate(this);
         }
     }
 }

@@ -2,7 +2,7 @@ package GameState;
 
 import GameStateObserver.GameStateObserver;
 
-import java.util.Iterator;
+import java.util.List;
 
 /**
  * Objects from which to read the state of the current game
@@ -16,7 +16,19 @@ public interface GameState {
      */
     public Team getTeam(int teamIndex);
 
-    public Iterator<Team> getTeamsIterator();
+    /**
+     * Get the amount of teams in this GameState.
+     *   the max teamIndex = getTeamAmount()-1
+     * @return Amount of teams
+     */
+    public int getTeamsAmount();
+
+    /**
+     * Creates a copy of immutable teams. This is to be
+     * used to read all teams / find index of a specific team
+     * @return A representation of the teams and their ordering
+     */
+    public List<Team> getTeamsList();
 
     /**
      * @precondition: mapIndex is a valid index for a map.
@@ -25,7 +37,12 @@ public interface GameState {
      */
     public Map getMap(int mapIndex);
 
-    public Iterator<Map> getMapsIterator();
+    /**
+     * Creates a copy of the maps list This is to be used to
+     * read all maps / find index of a specific map
+     * @return A representation of the maps and their ordering
+     */
+    public List<Map> getMapsList();
 
     /**
      * Get the current team in the lead.

@@ -27,6 +27,12 @@ public class TestKingOfTheHillGameState {
     }
 
     @Test
+    public void teamAIsStillKingWhenShifted(){
+        gameState.shiftTeams();
+        assertThat(gameState.getWinner(), is(teamA));
+    }
+
+    @Test
     public void teamBIsKingWhenGettingAPoint(){
         gameState.setTeamPoints(teamBIndex, 1);
 

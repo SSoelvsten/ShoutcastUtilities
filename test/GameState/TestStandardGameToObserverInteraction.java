@@ -52,6 +52,12 @@ public class TestStandardGameToObserverInteraction {
     }
 
     @Test
+    public void shouldCallOnMapChange(){
+        gameState.setMap(0, new StandardMap("MapName", "CTF"));
+        assertThat(observer.onMapUpdateCalls, is(1));
+    }
+
+    @Test
     public void shouldCallOnPauseChanges(){
         gameState.setPauseTeam(teamAIndex, null);
         assertThat(observer.onPauseUpdateCalls, is(1));

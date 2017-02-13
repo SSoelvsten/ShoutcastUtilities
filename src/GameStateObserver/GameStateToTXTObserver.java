@@ -1,9 +1,9 @@
 package GameStateObserver;
 
 import Format.GameStateFormattingStrategy;
-import GameState.GameState;
+import GameState.*;
 import Config.*;
-import ReadWrite.ReadWriteStrategy;
+import InputOutput.ReadWriteStrategy;
 
 /**
  * On a change in the GameState, updates the corresponding txt files as
@@ -69,6 +69,12 @@ public class GameStateToTXTObserver implements GameStateObserver {
 
     @Override
     public void onMapUpdate(GameState gameState) {
-        //TODO: TDD this method
+        int i = 0;
+        for(Map map : gameState.getMapsList()){
+            String mapString = formatting.map(i, gameState);
+            i++;
+            String filename = config.getString(ConfigKeys.folder_map_dst) + "map" + i + ".txt";
+            writer.write(filename, mapString);
+        }
     }
 }

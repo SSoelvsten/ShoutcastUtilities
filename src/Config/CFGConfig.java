@@ -1,6 +1,6 @@
 package Config;
 
-import ReadWrite.ReadWriteStrategy;
+import InputOutput.ReadWriteStrategy;
 
 import java.util.Collection;
 import java.util.HashMap;

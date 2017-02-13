@@ -15,6 +15,8 @@ public interface GameStateFormattingStrategy {
 
     public String gameNumber(GameState gs);
 
+    public String map(int mapIndex, GameState gs);
+
     public String winner(GameState gs);
 
     public String pause(GameState gs);

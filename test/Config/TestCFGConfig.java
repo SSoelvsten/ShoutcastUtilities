@@ -1,7 +1,7 @@
 package Config;
 
 
-import ReadWrite.BasicReadWriteStrategy;
+import InputOutput.BasicReadWriteStrategy;
 import org.junit.Before;
 import org.junit.Test;
 

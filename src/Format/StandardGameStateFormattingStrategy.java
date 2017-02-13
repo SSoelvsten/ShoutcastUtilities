@@ -50,6 +50,15 @@ public class StandardGameStateFormattingStrategy implements GameStateFormattingS
     }
 
     @Override
+    public String map(int mapIndex, GameState gs) {
+        String res = gs.getMap(mapIndex).getName();
+        if(gs.getMap(mapIndex).getGameType() != null)
+            res += " (" + gs.getMap(mapIndex).getGameType() + ")";
+
+        return res;
+    }
+
+    @Override
     public String teamName(int teamIndex, GameState gs) {
         return gs.getTeam(teamIndex).getName();
     }

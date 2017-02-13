@@ -12,6 +12,10 @@ public class StandardConfig implements Config {
     private Map<String,String> settings = new HashMap<>();
 
     public StandardConfig(){
+        //Folder
+        settings.put(ConfigKeys.folder_map_src, "maps/");
+        settings.put(ConfigKeys.folder_map_dst, "txt/");
+
         //Files
         settings.put(ConfigKeys.file_A_name, "txt/A_name.txt");
         settings.put(ConfigKeys.file_A_abbreviation, "txt/A_abbreviation.txt");
@@ -23,6 +27,8 @@ public class StandardConfig implements Config {
 
         settings.put(ConfigKeys.file_game_number, "txt/game_number.txt");
         settings.put(ConfigKeys.file_victor, "txt/victor.txt");
+
+        settings.put(ConfigKeys.file_map_unknown, "unknown.png");
 
         settings.put(ConfigKeys.file_pause, "txt/pause.txt");
 
