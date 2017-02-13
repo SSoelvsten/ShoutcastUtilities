@@ -14,10 +14,18 @@ public interface ModifiableGameState extends GameState {
     public int addTeam(ModifiableTeam team);
 
     /**
+     * Remove a team from the game state
+     * @param teamIndex The identifying index of the team
+     *                  (in [0, n] for n teams)
+     */
+    public void removeTeam(int teamIndex);
+
+    /**
      * Sets the identifying values of a team to a different one.
      * This can be used, should this team be a different one
      * @precondition: teamIndex is a valid index for a team
      * @param teamIndex The identifying index for a team
+     *                  (in [0, n] for n teams)
      * @param name The new name
      * @param abbreviation The new shorthand
      */
@@ -28,6 +36,7 @@ public interface ModifiableGameState extends GameState {
      * @precondition: points >= 0
      *                teamIndex is a valid index for a team
      * @param teamIndex The identifying index for a team
+     *                  (in [0, n] for n teams)
      * @param points The points to set it to
      */
     public void setTeamPoints(int teamIndex, int points);
@@ -39,6 +48,8 @@ public interface ModifiableGameState extends GameState {
 
     /**
      * Sets the game to be marked as paused.
+     * @param teamIndex The identifying index for a team
+     *                  (in [0, n] for n teams)
      * @param reason The reason for the pause.
      *               Can be set to null
      */

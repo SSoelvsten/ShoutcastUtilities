@@ -15,12 +15,19 @@ public class GameStateToTXTObserver implements GameStateObserver {
     private final GameStateFormattingStrategy formatting;
     private final ReadWriteStrategy writer;
 
+    private int teamAIndex;
+    private int teamBIndex;
+
     public GameStateToTXTObserver(Config config,
                                   GameStateFormattingStrategy formattingStrategy,
-                                  ReadWriteStrategy readWriteStrategy){
+                                  ReadWriteStrategy readWriteStrategy,
+                                  int teamAIndex, int teamBIndex){
         this.config = config;
         this.formatting = formattingStrategy;
         this.writer = readWriteStrategy;
+
+        this.teamAIndex = teamAIndex;
+        this.teamBIndex = teamBIndex;
     }
 
 
@@ -33,14 +40,14 @@ public class GameStateToTXTObserver implements GameStateObserver {
     @Override
     public void onNameUpdate(GameState gameState) {
         writer.write(config.getString(ConfigKeys.file_A_name),
-                formatting.teamAName(gameState));
+                formatting.teamName(teamAIndex, gameState));
         writer.write(config.getString(ConfigKeys.file_A_abbreviation),
-                formatting.teamAAbbreviation(gameState));
+                formatting.teamAbbreviation(teamAIndex, gameState));
 
         writer.write(config.getString(ConfigKeys.file_B_name),
-                formatting.teamBName(gameState));
+                formatting.teamName(teamBIndex, gameState));
         writer.write(config.getString(ConfigKeys.file_B_abbreviation),
-                formatting.teamBAbbreviation(gameState));
+                formatting.teamAbbreviation(teamBIndex, gameState));
     }
 
     @Override
@@ -52,9 +59,9 @@ public class GameStateToTXTObserver implements GameStateObserver {
     @Override
     public void onScoreUpdate(GameState gameState) {
         writer.write(config.getString(ConfigKeys.file_A_score),
-                formatting.teamAScore(gameState));
+                formatting.teamScore(teamAIndex, gameState));
         writer.write(config.getString(ConfigKeys.file_B_score),
-                formatting.teamBScore(gameState));
+                formatting.teamScore(teamBIndex, gameState));
 
         writer.write(config.getString(ConfigKeys.file_game_number),
                 formatting.gameNumber(gameState));

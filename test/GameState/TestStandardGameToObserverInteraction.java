@@ -11,12 +11,17 @@ public class TestStandardGameToObserverInteraction {
 
     ModifiableGameState gameState;
     GameStateObserverSpy observer;
+    private int teamAIndex;
+    private int teamBIndex;
 
     @Before
     public void setup(){
         observer = new GameStateObserverSpy();
 
         gameState = new StandardGameState();
+        teamAIndex = gameState.addTeam(new StandardTeam("Team A", "A", 0));
+        teamBIndex = gameState.addTeam(new StandardTeam("Team B", "B", 0));
+
         gameState.subscribe(observer);
     }
 
@@ -30,28 +35,28 @@ public class TestStandardGameToObserverInteraction {
 
     @Test
     public void shouldCallOnTeamRename(){
-        gameState.setTeamAIdentity("NewA", "A");
+        gameState.setTeamIdentity(teamAIndex, "NewA", "A");
         assertThat(observer.onNameUpdateCalls, is(1));
 
-        gameState.setTeamBIdentity("NewB", "B");
+        gameState.setTeamIdentity(teamBIndex, "NewB", "B");
         assertThat(observer.onNameUpdateCalls, is(2));
     }
 
     @Test
     public void shouldCallOnScoreChange(){
-        gameState.setTeamAPoints(3);
+        gameState.setTeamPoints(teamAIndex, 3);
         assertThat(observer.onScoreUpdateCalls, is(1));
 
-        gameState.setTeamBPoints(2);
+        gameState.setTeamPoints(teamBIndex, 2);
         assertThat(observer.onScoreUpdateCalls, is(2));
     }
 
     @Test
     public void shouldCallOnPauseChanges(){
-        gameState.setPauseTeamA(null);
+        gameState.setPauseTeam(teamAIndex, null);
         assertThat(observer.onPauseUpdateCalls, is(1));
 
-        gameState.setPauseTeamB(null);
+        gameState.setPauseTeam(teamBIndex, null);
         assertThat(observer.onPauseUpdateCalls, is(2));
 
         gameState.unpause();

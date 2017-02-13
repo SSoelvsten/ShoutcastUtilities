@@ -2,29 +2,41 @@ package GameState;
 
 import GameStateObserver.GameStateObserver;
 
+import java.util.Iterator;
+
 /**
  * A king of the hill decorator, meaning that on the challenger
- * (Team B) gaining a point, the challenger is set to be the
- * King of the Hill (Team A), and a Team B becomes a new fresh challenger.
+ * gaining a point, the challenger is set to be the King of the Hill
  */
 public class KingOfTheHillGameStateDecorator implements ModifiableGameState {
 
     private final ModifiableGameState gameState;
-    private int priorKingsStreakAccumulator;
+    private int kingIndex;
 
-    public KingOfTheHillGameStateDecorator(ModifiableGameState gameState){
+    public KingOfTheHillGameStateDecorator(ModifiableGameState gameState,
+                                           int kingIndex){
         this.gameState = gameState;
-        this.gameState.setTeamBPoints(0);
+        this.kingIndex = kingIndex;
     }
 
     @Override
-    public Team getTeamA() {
-        return gameState.getTeamA();
+    public Team getTeam(int teamIndex) {
+        return gameState.getTeam(teamIndex);
     }
 
     @Override
-    public Team getTeamB() {
-        return gameState.getTeamB();
+    public int addTeam(ModifiableTeam team) {
+        return gameState.addTeam(team);
+    }
+
+    @Override
+    public void removeTeam(int teamIndex) {
+        gameState.removeTeam(teamIndex);
+    }
+
+    @Override
+    public Iterator<Team> getTeamsIterator() {
+        return null;
     }
 
     /**
@@ -33,56 +45,53 @@ public class KingOfTheHillGameStateDecorator implements ModifiableGameState {
      */
     @Override
     public Team getWinner() {
-        return getTeamA();
+        return getTeam(kingIndex);
     }
 
     @Override
     public int getGameNumber() {
-        return priorKingsStreakAccumulator + gameState.getGameNumber();
+        return gameState.getGameNumber();
     }
 
     @Override
-    public void setTeamAPoints(int points) {
-        gameState.setTeamAPoints(points);
-    }
-
-    @Override
-    public void setTeamBPoints(int points) {
-        priorKingsStreakAccumulator += gameState.getTeamA().getPoints();
-        gameState.setTeamBPoints(points);
-        shiftTeams();
-        gameState.setTeamBIdentity("Challenger", "?");
-        gameState.setTeamBPoints(0);
+    public void setTeamPoints(int teamIndex, int points) {
+        this.kingIndex = teamIndex;
+        gameState.setTeamPoints(teamIndex, points);
     }
 
     @Override
     public void shiftTeams() {
-        gameState.shiftTeams();
+        gameState.shiftTeams(); //This does mess up the kingIndex!
     }
 
     @Override
-    public void setTeamAIdentity(String name, String abbreviation) {
-        gameState.setTeamAIdentity(name, abbreviation);
+    public void setTeamIdentity(int teamIndex, String name, String abbreviation) {
+        gameState.setTeamIdentity(teamIndex, name, abbreviation);
     }
 
     @Override
-    public void setTeamBIdentity(String name, String abbreviation) {
-        gameState.setTeamBIdentity(name, abbreviation);
-    }
-
-    @Override
-    public void setPauseTeamA(String reason) {
-        gameState.setPauseTeamA(reason);
-    }
-
-    @Override
-    public void setPauseTeamB(String reason) {
-        gameState.setPauseTeamB(reason);
+    public void setPauseTeam(int teamIndex, String reason) {
+        gameState.setPauseTeam(teamIndex, reason);
     }
 
     @Override
     public void unpause() {
         gameState.unpause();
+    }
+
+    @Override
+    public void setMap(int number, Map map) {
+        gameState.setMap(number, map);
+    }
+
+    @Override
+    public Map getMap(int mapIndex) {
+        return gameState.getMap(mapIndex);
+    }
+
+    @Override
+    public Iterator<Map> getMapsIterator() {
+        return gameState.getMapsIterator();
     }
 
     @Override

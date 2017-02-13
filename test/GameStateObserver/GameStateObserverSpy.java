@@ -6,6 +6,7 @@ public class GameStateObserverSpy implements GameStateObserver {
 
     public int onUpdateCalls = 0;
     public int onPauseUpdateCalls = 0;
+    private int onMapUpdateCalls = 0;
     public int onScoreUpdateCalls = 0;
     public int onNameUpdateCalls = 0;
 
@@ -20,6 +21,12 @@ public class GameStateObserverSpy implements GameStateObserver {
     @Override
     public void onPauseUpdate(GameState gameState) {
         onPauseUpdateCalls += 1;
+        latestGameState = gameState;
+    }
+
+    @Override
+    public void onMapUpdate(GameState gameState) {
+        onMapUpdateCalls += 1;
         latestGameState = gameState;
     }
 

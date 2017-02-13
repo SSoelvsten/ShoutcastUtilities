@@ -14,23 +14,27 @@ public class TestStandardGameStateFormatting {
     private StandardGameStateFormattingStrategy format;
 
     private ModifiableGameState gameState;
+    private int teamAIndex;
     private Team teamA;
+    private int teamBIndex;
     private Team teamB;
 
     @Before
     public void setup(){
         //Set up the validated StubConfig
-        this.config = new ConfigStub();
+        config = new ConfigStub();
         Validator validator = new StandardValidator(new StandardConfig());
         validator.ValidateConfig(config);
 
         //Set up the format
-        this.format = new StandardGameStateFormattingStrategy(config);
+        format = new StandardGameStateFormattingStrategy(config);
 
         //Set up the gamestate with shortcuts to the two teams
-        this.gameState = new StandardGameState();
-        this.teamA = gameState.getTeamA();
-        this.teamB = gameState.getTeamB();
+        gameState = new StandardGameState();
+        teamAIndex = gameState.addTeam(new StandardTeam("Team A", "A", 0));
+        teamA = gameState.getTeam(teamAIndex);
+        teamBIndex = gameState.addTeam(new StandardTeam("Team B", "B", 0));
+        teamB = gameState.getTeam(teamBIndex);
     }
 
     //Many of these things are 'obvious implementation'
@@ -45,20 +49,20 @@ public class TestStandardGameStateFormatting {
 
     @Test
     public void pauseFromAWithNoReasonShouldResultInOnlyTeamName(){
-        gameState.setPauseTeamA(null);
+        gameState.setPauseTeam(teamAIndex, null);
         assertThat(format.pause(gameState), is("Game Paused: " + teamA.getName()));
     }
 
     @Test
     public void pauseFromBWithReasonShouldResultInLongerPauseMessage(){
-        gameState.setPauseTeamB("Tomatoes");
+        gameState.setPauseTeam(teamBIndex, "Tomatoes");
         assertThat(format.pause(gameState),
                 is("Game Paused: " + teamB.getName() + ", Tomatoes"));
     }
 
     private void setGameScore(int a, int b){
-        gameState.setTeamAPoints(a);
-        gameState.setTeamBPoints(b);
+        gameState.setTeamPoints(teamAIndex, a);
+        gameState.setTeamPoints(teamBIndex, b);
     }
 
     @Test

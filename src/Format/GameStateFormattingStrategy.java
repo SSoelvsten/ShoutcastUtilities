@@ -7,17 +7,11 @@ import GameState.GameState;
  */
 public interface GameStateFormattingStrategy {
 
-    public String teamAName(GameState gs);
+    public String teamName(int teamIndex, GameState gs);
 
-    public String teamAAbbreviation(GameState gs);
+    public String teamAbbreviation(int teamIndex, GameState gs);
 
-    public String teamAScore(GameState gs);
-
-    public String teamBName(GameState gs);
-
-    public String teamBAbbreviation(GameState gs);
-
-    public String teamBScore(GameState gs);
+    public String teamScore(int teamIndex, GameState gs);
 
     public String gameNumber(GameState gs);
 

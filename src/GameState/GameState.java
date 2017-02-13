@@ -12,6 +12,7 @@ public interface GameState {
     /**
      * @precondition: teamIndex is a valid index for a team
      * @param teamIndex The identifying index for a team
+     *                  (in [0, n] for n teams)
      */
     public Team getTeam(int teamIndex);
 

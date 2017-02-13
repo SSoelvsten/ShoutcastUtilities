@@ -16,6 +16,8 @@ public class GlobalShortcuts implements NativeKeyListener {
 
     //The managers to send the shortcuts to.
     private ModifiableGameState gameState;
+    int teamAIndex;
+    int teamBIndex;
 
     //Flags for keys
     private int numberOfModifiers;
@@ -38,11 +40,14 @@ public class GlobalShortcuts implements NativeKeyListener {
      * @param config Config to read shortcuts from
      * @param gameState The GameState to modify.
      */
-    public GlobalShortcuts(Config config, ModifiableGameState gameState){
+    public GlobalShortcuts(Config config, ModifiableGameState gameState,
+                           int teamAIndex, int teamBIndex){
         super();
 
         //Connect to the managers
         this.gameState = gameState;
+        this.teamAIndex = teamAIndex;
+        this.teamBIndex = teamBIndex;
 
         numberOfModifiers = config.getInteger(ConfigKeys.number_modifiers);
 
@@ -66,8 +71,8 @@ public class GlobalShortcuts implements NativeKeyListener {
      */
     public void nativeKeyPressed(NativeKeyEvent e){
         //Listen for all the keys we use and put flags
-        if (modifier1 == e.getKeyCode()) { modifier1B = true; }
-        if (modifier2 == e.getKeyCode()) { modifier2B = true; }
+        if (e.getKeyCode() == modifier1) { modifier1B = true; }
+        if (e.getKeyCode() == modifier2) { modifier2B = true; }
 
         //Check if enough modifiers are currently pressed
         if (numberOfModifiers == 2 && modifier1B && modifier2B
@@ -83,17 +88,17 @@ public class GlobalShortcuts implements NativeKeyListener {
      * @param keycode The key pressed, which is handled by the framework
      */
     private void executeShortcut(int keycode){
-        if (incA == keycode) {
-            gameState.setTeamAPoints(gameState.getTeamA().getPoints() + 1);
-        } else if (decA == keycode) {
-            if(gameState.getTeamA().getPoints() > 0)
-                gameState.setTeamAPoints(gameState.getTeamA().getPoints() - 1);
-        } else if (incB == keycode) {
-            gameState.setTeamBPoints(gameState.getTeamB().getPoints() + 1);
-        } else if (decB == keycode) {
-            if(gameState.getTeamB().getPoints() > 0)
-                gameState.setTeamBPoints(gameState.getTeamB().getPoints() - 1);
-        } else if (swap == keycode) {
+        if (keycode == incA) {
+            gameState.setTeamPoints(teamAIndex, gameState.getTeam(teamAIndex).getPoints() + 1);
+        } else if (keycode == decA) {
+            if(gameState.getTeam(teamBIndex).getPoints() > 0)
+                gameState.setTeamPoints(teamAIndex, gameState.getTeam(teamAIndex).getPoints() - 1);
+        } else if (keycode == incB) {
+            gameState.setTeamPoints(teamBIndex, gameState.getTeam(teamBIndex).getPoints() + 1);
+        } else if (keycode == decB) {
+            if(gameState.getTeam(teamBIndex).getPoints() > 0)
+                gameState.setTeamPoints(teamBIndex, gameState.getTeam(teamBIndex).getPoints() - 1);
+        } else if (keycode == swap) {
             gameState.shiftTeams();
         } /*else if (update == keycode) {
             //Committing is now not a thing anymore

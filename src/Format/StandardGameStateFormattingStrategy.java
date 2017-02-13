@@ -50,32 +50,17 @@ public class StandardGameStateFormattingStrategy implements GameStateFormattingS
     }
 
     @Override
-    public String teamAName(GameState gs) {
-        return gs.getTeamA().getName();
+    public String teamName(int teamIndex, GameState gs) {
+        return gs.getTeam(teamIndex).getName();
     }
 
     @Override
-    public String teamAAbbreviation(GameState gs) {
-        return gs.getTeamA().getAbbreviation();
+    public String teamAbbreviation(int teamIndex, GameState gs) {
+        return gs.getTeam(teamIndex).getAbbreviation();
     }
 
     @Override
-    public String teamAScore(GameState gs) {
-        return "" + gs.getTeamA().getPoints();
-    }
-
-    @Override
-    public String teamBName(GameState gs) {
-        return gs.getTeamB().getName();
-    }
-
-    @Override
-    public String teamBAbbreviation(GameState gs) {
-        return gs.getTeamB().getAbbreviation();
-    }
-
-    @Override
-    public String teamBScore(GameState gs) {
-        return "" + gs.getTeamB().getPoints();
+    public String teamScore(int teamIndex, GameState gs) {
+        return "" + gs.getTeam(teamIndex).getPoints();
     }
 }
