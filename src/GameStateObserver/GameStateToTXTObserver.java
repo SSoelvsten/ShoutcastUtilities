@@ -25,10 +25,9 @@ public class GameStateToTXTObserver implements GameStateObserver {
 
 
     @Override
-    public void onUpdate(GameState gameState) {
+    public void onShiftUpdate(GameState gameState) {
         onNameUpdate(gameState);
         onScoreUpdate(gameState);
-        onPauseUpdate(gameState);
     }
 
     @Override
@@ -59,5 +58,10 @@ public class GameStateToTXTObserver implements GameStateObserver {
 
         writer.write(config.getString(ConfigKeys.file_game_number),
                 formatting.gameNumber(gameState));
+    }
+
+    @Override
+    public void onMapUpdate(GameState gameState) {
+        //TODO: TDD this method
     }
 }

@@ -3,6 +3,7 @@ package GameState;
 import GameStateObserver.GameStateObserver;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -19,7 +20,7 @@ public class StandardGameState implements ModifiableGameState {
     private Set<GameStateObserver> observers = new HashSet<>();
 
     @Override
-    public void swapTeams() {
+    public void shiftTeams() {
         ModifiableTeam temp = this.teamB;
         this.teamB = this.teamA;
         this.teamA = temp;
@@ -44,15 +45,8 @@ public class StandardGameState implements ModifiableGameState {
     }
 
     @Override
-    public void setPauseTeamA(String reason) {
+    public void setPauseTeam(int teamIndex, String reason) {
         this.pause = new StandardPause(teamA, reason);
-
-        callObserverPauseUpdate();
-    }
-
-    @Override
-    public void setPauseTeamB(String reason) {
-        this.pause = new StandardPause(teamB, reason);
 
         callObserverPauseUpdate();
     }
@@ -65,7 +59,7 @@ public class StandardGameState implements ModifiableGameState {
     }
 
     @Override
-    public void setTeamAIdentity(String name, String abbreviation) {
+    public void setTeamIdentity(int teamIndex, String name, String abbreviation) {
         teamA.setName(name);
         teamA.setAbbreviation(abbreviation);
 
@@ -73,35 +67,37 @@ public class StandardGameState implements ModifiableGameState {
     }
 
     @Override
-    public void setTeamBIdentity(String name, String abbreviation) {
-        teamB.setName(name);
-        teamB.setAbbreviation(abbreviation);
-
-        callObserverNameUpdate();
-    }
-
-    @Override
-    public void setTeamAPoints(int points) {
+    public void setTeamPoints(int teamIndex, int points) {
         teamA.setPoints(points);
 
         callObserverScoreUpdate();
     }
 
-    @Override
-    public void setTeamBPoints(int points) {
-        teamB.setPoints(points);
-
-        callObserverScoreUpdate();
-    }
 
     @Override
-    public Team getTeamA() {
+    public Team getTeam(int teamIndex) {
         return this.teamA;
     }
 
     @Override
-    public Team getTeamB() {
-        return this.teamB;
+    public Iterator<Team> getTeamsIterator() {
+        return null;
+    }
+
+    @Override
+    public void setMap(int number, Map map) {
+        //TODO: TDD this one possibly? Obivous implementation?
+        //  Need to be sure, that maps are overwritten if asked
+    }
+
+    @Override
+    public Map getMap(int mapIndex) {
+        return null;
+    }
+
+    @Override
+    public Iterator<Map> getMapsIterator() {
+        return null;
     }
 
     @Override
@@ -126,7 +122,7 @@ public class StandardGameState implements ModifiableGameState {
 
     private void callObserverUpdate(){
         for(GameStateObserver o : observers){
-            o.onUpdate(this);
+            o.onShiftUpdate(this);
         }
     }
 

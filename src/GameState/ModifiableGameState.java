@@ -6,47 +6,43 @@ package GameState;
 public interface ModifiableGameState extends GameState {
 
     /**
-     * Swaps the order of the (two) teams matched against each other.
+     * Add a new Team to the game state
+     * @param team The team to be added
+     * @return The identifying index for the team currently.
+     *         This can change when the teams are 'shifted'
      */
-    public void swapTeams();
+    public int addTeam(ModifiableTeam team);
 
     /**
      * Sets the identifying values of a team to a different one.
      * This can be used, should this team be a different one
+     * @precondition: teamIndex is a valid index for a team
+     * @param teamIndex The identifying index for a team
      * @param name The new name
      * @param abbreviation The new shorthand
      */
-    public void setTeamAIdentity(String name, String abbreviation);
-
-    public void setTeamBIdentity(String name, String abbreviation);
+    public void setTeamIdentity(int teamIndex, String name, String abbreviation);
 
     /**
      * Sets the points for a team to a different value.
      * @precondition: points >= 0
+     *                teamIndex is a valid index for a team
+     * @param teamIndex The identifying index for a team
      * @param points The points to set it to
      */
-    public void setTeamAPoints(int points);
+    public void setTeamPoints(int teamIndex, int points);
 
     /**
-     * Sets the points for a team to a different value.
-     * @precondition: points >= 0
-     * @param points The points to set it to
+     * Shifts the order of the teams matched against each other.
      */
-    public void setTeamBPoints(int points);
+    public void shiftTeams();
 
     /**
      * Sets the game to be marked as paused.
      * @param reason The reason for the pause.
      *               Can be set to null
      */
-    public void setPauseTeamA(String reason);
-
-    /**
-     * Sets the game to be marked as paused.
-     * @param reason The reason for the pause.
-     *               Can be set to null
-     */
-    public void setPauseTeamB(String reason);
+    public void setPauseTeam(int teamIndex, String reason);
 
     /**
      * Set the length of the series. 0 means no
@@ -59,4 +55,11 @@ public interface ModifiableGameState extends GameState {
      * Sets the Game State to unpaused
      */
     public void unpause();
+
+    /**
+     * Sets a map in the map list, overwriting any map currently at that number.
+     * @param number The number in the series. Will overwrite any others at this index
+     * @param map The map to be put in
+     */
+    public void setMap(int number, Map map);
 }

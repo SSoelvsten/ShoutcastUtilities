@@ -2,14 +2,29 @@ package GameState;
 
 import GameStateObserver.GameStateObserver;
 
+import java.util.Iterator;
+
 /**
  * Objects from which to read the state of the current game
  */
 public interface GameState {
 
-    public Team getTeamA();
+    /**
+     * @precondition: teamIndex is a valid index for a team
+     * @param teamIndex The identifying index for a team
+     */
+    public Team getTeam(int teamIndex);
 
-    public Team getTeamB();
+    public Iterator<Team> getTeamsIterator();
+
+    /**
+     * @precondition: mapIndex is a valid index for a map.
+     *                Use the iterator if you do not yet know.
+     * @param mapIndex The identifying index for a map
+     */
+    public Map getMap(int mapIndex);
+
+    public Iterator<Map> getMapsIterator();
 
     /**
      * Get the current team in the lead.
@@ -41,4 +56,5 @@ public interface GameState {
      * @param o The observer subscribing
      */
     public void subscribe(GameStateObserver o);
+
 }

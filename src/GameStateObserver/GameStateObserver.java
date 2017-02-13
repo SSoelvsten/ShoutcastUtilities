@@ -16,7 +16,7 @@ public interface GameStateObserver {
      * @param gameState The game state, that has changed and
      *                  wants to nofity its observers.
      */
-    public void onUpdate(GameState gameState);
+    public void onShiftUpdate(GameState gameState);
 
     /**
      * Is called, when a team changes name and/or abbreviation
@@ -38,4 +38,11 @@ public interface GameStateObserver {
      *                  wants to nofity its observers.
      */
     public void onPauseUpdate(GameState gameState);
+
+    /**
+     * Is called, when a gameState changes the maps chosen to
+     * be played on.
+     * @param gameState The game state, that has its maps changed
+     */
+    public void onMapUpdate(GameState gameState);
 }

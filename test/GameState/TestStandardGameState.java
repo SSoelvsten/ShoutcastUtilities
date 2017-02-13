@@ -22,7 +22,7 @@ public class TestStandardGameState {
 
     @Test
     public void shouldSwapTeams() {
-        gameState.swapTeams();
+        gameState.shiftTeams();
 
         assertThat(gameState.getTeamA(), is(teamB));
         assertThat(gameState.getTeamB(), is(teamA));

@@ -23,7 +23,7 @@ public class TestStandardGameToObserverInteraction {
     @Test
     public void shouldCallWithItselfAsAnArgument(){
         //Swap teams definitely should call
-        gameState.swapTeams();
+        gameState.shiftTeams();
 
         assertThat(observer.latestGameState, is(gameState));
     }

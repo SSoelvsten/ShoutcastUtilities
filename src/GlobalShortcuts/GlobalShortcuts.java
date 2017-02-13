@@ -94,7 +94,7 @@ public class GlobalShortcuts implements NativeKeyListener {
             if(gameState.getTeamB().getPoints() > 0)
                 gameState.setTeamBPoints(gameState.getTeamB().getPoints() - 1);
         } else if (swap == keycode) {
-            gameState.swapTeams();
+            gameState.shiftTeams();
         } /*else if (update == keycode) {
             //Committing is now not a thing anymore
         }*/

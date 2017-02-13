@@ -12,7 +12,7 @@ public class GameStateObserverSpy implements GameStateObserver {
     public GameState latestGameState = null;
 
     @Override
-    public void onUpdate(GameState gameState) {
+    public void onShiftUpdate(GameState gameState) {
         onUpdateCalls += 1;
         latestGameState = gameState;
     }

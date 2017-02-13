@@ -113,7 +113,7 @@ public class TestGameStateToTXTObserver {
 
     @Test
     public void ShouldPrintEverythingOnGeneral(){
-        observer.onUpdate(gameState);
+        observer.onShiftUpdate(gameState);
 
         //A Name
         assertThat(readWriteSpy.read(config.getString(ConfigKeys.file_A_name)),

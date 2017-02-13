@@ -50,14 +50,14 @@ public class KingOfTheHillGameStateDecorator implements ModifiableGameState {
     public void setTeamBPoints(int points) {
         priorKingsStreakAccumulator += gameState.getTeamA().getPoints();
         gameState.setTeamBPoints(points);
-        swapTeams();
+        shiftTeams();
         gameState.setTeamBIdentity("Challenger", "?");
         gameState.setTeamBPoints(0);
     }
 
     @Override
-    public void swapTeams() {
-        gameState.swapTeams();
+    public void shiftTeams() {
+        gameState.shiftTeams();
     }
 
     @Override
