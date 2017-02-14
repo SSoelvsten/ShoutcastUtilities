@@ -15,19 +15,12 @@ public class GameStateToTXTObserver implements GameStateObserver {
     private final GameStateFormattingStrategy formatting;
     private final ReadWriteStrategy writer;
 
-    private int teamAIndex;
-    private int teamBIndex;
-
     public GameStateToTXTObserver(Config config,
                                   GameStateFormattingStrategy formattingStrategy,
-                                  ReadWriteStrategy readWriteStrategy,
-                                  int teamAIndex, int teamBIndex){
+                                  ReadWriteStrategy readWriteStrategy){
         this.config = config;
         this.formatting = formattingStrategy;
         this.writer = readWriteStrategy;
-
-        this.teamAIndex = teamAIndex;
-        this.teamBIndex = teamBIndex;
     }
 
 
@@ -39,32 +32,39 @@ public class GameStateToTXTObserver implements GameStateObserver {
 
     @Override
     public void onNameUpdate(GameState gameState) {
-        writer.write(config.getString(ConfigKeys.file_A_name),
-                formatting.teamName(teamAIndex, gameState));
-        writer.write(config.getString(ConfigKeys.file_A_abbreviation),
-                formatting.teamAbbreviation(teamAIndex, gameState));
+        int i = 0;
+        for(Team t : gameState.getTeamsList()){
+            String nameString = formatting.teamName(i, gameState);
+            String abbreviationString = formatting.teamAbbreviation(i, gameState);
 
-        writer.write(config.getString(ConfigKeys.file_B_name),
-                formatting.teamName(teamBIndex, gameState));
-        writer.write(config.getString(ConfigKeys.file_B_abbreviation),
-                formatting.teamAbbreviation(teamBIndex, gameState));
+            i++;
+
+            String nameFile = config.getString(ConfigKeys.folder_txt_dst) + "name" + i + ".txt";
+            String abbreviationFile = config.getString(ConfigKeys.folder_txt_dst) + "abbreviation" + i + ".txt";
+            writer.write(nameFile, nameString);
+            writer.write(abbreviationFile, abbreviationString);
+        }
     }
 
     @Override
     public void onPauseUpdate(GameState gameState) {
-        writer.write(config.getString(ConfigKeys.file_pause),
+        writer.write(config.getString(ConfigKeys.folder_txt_dst) + "pause.txt",
                 formatting.pause(gameState));
     }
 
     @Override
     public void onScoreUpdate(GameState gameState) {
-        writer.write(config.getString(ConfigKeys.file_A_score),
-                formatting.teamScore(teamAIndex, gameState));
-        writer.write(config.getString(ConfigKeys.file_B_score),
-                formatting.teamScore(teamBIndex, gameState));
+        int i = 0;
+        for(Team t : gameState.getTeamsList()){
+            String scoreString = formatting.teamScore(i, gameState);
 
-        writer.write(config.getString(ConfigKeys.file_game_number),
-                formatting.gameNumber(gameState));
+            i++;
+
+            String filename = config.getString(ConfigKeys.folder_txt_dst) + "score" + i + ".txt";
+            writer.write(filename, scoreString);
+        }
+
+        writer.write(config.getString(ConfigKeys.folder_txt_dst) + "game_number.txt", formatting.gameNumber(gameState));
     }
 
     @Override
@@ -72,7 +72,9 @@ public class GameStateToTXTObserver implements GameStateObserver {
         int i = 0;
         for(Map map : gameState.getMapsList()){
             String mapString = formatting.map(i, gameState);
+
             i++;
+
             String filename = config.getString(ConfigKeys.folder_map_dst) + "map" + i + ".txt";
             writer.write(filename, mapString);
         }

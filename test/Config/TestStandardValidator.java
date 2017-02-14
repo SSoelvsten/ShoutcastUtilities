@@ -23,13 +23,13 @@ public class TestStandardValidator {
     public void shouldAddMissingValues(){
         //ConfigStub only got enable_keybindings and file_B_abbreviation set
         //So the validator should add all the others, such as file_A_name
-        assertThat(spy.getString(ConfigKeys.file_A_name), IsNull.notNullValue());
+        assertThat(spy.getString(ConfigKeys.folder_map_dst), IsNull.notNullValue());
     }
 
     @Test
     public void shouldNotChangeTypeCorrectExistingValues(){
         //ConfigStub already got file_B_abbreviation set correctly to "tomato"
-        assertThat(spy.getString(ConfigKeys.file_B_abbreviation), is("tomato"));
+        assertThat(spy.getString(ConfigKeys.folder_map_src), is("tomato/"));
     }
 
     @Test

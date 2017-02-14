@@ -24,15 +24,10 @@ public class TestCFGConfig {
     }
 
     @Test
-    public void shouldHaveTeamAFiles(){
-        assertThat(config.getString(ConfigKeys.file_A_name), is(sc.getString(ConfigKeys.file_A_name)));
-        assertThat(config.getString(ConfigKeys.file_A_score), is(sc.getString(ConfigKeys.file_A_score)));
-    }
-
-    //If it already got the third team specific file, then it probably also got the others
-    @Test
-    public void shouldHaveTeamBFiles(){
-        assertThat(config.getString(ConfigKeys.file_B_abbreviation), is(sc.getString(ConfigKeys.file_B_abbreviation)));
+    public void shouldHaveFolders(){
+        assertThat(config.getString(ConfigKeys.folder_map_src), is("maps/"));
+        assertThat(config.getString(ConfigKeys.folder_map_dst), is("txt/"));
+        assertThat(config.getString(ConfigKeys.folder_txt_dst), is("txt/"));
     }
 
     @Test

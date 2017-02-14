@@ -15,25 +15,10 @@ public class StandardConfig implements Config {
         //Folder
         settings.put(ConfigKeys.folder_map_src, "maps/");
         settings.put(ConfigKeys.folder_map_dst, "txt/");
+        settings.put(ConfigKeys.folder_txt_dst, "txt/");
 
         //Files
-        settings.put(ConfigKeys.file_A_name, "txt/A_name.txt");
-        settings.put(ConfigKeys.file_A_abbreviation, "txt/A_abbreviation.txt");
-        settings.put(ConfigKeys.file_A_score, "txt/A_score.txt");
-
-        settings.put(ConfigKeys.file_B_name, "txt/B_name.txt");
-        settings.put(ConfigKeys.file_B_abbreviation, "txt/B_abbreviation.txt");
-        settings.put(ConfigKeys.file_B_score, "txt/B_score.txt");
-
-        settings.put(ConfigKeys.file_game_number, "txt/game_number.txt");
-        settings.put(ConfigKeys.file_victor, "txt/victor.txt");
-
         settings.put(ConfigKeys.file_map_unknown, "unknown.png");
-
-        settings.put(ConfigKeys.file_pause, "txt/pause.txt");
-
-        settings.put(ConfigKeys.file_countdown, "txt/clock_countdown.txt");
-        settings.put(ConfigKeys.file_time, "txt/clock_time.txt");
 
         //Strings
         settings.put(ConfigKeys.string_pre_game_number, "Map");

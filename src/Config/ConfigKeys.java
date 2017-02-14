@@ -7,25 +7,10 @@ public abstract class ConfigKeys {
     //Folder
     public static final String folder_map_src = "folder_map_img_src";
     public static final String folder_map_dst = "folder_map_img_dst";
+    public static final String folder_txt_dst = "folder_state_txt_dst";
 
     //Files
-    public static final String file_A_name = "file_A_name";
-    public static final String file_A_abbreviation = "file_A_abbreviation";
-    public static final String file_A_score = "file_A_score";
-
-    public static final String file_B_name = "file_B_name";
-    public static final String file_B_abbreviation = "file_B_abbreviation";
-    public static final String file_B_score = "file_B_score";
-
-    public static final String file_game_number = "file_game_number";
-    public static final String file_victor = "file_victor";
-
     public static final String file_map_unknown = "file_map_unknown";
-
-    public static final String file_pause = "file_pause";
-
-    public static final String file_countdown = "file_countdown";
-    public static final String file_time = "file_time";
 
     //Strings
     public static final String string_pre_game_number = "string_pre_game_number";

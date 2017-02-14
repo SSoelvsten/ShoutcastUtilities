@@ -11,7 +11,7 @@ public class ConfigStub implements Config{
     public ConfigStub(){
         settings = new HashMap<>();
         put(ConfigKeys.enable_keybindings, "tomato");   //Should NOT stay after verification (not bool)
-        put(ConfigKeys.file_B_abbreviation, "tomato");           //Should stay after verification
+        put(ConfigKeys.folder_map_src, "tomato/");       //Should stay after verification
     }
 
     @Override

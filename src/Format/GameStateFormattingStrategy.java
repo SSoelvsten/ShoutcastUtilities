@@ -1,6 +1,6 @@
 package Format;
 
-import GameState.GameState;
+import GameState.*;
 
 /**
  * A strategy to format the information in a GameState into Strings
@@ -8,14 +8,18 @@ import GameState.GameState;
 public interface GameStateFormattingStrategy {
 
     public String teamName(int teamIndex, GameState gs);
+    public String teamName(Team team);
 
     public String teamAbbreviation(int teamIndex, GameState gs);
+    public String teamAbbreviation(Team team);
 
     public String teamScore(int teamIndex, GameState gs);
+    public String teamScore(Team team);
 
     public String gameNumber(GameState gs);
 
     public String map(int mapIndex, GameState gs);
+    public String map(Map map);
 
     public String winner(GameState gs);
 

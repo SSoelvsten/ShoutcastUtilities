@@ -1,7 +1,7 @@
 package Format;
 
 import Config.*;
-import GameState.GameState;
+import GameState.*;
 
 /**
  * The normal output formatting used by twitch.tv/ikslorin
@@ -59,17 +59,37 @@ public class StandardGameStateFormattingStrategy implements GameStateFormattingS
     }
 
     @Override
+    public String map(Map map) {
+        return null;
+    }
+
+    @Override
     public String teamName(int teamIndex, GameState gs) {
-        return gs.getTeam(teamIndex).getName();
+        return teamName(gs.getTeam(teamIndex));
+    }
+
+    @Override
+    public String teamName(Team team) {
+        return team.getName();
     }
 
     @Override
     public String teamAbbreviation(int teamIndex, GameState gs) {
-        return gs.getTeam(teamIndex).getAbbreviation();
+        return teamAbbreviation(gs.getTeam(teamIndex));
+    }
+
+    @Override
+    public String teamAbbreviation(Team team) {
+        return team.getAbbreviation();
     }
 
     @Override
     public String teamScore(int teamIndex, GameState gs) {
-        return "" + gs.getTeam(teamIndex).getPoints();
+        return teamScore(gs.getTeam(teamIndex));
+    }
+
+    @Override
+    public String teamScore(Team team) {
+        return "" + team.getPoints();
     }
 }

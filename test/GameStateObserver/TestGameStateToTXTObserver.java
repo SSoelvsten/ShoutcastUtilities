@@ -2,11 +2,8 @@ package GameStateObserver;
 
 import Config.*;
 import Format.*;
-import GameState.ModifiableGameState;
+import GameState.*;
 
-import GameState.StandardGameState;
-import GameState.StandardMap;
-import GameState.StandardTeam;
 import InputOutput.ReadWriteStrategySpy2;
 import org.hamcrest.core.IsNull;
 import org.junit.Before;
@@ -35,66 +32,72 @@ public class TestGameStateToTXTObserver {
         this.formattingStrategy = new StandardGameStateFormattingStrategy(config);
         this.readWriteSpy = new ReadWriteStrategySpy2();
 
-        this.observer = new GameStateToTXTObserver(config, formattingStrategy, readWriteSpy, teamAIndex, teamBIndex);
+        this.observer = new GameStateToTXTObserver(config, formattingStrategy, readWriteSpy);
     }
 
     @Test
-    public void ShouldPrintTeamANameFile(){
+    public void ShouldPrintTeam1NameFile(){
         observer.onNameUpdate(gameState);
 
-        assertThat(readWriteSpy.read(config.getString(ConfigKeys.file_A_name)),
+        String file = "txt/name1.txt";
+        assertThat(readWriteSpy.read(file),
                 IsNull.notNullValue());
-        assertThat(readWriteSpy.read(config.getString(ConfigKeys.file_A_name)),
+        assertThat(readWriteSpy.read(file),
                 is(formattingStrategy.teamName(teamAIndex, gameState)));
     }
 
     @Test
-    public void ShouldPrintTeamAAbbreviationFile(){
+    public void ShouldPrintTeam1AbbreviationFile(){
         observer.onNameUpdate(gameState);
 
-        assertThat(readWriteSpy.read(config.getString(ConfigKeys.file_A_abbreviation)),
+        String file = "txt/abbreviation1.txt";
+        assertThat(readWriteSpy.read(file),
                 IsNull.notNullValue());
-        assertThat(readWriteSpy.read(config.getString(ConfigKeys.file_A_abbreviation)),
+        assertThat(readWriteSpy.read(file),
                 is(formattingStrategy.teamAbbreviation(teamAIndex, gameState)));
     }
 
     @Test
-    public void ShouldPrintTeamAScoreFile(){
+    public void ShouldPrintTeam1ScoreFile(){
         observer.onScoreUpdate(gameState);
 
-        assertThat(readWriteSpy.read(config.getString(ConfigKeys.file_A_score)),
+        String file = "txt/score1.txt";
+        assertThat(readWriteSpy.read(file),
                 IsNull.notNullValue());
-        assertThat(readWriteSpy.read(config.getString(ConfigKeys.file_A_score)),
+        assertThat(readWriteSpy.read(file),
                 is(formattingStrategy.teamScore(teamAIndex, gameState)));
     }
 
     @Test
-    public void ShouldPrintTeamBNameFile(){
+    public void ShouldPrintTeam2NameFile(){
         observer.onNameUpdate(gameState);
 
-        assertThat(readWriteSpy.read(config.getString(ConfigKeys.file_B_name)),
+        String file = "txt/name2.txt";
+        assertThat(readWriteSpy.read(file),
                 IsNull.notNullValue());
-        assertThat(readWriteSpy.read(config.getString(ConfigKeys.file_B_name)),
+        assertThat(readWriteSpy.read(file),
                 is(formattingStrategy.teamName(teamBIndex, gameState)));
     }
 
     @Test
-    public void ShouldPrintTeamBAbbreviationFile(){
+    public void ShouldPrintTeam2AbbreviationFile(){
         observer.onNameUpdate(gameState);
 
-        assertThat(readWriteSpy.read(config.getString(ConfigKeys.file_B_abbreviation)),
+        String file = "txt/abbreviation2.txt";
+        assertThat(readWriteSpy.read(file),
                 IsNull.notNullValue());
-        assertThat(readWriteSpy.read(config.getString(ConfigKeys.file_B_abbreviation)),
+        assertThat(readWriteSpy.read(file),
                 is(formattingStrategy.teamAbbreviation(teamBIndex, gameState)));
     }
 
     @Test
-    public void ShouldPrintTeamBScoreFile(){
+    public void ShouldPrintTeam2ScoreFile(){
         observer.onScoreUpdate(gameState);
 
-        assertThat(readWriteSpy.read(config.getString(ConfigKeys.file_B_score)),
+        String file = "txt/score2.txt";
+        assertThat(readWriteSpy.read(file),
                 IsNull.notNullValue());
-        assertThat(readWriteSpy.read(config.getString(ConfigKeys.file_B_score)),
+        assertThat(readWriteSpy.read(file),
                 is(formattingStrategy.teamScore(teamBIndex, gameState)));
     }
 
@@ -102,9 +105,10 @@ public class TestGameStateToTXTObserver {
     public void ShouldPrintGameNumber(){
         observer.onScoreUpdate(gameState);
 
-        assertThat(readWriteSpy.read(config.getString(ConfigKeys.file_game_number)),
+        String file = "txt/game_number.txt";
+        assertThat(readWriteSpy.read(file),
                 IsNull.notNullValue());
-        assertThat(readWriteSpy.read(config.getString(ConfigKeys.file_game_number)),
+        assertThat(readWriteSpy.read(file),
                 is(formattingStrategy.gameNumber(gameState)));
     }
 
@@ -112,9 +116,10 @@ public class TestGameStateToTXTObserver {
     public void ShouldPrintPause(){
         observer.onPauseUpdate(gameState);
 
-        assertThat(readWriteSpy.read(config.getString(ConfigKeys.file_pause)),
+        String file = "txt/pause.txt";
+        assertThat(readWriteSpy.read(file),
                 IsNull.notNullValue());
-        assertThat(readWriteSpy.read(config.getString(ConfigKeys.file_pause)),
+        assertThat(readWriteSpy.read(file),
                 is(formattingStrategy.pause(gameState)));
     }
 
@@ -136,21 +141,24 @@ public class TestGameStateToTXTObserver {
         observer.onShiftUpdate(gameState);
 
         //A Name
-        assertThat(readWriteSpy.read(config.getString(ConfigKeys.file_A_name)),
+        String file = "txt/name1.txt";
+        assertThat(readWriteSpy.read(file),
                 IsNull.notNullValue());
-        assertThat(readWriteSpy.read(config.getString(ConfigKeys.file_A_name)),
+        assertThat(readWriteSpy.read(file),
                 is(formattingStrategy.teamName(teamAIndex, gameState)));
 
         //B Abbreviation
-        assertThat(readWriteSpy.read(config.getString(ConfigKeys.file_B_abbreviation)),
+        file = "txt/abbreviation2.txt";
+        assertThat(readWriteSpy.read(file),
                 IsNull.notNullValue());
-        assertThat(readWriteSpy.read(config.getString(ConfigKeys.file_B_abbreviation)),
+        assertThat(readWriteSpy.read(file),
                 is(formattingStrategy.teamAbbreviation(teamBIndex, gameState)));
 
         //A Score
-        assertThat(readWriteSpy.read(config.getString(ConfigKeys.file_A_score)),
+        file = "txt/score1.txt";
+        assertThat(readWriteSpy.read(file),
                 IsNull.notNullValue());
-        assertThat(readWriteSpy.read(config.getString(ConfigKeys.file_A_score)),
+        assertThat(readWriteSpy.read(file),
                 is(formattingStrategy.teamScore(teamAIndex, gameState)));
     }
 }
