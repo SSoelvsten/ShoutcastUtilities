@@ -10,7 +10,7 @@ import java.io.IOException;
  * A GameState observer, which sets up pictures where specified
  * with the thumbnails of the maps from the GameState
  */
-public class GameStateMapThumbnailObserver implements GameStateObserver {
+public class GameStateMapThumbnailObserver extends AbstractGameStateObserver {
 
     Config config;
     FileHandler fileHandler;
@@ -42,25 +42,5 @@ public class GameStateMapThumbnailObserver implements GameStateObserver {
                 }
             }
         }
-    }
-
-    @Override
-    public void onShiftUpdate(GameState gameState) {
-        //Do nothing
-    }
-
-    @Override
-    public void onPauseUpdate(GameState gameState) {
-        //Do nothing
-    }
-
-    @Override
-    public void onScoreUpdate(GameState gameState) {
-        //Do nothing
-    }
-
-    @Override
-    public void onNameUpdate(GameState gameState) {
-        //Do nothing
     }
 }

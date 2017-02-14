@@ -1,22 +1,23 @@
 package JFrameControllers;
 
 import GameState.ModifiableGameState;
+import GameStateObserver.GameStateObserver;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class StandardJFrameController implements JFrameController {
+/**
+ * A GUI controller for the ShoutCast Utilities.
+ */
+public class StandardJFrameController implements JFrameController, GameStateObserver {
 
     //TODO: Clock will need a prototype
 
+    //TODO: "Add Team" and "Add Map" buttons
+
     JFrame frame;
 
-    int nameTextFieldSize;
-    int scoreTextFieldSize;
-
-    public StandardJFrameController(int nameTextFieldSize, int scoreTextFieldSize){
-        this.nameTextFieldSize = nameTextFieldSize;
-        this.scoreTextFieldSize = scoreTextFieldSize;
+    public StandardJFrameController(){
 
         frame = new JFrame();
         frame.setLayout(new BorderLayout());
@@ -35,7 +36,7 @@ public class StandardJFrameController implements JFrameController {
     @Override
     public void addGameState(ModifiableGameState gameState) {
         //This will only manage one game state. So the old will
-        //just be replaced with a new one
+        //just be replaced with a new one?
 
         //TODO; Create panels without
         //      Solution: Create an object in between?
