@@ -10,13 +10,13 @@ import java.awt.event.ActionListener;
 /**
  * An object to create and manage a JPanel controlling one team of a GameState
  */
-public class JPanelTeamController extends AbstractGameStateObserver {
+public class JPanelTeamController extends AbstractGameStateObserver implements JPanelTeamMapController {
 
     private int teamIndex;
     private ModifiableGameState gameState;
 
-    private int nameLength = 16;
-    private int abbreviavtionLength = 6;
+    private int nameLength = 10;
+    private int abbreviavtionLength = 4;
     private int scoreLength = 1;
 
     private JPanel panel = new JPanel();
@@ -24,6 +24,8 @@ public class JPanelTeamController extends AbstractGameStateObserver {
     private JTextField nameTextField = new JTextField(nameLength);
     private JTextField abbreviationTextField = new JTextField(abbreviavtionLength);
     private JTextField scoreTextField = new JTextField(scoreLength);
+
+    private boolean listen = true;
 
     public JPanelTeamController(int teamIndex, ModifiableGameState gameState){
         this.teamIndex = teamIndex;
@@ -33,6 +35,8 @@ public class JPanelTeamController extends AbstractGameStateObserver {
         nameTextField.setEditable(true);
         abbreviationTextField.setEditable(true);
         scoreTextField.setEditable(false);
+
+        panel.add(new JLabel("Team " + teamIndex + " :"));
 
         panel.add(new JLabel("Name"));
         panel.add(nameTextField);
@@ -49,7 +53,13 @@ public class JPanelTeamController extends AbstractGameStateObserver {
         return panel;
     }
 
-    public void commitNameFields(){
+    @Override
+    public void listenToGameState(boolean value) {
+        listen = value;
+    }
+
+    @Override
+    public void commitInfo(){
         gameState.setTeamIdentity(teamIndex, nameTextField.getText(), abbreviationTextField.getText());
     }
 
@@ -78,12 +88,15 @@ public class JPanelTeamController extends AbstractGameStateObserver {
 
     @Override
     public void onNameUpdate(GameState gameState) {
-        nameTextField.setText(gameState.getTeam(teamIndex).getName());
-        abbreviationTextField.setText(gameState.getTeam(teamIndex).getAbbreviation());
+        if(listen){
+            nameTextField.setText(gameState.getTeam(teamIndex).getName());
+            abbreviationTextField.setText(gameState.getTeam(teamIndex).getAbbreviation());
+        }
     }
 
     @Override
     public void onScoreUpdate(GameState gameState) {
-        scoreTextField.setText(gameState.getTeam(teamIndex).getPoints() + "");
+        if(listen)
+            scoreTextField.setText(gameState.getTeam(teamIndex).getPoints() + "");
     }
 }

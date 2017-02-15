@@ -5,7 +5,7 @@ import GameStateObserver.*;
 
 import javax.swing.*;
 
-public class JPanelMapController extends AbstractGameStateObserver {
+public class JPanelMapController extends AbstractGameStateObserver implements JPanelTeamMapController {
 
     private int mapIndex;
     private ModifiableGameState gameState;
@@ -17,6 +17,8 @@ public class JPanelMapController extends AbstractGameStateObserver {
 
     private JTextField nameTextField = new JTextField(nameLength);
     private JTextField gameTypeTextField = new JTextField(gameTypeLength);
+
+    private boolean listen = true;
 
     public JPanelMapController(int mapIndex, ModifiableGameState gameState){
         this.mapIndex = mapIndex;
@@ -37,7 +39,13 @@ public class JPanelMapController extends AbstractGameStateObserver {
         return panel;
     }
 
-    public void commitMapInfo(){
+    @Override
+    public void listenToGameState(boolean value) {
+        listen = value;
+    }
+
+    @Override
+    public void commitInfo(){
         gameState.setMap(mapIndex,
                 new StandardMap(nameTextField.getText(),
                                 gameTypeTextField.getText()));
@@ -45,8 +53,10 @@ public class JPanelMapController extends AbstractGameStateObserver {
 
     @Override
     public void onMapUpdate(GameState gameState) {
-        Map map = gameState.getMap(mapIndex);
-        nameTextField.setText(map.getName());
-        gameTypeTextField.setText(map.getGameType());
+        if(listen){
+            Map map = gameState.getMap(mapIndex);
+            nameTextField.setText(map.getName());
+            gameTypeTextField.setText(map.getGameType());
+        }
     }
 }

@@ -2,6 +2,7 @@ package JFrameControllers;
 
 import GameState.*;
 import GameStateObserver.GameStateObserver;
+import com.sun.media.sound.InvalidFormatException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,8 +21,8 @@ public class StandardJFrameController implements JFrameController {
     //TODO: "Add Team" and "Add Map" buttons
 
     JFrame frame;
-    ArrayList<JPanelTeamController> teamPanels;
-    ArrayList<JPanelMapController> mapPanels;
+    ArrayList<JPanelTeamMapController> teamPanels;
+    ArrayList<JPanelTeamMapController> mapPanels;
 
     public StandardJFrameController(){
 
@@ -67,14 +68,7 @@ public class StandardJFrameController implements JFrameController {
         });
 
         JButton commitTeam = new JButton("Commit Teams");
-        commitTeam.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                for(JPanelTeamController tc : teamPanels) {
-                    tc.commitNameFields();
-                }
-            }
-        });
+        commitTeam.addActionListener(createCommitActionListener(teamPanels));
 
         JPanel mapControllerPanel = new JPanel(new GridLayout(gameState.getMapsList().size(), 1));
 
@@ -90,18 +84,66 @@ public class StandardJFrameController implements JFrameController {
         }
 
         JButton addMap = new JButton("Commit Maps");
-        addMap.addActionListener(new ActionListener() {
+        addMap.addActionListener(createCommitActionListener(mapPanels));
+
+        JPanel seriesPanel = new JPanel();
+        seriesPanel.add(new JLabel("Best of"));
+        JTextField seriesField = new JTextField(4);
+        seriesPanel.add(seriesField);
+        JButton seriesCommit = new JButton("Commit");
+        seriesCommit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                for(JPanelMapController mc : mapPanels){
-                    mc.commitMapInfo();
+                try{
+                    int length = Integer.parseInt(seriesField.getText());
+                    gameState.setSeriesLength(length);
+                } catch(Exception exception) {
+                    seriesField.setText(0 + "");
                 }
             }
         });
+        seriesPanel.add(seriesCommit);
 
+        JPanel pausePanel = new JPanel();
+        pausePanel.add(new JLabel("Team ID: "));
+        JTextField pauseIDField = new JTextField(3);
+        pausePanel.add(pauseIDField);
+        pausePanel.add(new JLabel("Reason: "));
+        JTextField pauseReasonField = new JTextField(9);
+        pausePanel.add(pauseReasonField);
+        JButton unpauseButt = new JButton("Unpause");
+        unpauseButt.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gameState.unpause();
+            }
+        });
+        pausePanel.add(unpauseButt);
+        JButton pauseButt = new JButton("Pause");
+        pauseButt.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try{
+                    int id = Integer.parseInt(pauseIDField.getText());
+                    if(id < gameState.getTeamsAmount()){
+                        String reason = null;
+                        if(!pauseReasonField.getText().equals("")){
+                            reason = pauseReasonField.getText();
+                        }
+                        gameState.setPauseTeam(id, reason);
+                    }
+                } catch (Exception exception) {
+                    pauseIDField.setText(0 + "");
+                }
+            }
+        });
+        pausePanel.add(pauseButt);
+
+        meta.add(seriesPanel, BorderLayout.NORTH);
         meta.add(shiftButt, BorderLayout.CENTER);
         meta.add(commitTeam, BorderLayout.EAST);
         meta.add(addMap, BorderLayout.WEST);
+        meta.add(pausePanel, BorderLayout.SOUTH);
 
         gameStatePanel.add(teamControllersPanel, BorderLayout.NORTH);
         gameStatePanel.add(meta, BorderLayout.CENTER);
@@ -109,5 +151,21 @@ public class StandardJFrameController implements JFrameController {
 
         frame.add(gameStatePanel, BorderLayout.CENTER);
         frame.pack();
+    }
+
+    private ActionListener createCommitActionListener(ArrayList<JPanelTeamMapController> list){
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for(JPanelTeamMapController c : list)
+                    c.listenToGameState(false);
+
+                for(JPanelTeamMapController c : list)
+                    c.commitInfo();
+
+                for(JPanelTeamMapController c : list)
+                    c.listenToGameState(true);
+            }
+        };
     }
 }
