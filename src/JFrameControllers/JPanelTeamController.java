@@ -4,7 +4,6 @@ import GameState.*;
 import GameStateObserver.AbstractGameStateObserver;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -17,13 +16,14 @@ public class JPanelTeamController extends AbstractGameStateObserver {
     private ModifiableGameState gameState;
 
     private int nameLength = 16;
+    private int abbreviavtionLength = 6;
     private int scoreLength = 1;
 
-    private JPanel panel = new JPanel(new BorderLayout());
+    private JPanel panel = new JPanel();
 
-    private final JTextField nameTextField = new JTextField(nameLength);
-    private final JTextField abbreviationTextField = new JTextField(nameLength);
-    private final JTextField scoreTextField = new JTextField(scoreLength);
+    private JTextField nameTextField = new JTextField(nameLength);
+    private JTextField abbreviationTextField = new JTextField(abbreviavtionLength);
+    private JTextField scoreTextField = new JTextField(scoreLength);
 
     public JPanelTeamController(int teamIndex, ModifiableGameState gameState){
         this.teamIndex = teamIndex;
@@ -34,28 +34,23 @@ public class JPanelTeamController extends AbstractGameStateObserver {
         abbreviationTextField.setEditable(true);
         scoreTextField.setEditable(false);
 
-        JPanel fieldPanel = new JPanel();
-        fieldPanel.add(createNamePanel("Name", nameTextField));
-        fieldPanel.add(createNamePanel("Abbr.", abbreviationTextField));
+        panel.add(new JLabel("Name"));
+        panel.add(nameTextField);
 
-        fieldPanel.add(createScoreButton(-1));
-        fieldPanel.add(scoreTextField);
-        fieldPanel.add(createScoreButton(1));
+        panel.add(new JLabel("Abbr."));
+        panel.add(abbreviationTextField);
 
-        panel.add(fieldPanel, BorderLayout.NORTH);
+        panel.add(createScoreButton(-1));
+        panel.add(scoreTextField);
+        panel.add(createScoreButton(1));
+    }
+
+    public JPanel getPanel(){
+        return panel;
     }
 
     public void commitNameFields(){
         gameState.setTeamIdentity(teamIndex, nameTextField.getText(), abbreviationTextField.getText());
-    }
-
-    private JPanel createNamePanel(String label, JTextField textField){
-        JPanel panel = new JPanel();
-
-        panel.add(new JLabel(label));
-        panel.add(textField);
-
-        return panel;
     }
 
     private JButton createScoreButton(int change){
@@ -84,7 +79,7 @@ public class JPanelTeamController extends AbstractGameStateObserver {
     @Override
     public void onNameUpdate(GameState gameState) {
         nameTextField.setText(gameState.getTeam(teamIndex).getName());
-        nameTextField.setText(gameState.getTeam(teamIndex).getAbbreviation());
+        abbreviationTextField.setText(gameState.getTeam(teamIndex).getAbbreviation());
     }
 
     @Override
