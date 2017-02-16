@@ -47,6 +47,7 @@ public class JPanelTeamController extends AbstractGameStateObserver implements J
         panel.add(createScoreButton(-1));
         panel.add(scoreTextField);
         panel.add(createScoreButton(1));
+        scoreTextField.setText(gameState.getTeam(teamIndex).getPoints() + "");
     }
 
     public JPanel getPanel(){

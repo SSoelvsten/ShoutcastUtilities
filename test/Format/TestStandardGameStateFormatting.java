@@ -135,13 +135,32 @@ public class TestStandardGameStateFormatting {
 
     @Test
     public void mapWithoutTypeShouldBeNameAlone(){
-        gameState.setMap(0, new StandardMap("MapName", null));
+        gameState.setMap(0, new StandardMap("MapName", null, null));
         assertThat(format.map(0, gameState), is("MapName"));
     }
 
     @Test
-    public void mapWithTypeShouldBePutInParantheses(){
-        gameState.setMap(0, new StandardMap("MapName", "Type"));
-        assertThat(format.map(0, gameState), is("MapName (Type)"));
+    public void mapWithTypeShouldSeperatedBySpace(){
+        gameState.setMap(0, new StandardMap("MapName", "Type", null));
+        assertThat(format.map(0, gameState), is("MapName Type"));
+    }
+
+    @Test
+    public void mapWithTypeAndNoteShouldBeHaveTheNoteInParentheses(){
+        gameState.setMap(0, new StandardMap("MapName", "Type", "Note"));
+        assertThat(format.map(0, gameState), is("MapName Type (Note)"));
+    }
+
+    @Test
+    public void emptyStringsOnNoteIsTreatedAsNull(){
+        //Treated as null -> behaves similar as above
+        gameState.setMap(0, new StandardMap("MapName", "Type", ""));
+        assertThat(format.map(0, gameState), is("MapName Type"));
+    }
+
+    @Test
+    public void emptyStringOnGameTypeIsTreatedAsNull(){
+        gameState.setMap(0, new StandardMap("MapName", "", ""));
+        assertThat(format.map(0, gameState), is("MapName"));
     }
 }

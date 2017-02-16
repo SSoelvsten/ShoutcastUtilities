@@ -52,10 +52,16 @@ public class StandardGameStateFormattingStrategy implements GameStateFormattingS
     @Override
     public String map(int mapIndex, GameState gs) {
         String res = gs.getMap(mapIndex).getName();
-        if(gs.getMap(mapIndex).getGameType() != null)
-            res += " (" + gs.getMap(mapIndex).getGameType() + ")";
-
+        if(isNotEmptyOrNull(gs.getMap(mapIndex).getGameType()))
+            res += " " + gs.getMap(mapIndex).getGameType();
+        if(isNotEmptyOrNull(gs.getMap(mapIndex).getNote())){
+            res += " (" + gs.getMap(mapIndex).getNote() + ")";
+        }
         return res;
+    }
+
+    private boolean isNotEmptyOrNull(String s){
+        return s != null && !s.equals("");
     }
 
     @Override

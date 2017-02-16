@@ -16,8 +16,8 @@ public class GlobalShortcuts implements NativeKeyListener {
 
     //The managers to send the shortcuts to.
     private ModifiableGameState gameState;
-    int teamAIndex;
-    int teamBIndex;
+    int team0Index;
+    int team1Index;
 
     //Flags for keys
     private int numberOfModifiers;
@@ -26,8 +26,6 @@ public class GlobalShortcuts implements NativeKeyListener {
     private boolean modifier1B;
     private int modifier2;
     private boolean modifier2B;
-
-    private int update;
 
     private int incA;
     private int decA;
@@ -41,13 +39,13 @@ public class GlobalShortcuts implements NativeKeyListener {
      * @param gameState The GameState to modify.
      */
     public GlobalShortcuts(Config config, ModifiableGameState gameState,
-                           int teamAIndex, int teamBIndex){
+                           int team0Index, int team1Index){
         super();
 
         //Connect to the managers
         this.gameState = gameState;
-        this.teamAIndex = teamAIndex;
-        this.teamBIndex = teamBIndex;
+        this.team0Index = team0Index;
+        this.team1Index = team1Index;
 
         numberOfModifiers = config.getInteger(ConfigKeys.number_modifiers);
 
@@ -57,11 +55,10 @@ public class GlobalShortcuts implements NativeKeyListener {
         modifier2 = config.getInteger(ConfigKeys.modifier2_key);
         modifier2B = false;
 
-        update = config.getInteger(ConfigKeys.commit_key);
-        incA = config.getInteger(ConfigKeys.team_a_increment_key);
-        decA = config.getInteger(ConfigKeys.team_a_decrement_key);
-        incB = config.getInteger(ConfigKeys.team_b_increment_key);
-        decB = config.getInteger(ConfigKeys.team_b_decrement_key);
+        incA = config.getInteger(ConfigKeys.team_0_increment_key);
+        decA = config.getInteger(ConfigKeys.team_0_decrement_key);
+        incB = config.getInteger(ConfigKeys.team_1_increment_key);
+        decB = config.getInteger(ConfigKeys.team_1_decrement_key);
         swap = config.getInteger(ConfigKeys.swap_teams_key);
     }
 
@@ -89,20 +86,18 @@ public class GlobalShortcuts implements NativeKeyListener {
      */
     private void executeShortcut(int keycode){
         if (keycode == incA) {
-            gameState.setTeamPoints(teamAIndex, gameState.getTeam(teamAIndex).getPoints() + 1);
+            gameState.setTeamPoints(team0Index, gameState.getTeam(team0Index).getPoints() + 1);
         } else if (keycode == decA) {
-            if(gameState.getTeam(teamBIndex).getPoints() > 0)
-                gameState.setTeamPoints(teamAIndex, gameState.getTeam(teamAIndex).getPoints() - 1);
+            if(gameState.getTeam(team1Index).getPoints() > 0)
+                gameState.setTeamPoints(team0Index, gameState.getTeam(team0Index).getPoints() - 1);
         } else if (keycode == incB) {
-            gameState.setTeamPoints(teamBIndex, gameState.getTeam(teamBIndex).getPoints() + 1);
+            gameState.setTeamPoints(team1Index, gameState.getTeam(team1Index).getPoints() + 1);
         } else if (keycode == decB) {
-            if(gameState.getTeam(teamBIndex).getPoints() > 0)
-                gameState.setTeamPoints(teamBIndex, gameState.getTeam(teamBIndex).getPoints() - 1);
+            if(gameState.getTeam(team1Index).getPoints() > 0)
+                gameState.setTeamPoints(team1Index, gameState.getTeam(team1Index).getPoints() - 1);
         } else if (keycode == swap) {
             gameState.shiftTeams();
-        } /*else if (update == keycode) {
-            //Committing is now not a thing anymore
-        }*/
+        }
     }
 
     /**

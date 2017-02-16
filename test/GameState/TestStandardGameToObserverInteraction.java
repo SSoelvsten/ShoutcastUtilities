@@ -53,7 +53,7 @@ public class TestStandardGameToObserverInteraction {
 
     @Test
     public void shouldCallOnMapChange(){
-        gameState.setMap(0, new StandardMap("MapName", "CTF"));
+        gameState.setMap(0, new StandardMap("MapName", "CTF", null));
         assertThat(observer.onMapUpdateCalls, is(1));
     }
 

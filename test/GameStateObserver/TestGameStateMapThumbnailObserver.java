@@ -30,15 +30,15 @@ public class TestGameStateMapThumbnailObserver {
 
     @Test
     public void onAddingFirstMapItIsWrittenToDisk(){
-        gameState.setMap(0, new StandardMap("Name", "Type"));
+        gameState.setMap(0, new StandardMap("Name", "Type", null));
         assertThat(spy.filesCopied, is(1));
         assertThat(spy.files.get(config.getString(ConfigKeys.folder_map_dst)), is("map1.png"));
     }
 
     @Test
     public void onAddingTwoMapsBothAreWrittenToDiskInSeperateFiles(){
-        gameState.setMap(0, new StandardMap("Name1", "Type")); //Copies one map
-        gameState.setMap(1, new StandardMap("Name2", "Type")); //Copies two maps
+        gameState.setMap(0, new StandardMap("Name1", "Type", null)); //Copies one map
+        gameState.setMap(1, new StandardMap("Name2", "Type", null)); //Copies two maps
         assertThat(spy.filesCopied, is(3));
         assertThat(spy.files.get(config.getString(ConfigKeys.folder_map_dst)), is("map2.png"));
     }

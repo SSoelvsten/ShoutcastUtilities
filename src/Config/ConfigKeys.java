@@ -26,11 +26,9 @@ public abstract class ConfigKeys {
     public static final String modifier1_key = "modifier1_key";
     public static final String modifier2_key = "modifier2_key";
 
-    public static final String commit_key = "commit_key";
-
-    public static final String team_a_increment_key = "team_a_increment_key";
-    public static final String team_a_decrement_key = "team_a_decrement_key";
-    public static final String team_b_increment_key = "team_b_increment_key";
-    public static final String team_b_decrement_key = "team_b_decrement_key";
+    public static final String team_0_increment_key = "team_0_increment_key";
+    public static final String team_0_decrement_key = "team_0_decrement_key";
+    public static final String team_1_increment_key = "team_1_increment_key";
+    public static final String team_1_decrement_key = "team_1_decrement_key";
     public static final String swap_teams_key = "swap_teams_key";
 }

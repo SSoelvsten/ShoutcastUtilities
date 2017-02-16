@@ -34,12 +34,10 @@ public class StandardConfig implements Config {
         settings.put(ConfigKeys.modifier1_key, "3640");
         settings.put(ConfigKeys.modifier2_key, "3613");
 
-        settings.put(ConfigKeys.commit_key, "82");
-
-        settings.put(ConfigKeys.team_a_increment_key, "71");
-        settings.put(ConfigKeys.team_a_increment_key, "75");
-        settings.put(ConfigKeys.team_b_increment_key, "73");
-        settings.put(ConfigKeys.team_b_decrement_key, "77");
+        settings.put(ConfigKeys.team_0_increment_key, "71");
+        settings.put(ConfigKeys.team_0_increment_key, "75");
+        settings.put(ConfigKeys.team_1_increment_key, "73");
+        settings.put(ConfigKeys.team_1_decrement_key, "77");
         settings.put(ConfigKeys.swap_teams_key, "72");
     }
 

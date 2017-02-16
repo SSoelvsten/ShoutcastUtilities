@@ -10,13 +10,14 @@ public class JPanelMapController extends AbstractGameStateObserver implements JP
     private int mapIndex;
     private ModifiableGameState gameState;
 
-    private int nameLength = 8;
-    private int gameTypeLength = 4;
+    private int nameLength = 12;
+    private int gameTypeLength = 6;
 
     private JPanel panel = new JPanel();
 
     private JTextField nameTextField = new JTextField(nameLength);
     private JTextField gameTypeTextField = new JTextField(gameTypeLength);
+    private JTextField noteTextField = new JTextField(gameTypeLength);
 
     private boolean listen = true;
 
@@ -32,7 +33,8 @@ public class JPanelMapController extends AbstractGameStateObserver implements JP
         panel.add(nameTextField);
         panel.add(new JLabel("Game type"));
         panel.add(gameTypeTextField);
-
+        panel.add(new JLabel("Note"));
+        panel.add(noteTextField);
     }
 
     public JPanel getPanel(){
@@ -48,7 +50,8 @@ public class JPanelMapController extends AbstractGameStateObserver implements JP
     public void commitInfo(){
         gameState.setMap(mapIndex,
                 new StandardMap(nameTextField.getText(),
-                                gameTypeTextField.getText()));
+                                gameTypeTextField.getText(),
+                                noteTextField.getText()));
     }
 
     @Override

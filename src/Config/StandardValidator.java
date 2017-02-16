@@ -26,11 +26,10 @@ public class StandardValidator implements Validator {
         checkInteger(toValidate, ConfigKeys.number_modifiers, toCompare.getInteger(ConfigKeys.number_modifiers));
         checkInteger(toValidate, ConfigKeys.modifier1_key, toCompare.getInteger(ConfigKeys.modifier1_key));
         checkInteger(toValidate, ConfigKeys.modifier2_key, toCompare.getInteger(ConfigKeys.modifier2_key));
-        checkInteger(toValidate, ConfigKeys.commit_key, toCompare.getInteger(ConfigKeys.commit_key));
-        checkInteger(toValidate, ConfigKeys.team_a_increment_key, toCompare.getInteger(ConfigKeys.team_a_increment_key));
-        checkInteger(toValidate, ConfigKeys.team_a_decrement_key, toCompare.getInteger(ConfigKeys.team_b_decrement_key));
-        checkInteger(toValidate, ConfigKeys.team_b_increment_key, toCompare.getInteger(ConfigKeys.team_b_increment_key));
-        checkInteger(toValidate, ConfigKeys.team_b_decrement_key, toCompare.getInteger(ConfigKeys.team_b_decrement_key));
+        checkInteger(toValidate, ConfigKeys.team_0_increment_key, toCompare.getInteger(ConfigKeys.team_0_increment_key));
+        checkInteger(toValidate, ConfigKeys.team_0_decrement_key, toCompare.getInteger(ConfigKeys.team_1_decrement_key));
+        checkInteger(toValidate, ConfigKeys.team_1_increment_key, toCompare.getInteger(ConfigKeys.team_1_increment_key));
+        checkInteger(toValidate, ConfigKeys.team_1_decrement_key, toCompare.getInteger(ConfigKeys.team_1_decrement_key));
         checkInteger(toValidate, ConfigKeys.swap_teams_key, toCompare.getInteger(ConfigKeys.swap_teams_key));
     }
 

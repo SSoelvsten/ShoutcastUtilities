@@ -125,7 +125,7 @@ public class TestGameStateToTXTObserver {
 
     @Test
     public void ShouldPrint1MapFileFor1MapInGameState(){
-        gameState.setMap(0, new StandardMap("FirstMap", "CTF"));
+        gameState.setMap(0, new StandardMap("FirstMap", "CTF", null));
         observer.onMapUpdate(gameState);
 
         //With only one map, it should be written to map1.txt
