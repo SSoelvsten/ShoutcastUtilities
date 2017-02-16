@@ -20,6 +20,8 @@ public class StandardValidator implements Validator {
         }
 
         //Check type of bindings
+        checkInteger(toValidate, ConfigKeys.team_amount, toCompare.getInteger(ConfigKeys.team_amount));
+        checkInteger(toValidate, ConfigKeys.map_amount, toCompare.getInteger(ConfigKeys.map_amount));
         checkBoolean(toValidate, ConfigKeys.enable_keybindings, toCompare.getBoolean(ConfigKeys.enable_keybindings));
         checkInteger(toValidate, ConfigKeys.number_modifiers, toCompare.getInteger(ConfigKeys.number_modifiers));
         checkInteger(toValidate, ConfigKeys.modifier1_key, toCompare.getInteger(ConfigKeys.modifier1_key));

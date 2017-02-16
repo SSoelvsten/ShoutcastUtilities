@@ -28,7 +28,7 @@ public class JPanelMapController extends AbstractGameStateObserver implements JP
         nameTextField.setEditable(true);
         gameTypeTextField.setEditable(true);
 
-        panel.add(new JLabel("Map"));
+        panel.add(new JLabel("Map " + mapIndex + ":"));
         panel.add(nameTextField);
         panel.add(new JLabel("Game type"));
         panel.add(gameTypeTextField);

@@ -28,7 +28,7 @@ public class GameStateMapThumbnailObserver extends AbstractGameStateObserver {
         for(Map map : gameState.getMapsList()){
             i++;
 
-            String fromFile = map.getName()  + "_" + map.getGameType().toLowerCase();
+            String fromFile = map.getName().toLowerCase()  + "_" + map.getGameType().toLowerCase() + ".png";
             String toFile = "map" + i + ".png";
             try{
                 fileHandler.copyFile(config.getString(ConfigKeys.folder_map_src), fromFile,

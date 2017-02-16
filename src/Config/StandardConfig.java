@@ -12,6 +12,10 @@ public class StandardConfig implements Config {
     private Map<String,String> settings = new HashMap<>();
 
     public StandardConfig(){
+        //Setup
+        settings.put(ConfigKeys.team_amount, "2");
+        settings.put(ConfigKeys.map_amount, "3");
+
         //Folder
         settings.put(ConfigKeys.folder_map_src, "maps/");
         settings.put(ConfigKeys.folder_map_dst, "txt/");

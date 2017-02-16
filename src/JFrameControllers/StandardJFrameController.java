@@ -83,14 +83,12 @@ public class StandardJFrameController implements JFrameController {
             mpc.onMapUpdate(gameState);
         }
 
-        JButton addMap = new JButton("Commit Maps");
-        addMap.addActionListener(createCommitActionListener(mapPanels));
-
         JPanel seriesPanel = new JPanel();
         seriesPanel.add(new JLabel("Best of"));
         JTextField seriesField = new JTextField(4);
+        seriesField.setText(mapPanels.size() + "");
         seriesPanel.add(seriesField);
-        JButton seriesCommit = new JButton("Commit");
+        JButton seriesCommit = new JButton("Commit Maps");
         seriesCommit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -102,15 +100,22 @@ public class StandardJFrameController implements JFrameController {
                 }
             }
         });
+        seriesCommit.addActionListener(createCommitActionListener(mapPanels));
         seriesPanel.add(seriesCommit);
 
-        JPanel pausePanel = new JPanel();
-        pausePanel.add(new JLabel("Team ID: "));
+        JPanel pausePanel = new JPanel(new BorderLayout());
+
+        JPanel pauseFieldsPanel = new JPanel(new FlowLayout());
+        pauseFieldsPanel.add(new JLabel("Team ID: "));
         JTextField pauseIDField = new JTextField(3);
-        pausePanel.add(pauseIDField);
-        pausePanel.add(new JLabel("Reason: "));
-        JTextField pauseReasonField = new JTextField(9);
-        pausePanel.add(pauseReasonField);
+        pauseFieldsPanel.add(pauseIDField);
+        pauseFieldsPanel.add(new JLabel("Pause Reason: "));
+        JTextField pauseReasonField = new JTextField(16);
+        pauseFieldsPanel.add(pauseReasonField);
+        pauseFieldsPanel.add(pauseReasonField);
+
+        pausePanel.add(pauseFieldsPanel, BorderLayout.NORTH);
+
         JButton unpauseButt = new JButton("Unpause");
         unpauseButt.addActionListener(new ActionListener() {
             @Override
@@ -118,7 +123,7 @@ public class StandardJFrameController implements JFrameController {
                 gameState.unpause();
             }
         });
-        pausePanel.add(unpauseButt);
+        pausePanel.add(unpauseButt, BorderLayout.WEST);
         JButton pauseButt = new JButton("Pause");
         pauseButt.addActionListener(new ActionListener() {
             @Override
@@ -137,13 +142,17 @@ public class StandardJFrameController implements JFrameController {
                 }
             }
         });
-        pausePanel.add(pauseButt);
+        pausePanel.add(pauseButt, BorderLayout.EAST);
 
-        meta.add(seriesPanel, BorderLayout.NORTH);
-        meta.add(shiftButt, BorderLayout.CENTER);
-        meta.add(commitTeam, BorderLayout.EAST);
-        meta.add(addMap, BorderLayout.WEST);
-        meta.add(pausePanel, BorderLayout.SOUTH);
+        JPanel metaButtons = new JPanel(new GridLayout(2,2));
+        metaButtons.add(shiftButt);
+        metaButtons.add(commitTeam);
+        metaButtons.add(pauseButt);
+        metaButtons.add(unpauseButt);
+
+        meta.add(metaButtons, BorderLayout.NORTH);
+        meta.add(pausePanel, BorderLayout.CENTER);
+        meta.add(seriesPanel, BorderLayout.SOUTH);
 
         gameStatePanel.add(teamControllersPanel, BorderLayout.NORTH);
         gameStatePanel.add(meta, BorderLayout.CENTER);

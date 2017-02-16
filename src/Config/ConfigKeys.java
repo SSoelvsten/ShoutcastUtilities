@@ -4,6 +4,10 @@ package Config;
  * Class containing all keys expected to be present in a config
  */
 public abstract class ConfigKeys {
+    //Setup
+    public static final String team_amount = "team_amount";
+    public static final String map_amount = "map_amount";
+
     //Folder
     public static final String folder_map_src = "folder_map_img_src";
     public static final String folder_map_dst = "folder_map_img_dst";
