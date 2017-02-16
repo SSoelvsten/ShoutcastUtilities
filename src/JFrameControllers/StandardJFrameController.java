@@ -130,7 +130,7 @@ public class StandardJFrameController implements JFrameController {
             public void actionPerformed(ActionEvent e) {
                 try{
                     int id = Integer.parseInt(pauseIDField.getText());
-                    if(id < gameState.getTeamsAmount()){
+                    if(id < gameState.getTeamsAmount() && id >= 0){
                         String reason = null;
                         if(!pauseReasonField.getText().equals("")){
                             reason = pauseReasonField.getText();

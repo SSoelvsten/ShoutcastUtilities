@@ -20,7 +20,7 @@ These can be changed before commiting to the .txt files, making for a better vie
 
 Link the .txt files outputted into OBS and you're ready to go!
 
-![Alt text](/TeamScoreManager.png?raw=true "OBS using the output of the program")
+![Alt text](/img/TeamScoreManager.png?raw=true "OBS using the output of the program")
 
 With 0.1.1b this software also includes a pause notification, which automatically includes the teamname and has an optional pause description available. When there's no pause notification, the .txt file is empty to not show the text on the pause screen.
 
@@ -29,7 +29,7 @@ With 0.1.2b this software also includes a BO X output, calculating the current g
 ## Clock
 A small java program to output the current time of day and/or a countdown into two .txt files. This might be stressful on a harddrive, but it works.
 
-![Alt text](/Clock.png?raw=true "The timer")
+![Alt text](/img/Clock.png?raw=true "The timer")
 
 ## Minimalist Changelog
 The following is a small overview of the implemented features
@@ -52,6 +52,9 @@ The following is a small overview of the implemented features
 
 ### 0.1.3a
 - Victor or draw output into victor.txt
+
+### 0.2.0 (Current Goal)
+- Remake everything with TDD and proper compositional design. At first this will only be the Team Score
 
 ## TODO:
 - Make the amount of clocks customizable

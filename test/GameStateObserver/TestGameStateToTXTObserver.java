@@ -36,7 +36,7 @@ public class TestGameStateToTXTObserver {
     }
 
     @Test
-    public void ShouldPrintTeam1NameFile(){
+    public void shouldPrintTeam1NameFile(){
         observer.onNameUpdate(gameState);
 
         String file = "txt/name1.txt";
@@ -47,7 +47,7 @@ public class TestGameStateToTXTObserver {
     }
 
     @Test
-    public void ShouldPrintTeam1AbbreviationFile(){
+    public void shouldPrintTeam1AbbreviationFile(){
         observer.onNameUpdate(gameState);
 
         String file = "txt/abbreviation1.txt";
@@ -58,7 +58,7 @@ public class TestGameStateToTXTObserver {
     }
 
     @Test
-    public void ShouldPrintTeam1ScoreFile(){
+    public void shouldPrintTeam1ScoreFile(){
         observer.onScoreUpdate(gameState);
 
         String file = "txt/score1.txt";
@@ -69,7 +69,7 @@ public class TestGameStateToTXTObserver {
     }
 
     @Test
-    public void ShouldPrintTeam2NameFile(){
+    public void shouldPrintTeam2NameFile(){
         observer.onNameUpdate(gameState);
 
         String file = "txt/name2.txt";
@@ -80,7 +80,7 @@ public class TestGameStateToTXTObserver {
     }
 
     @Test
-    public void ShouldPrintTeam2AbbreviationFile(){
+    public void shouldPrintTeam2AbbreviationFile(){
         observer.onNameUpdate(gameState);
 
         String file = "txt/abbreviation2.txt";
@@ -91,7 +91,7 @@ public class TestGameStateToTXTObserver {
     }
 
     @Test
-    public void ShouldPrintTeam2ScoreFile(){
+    public void shouldPrintTeam2ScoreFile(){
         observer.onScoreUpdate(gameState);
 
         String file = "txt/score2.txt";
@@ -102,7 +102,7 @@ public class TestGameStateToTXTObserver {
     }
 
     @Test
-    public void ShouldPrintGameNumber(){
+    public void shouldPrintGameNumber(){
         observer.onScoreUpdate(gameState);
 
         String file = "txt/game_number.txt";
@@ -113,7 +113,7 @@ public class TestGameStateToTXTObserver {
     }
 
     @Test
-    public void ShouldPrintPause(){
+    public void shouldPrintPause(){
         observer.onPauseUpdate(gameState);
 
         String file = "txt/pause.txt";
@@ -124,7 +124,7 @@ public class TestGameStateToTXTObserver {
     }
 
     @Test
-    public void ShouldPrint1MapFileFor1MapInGameState(){
+    public void shouldPrint1MapFileFor1MapInGameState(){
         gameState.setMap(0, new StandardMap("FirstMap", "CTF", null));
         observer.onMapUpdate(gameState);
 
@@ -137,7 +137,7 @@ public class TestGameStateToTXTObserver {
     }
 
     @Test
-    public void ShouldPrintTeamAndScoreOnShift(){
+    public void shouldPrintTeamAndScoreOnShift(){
         observer.onShiftUpdate(gameState);
 
         //A Name
@@ -160,5 +160,16 @@ public class TestGameStateToTXTObserver {
                 IsNull.notNullValue());
         assertThat(readWriteSpy.read(file),
                 is(formattingStrategy.teamScore(teamAIndex, gameState)));
+    }
+
+    @Test
+    public void shouldPrintVictor(){
+        observer.onScoreUpdate(gameState);
+
+        String file = "txt/winner.txt";
+        assertThat(readWriteSpy.read(file),
+                IsNull.notNullValue());
+        assertThat(readWriteSpy.read(file),
+                is(formattingStrategy.winner(gameState)));
     }
 }

@@ -21,7 +21,7 @@ public class StandardGameStateFormattingStrategy implements GameStateFormattingS
         if(gs.getPause() != null){
             res = "Game Paused: " + gs.getPause().getPausingTeam().getName();
 
-            if(gs.getPause().getReason() != null){
+            if(isNotEmptyOrNull(gs.getPause().getReason())){
                 res += ", " + gs.getPause().getReason();
             }
         }

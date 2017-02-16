@@ -64,6 +64,7 @@ public class GameStateToTXTObserver implements GameStateObserver {
             writer.write(filename, scoreString);
         }
 
+        writer.write(config.getString(ConfigKeys.folder_txt_dst) + "winner.txt", formatting.winner(gameState));
         writer.write(config.getString(ConfigKeys.folder_txt_dst) + "game_number.txt", formatting.gameNumber(gameState));
     }
 

@@ -60,6 +60,13 @@ public class TestStandardGameStateFormatting {
                 is("Game Paused: " + teamB.getName() + ", Tomatoes"));
     }
 
+    @Test
+    public void pauseWithEmptyStringAsReasonResultsInSameAsNull(){
+        gameState.setPauseTeam(teamAIndex, "");
+        assertThat(format.pause(gameState),
+                is("Game Paused: " + teamA.getName()));
+    }
+
     private void setGameScore(int a, int b){
         gameState.setTeamPoints(teamAIndex, a);
         gameState.setTeamPoints(teamBIndex, b);
