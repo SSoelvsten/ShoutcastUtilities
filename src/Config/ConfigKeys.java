@@ -31,4 +31,5 @@ public abstract class ConfigKeys {
     public static final String team_1_increment_key = "team_1_increment_key";
     public static final String team_1_decrement_key = "team_1_decrement_key";
     public static final String swap_teams_key = "swap_teams_key";
+    public static final String unpause_key = "unpause_key";
 }

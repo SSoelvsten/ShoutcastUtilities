@@ -32,6 +32,7 @@ public class GlobalShortcuts implements NativeKeyListener {
     private int incB;
     private int decB;
     private int swap;
+    private int unpause;
 
     /**
      * Constructor setting up connections to the objects to control with the power of shortcuts
@@ -60,6 +61,7 @@ public class GlobalShortcuts implements NativeKeyListener {
         incB = config.getInteger(ConfigKeys.team_1_increment_key);
         decB = config.getInteger(ConfigKeys.team_1_decrement_key);
         swap = config.getInteger(ConfigKeys.swap_teams_key);
+        unpause = config.getInteger(ConfigKeys.unpause_key);
     }
 
     /**
@@ -88,7 +90,7 @@ public class GlobalShortcuts implements NativeKeyListener {
         if (keycode == incA) {
             gameState.setTeamPoints(team0Index, gameState.getTeam(team0Index).getPoints() + 1);
         } else if (keycode == decA) {
-            if(gameState.getTeam(team1Index).getPoints() > 0)
+            if(gameState.getTeam(team0Index).getPoints() > 0)
                 gameState.setTeamPoints(team0Index, gameState.getTeam(team0Index).getPoints() - 1);
         } else if (keycode == incB) {
             gameState.setTeamPoints(team1Index, gameState.getTeam(team1Index).getPoints() + 1);
@@ -97,6 +99,8 @@ public class GlobalShortcuts implements NativeKeyListener {
                 gameState.setTeamPoints(team1Index, gameState.getTeam(team1Index).getPoints() - 1);
         } else if (keycode == swap) {
             gameState.shiftTeams();
+        } else if (keycode == unpause){
+            gameState.unpause();
         }
     }
 

@@ -39,6 +39,7 @@ public class StandardConfig implements Config {
         settings.put(ConfigKeys.team_1_increment_key, "73");
         settings.put(ConfigKeys.team_1_decrement_key, "77");
         settings.put(ConfigKeys.swap_teams_key, "72");
+        settings.put(ConfigKeys.unpause_key, "76");
     }
 
     public Collection<String> getKeys(){
