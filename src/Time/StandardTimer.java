@@ -3,11 +3,15 @@ package Time;
 import Observer.TimerObserver;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * A standard timer, ticking with normal seconds.
  */
 public class StandardTimer implements ModifiableTimer {
+
+    private final ModifiableTimer thisTimer = this;
 
     private int hour;
     private int minute;
@@ -15,15 +19,14 @@ public class StandardTimer implements ModifiableTimer {
 
     private ArrayList<TimerObserver> observerList = new ArrayList<>();
 
-    private Ticker ticker;
+    private int tickrate;
 
-    private Thread thread;
+    private Timer timer;
+
     private TimerCalculatorStrategy strategy;
 
-    public StandardTimer(Ticker ticker, TimerCalculatorStrategy strategy){
-        this.ticker = ticker;
-        ticker.subscribe(this);
-
+    public StandardTimer(int msTickRate, TimerCalculatorStrategy strategy){
+        this.tickrate = msTickRate;
         this.strategy = strategy;
 
         set(0, 0, 0);
@@ -32,14 +35,22 @@ public class StandardTimer implements ModifiableTimer {
     @Override
     public void start() {
         stop();
-        thread = new Thread(ticker);
-        thread.start();
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run(){
+                strategy.setNextTime(thisTimer);
+            }
+        };
+
+        timer = new Timer();
+        timer.scheduleAtFixedRate(timerTask, 0, tickrate);
     }
 
     @Override
     public void stop() {
-        if(thread != null && thread.isAlive()){
-            thread.interrupt();
+        if(timer != null){
+            timer.cancel();
+            timer = null;
         }
     }
 
@@ -60,15 +71,13 @@ public class StandardTimer implements ModifiableTimer {
     }
 
     @Override
-    public void setTicker(Ticker ticker) {
-        this.ticker.unsubscribe(this);
-        this.ticker = ticker;
-        ticker.subscribe(this);
+    public void setTickrate(int msTickrate) {
+        this.tickrate = msTickrate;
     }
 
     @Override
-    public Ticker getTicker() {
-        return ticker;
+    public boolean isRunning() {
+        return timer != null;
     }
 
     @Override
@@ -87,12 +96,12 @@ public class StandardTimer implements ModifiableTimer {
     }
 
     @Override
-    public void subscribe(TimerObserver o) {
-        observerList.add(o);
+    public int getTickrate() {
+        return tickrate;
     }
 
     @Override
-    public void onTick() {
-        this.strategy.setNextTime(this);
+    public void subscribe(TimerObserver o) {
+        observerList.add(o);
     }
 }

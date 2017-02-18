@@ -25,8 +25,9 @@ public class StandardConfig implements Config {
         //Files
         settings.put(ConfigKeys.file_map_unknown, "unknown.png");
 
-        //Strings
+        //Values
         settings.put(ConfigKeys.string_pre_game_number, "Map");
+        settings.put(ConfigKeys.timer_tickrate, "1000");
 
         //Keybindings
         settings.put(ConfigKeys.enable_keybindings, "true");

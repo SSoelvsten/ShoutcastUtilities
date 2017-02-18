@@ -17,8 +17,9 @@ public abstract class ConfigKeys {
     //Files
     public static final String file_map_unknown = "file_map_unknown";
 
-    //Strings
+    //Values
     public static final String string_pre_game_number = "string_pre_game_number";
+    public static final String timer_tickrate = "timer_tickrate";
 
     //Keybinds
     public static final String enable_keybindings = "enable_keybindings";

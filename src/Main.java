@@ -1,13 +1,17 @@
 import Config.*;
+import Format.MinSecTimerFormattingStrategy;
 import Format.StandardGameStateFormattingStrategy;
+import Format.TimerFormattingStrategy;
 import GameState.*;
 import Observer.*;
 import GlobalShortcuts.*;
 import InputOutput.*;
 import JFrameControllers.*;
+import Time.*;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 
+import java.util.ArrayList;
 import java.util.logging.*;
 
 /**
@@ -36,19 +40,39 @@ public class Main {
 
         gs.setSeriesLength(config.getInteger(ConfigKeys.map_amount));
 
+        //Initialize the Timer and the strategies
+        ArrayList<String> stratNames = new ArrayList<>();
+        ArrayList<TimerCalculatorStrategy> calcStrats = new ArrayList<>();
+
+        stratNames.add("Clock");
+        calcStrats.add(new StandardTimerCalculationStrategy(0,59,0,59,0,23));
+
+        stratNames.add("Countdown");
+        calcStrats.add(new StopAtZeroTimerCalculationStrategyDecorator(
+                new StandardTimerCalculationStrategy(59,0,59,0,23,0)));
+
+        ModifiableTimer timer = new StandardTimer(config.getInteger(ConfigKeys.timer_tickrate), calcStrats.get(0));
+
         //Initialize the various listeners
+        ReadWriteStrategy output = new PreSpaceReadWriteStrategyDecorator(rws);
+
         GameStateObserver fileObserver = new GameStateToTXTObserver(config,
-                new StandardGameStateFormattingStrategy(config),
-                new PreSpaceReadWriteStrategyDecorator(rws));
+                new StandardGameStateFormattingStrategy(config), output);
         gs.subscribe(fileObserver);
 
         GameStateObserver thumbnailObserver = new GameStateMapThumbnailObserver(config, new BasicFileHandler());
         gs.subscribe(thumbnailObserver);
 
-        //Add the controllers
+        TimerObserver timerTXTObserver = new TimerToTXTObserver(1, config,
+                new MinSecTimerFormattingStrategy(config), output);
+        timer.subscribe(timerTXTObserver);
+
+        //Start JFrame Controller
         JFrameController frame = new StandardJFrameController();
         frame.addGameState(gs);
+        frame.addClock(timer, stratNames, calcStrats);
 
+        //Start Global shortcuts
         GlobalShortcuts shortcuts = null;
         if(config.getBoolean(ConfigKeys.enable_keybindings)
                 && config.getInteger(ConfigKeys.team_amount) >= 2){

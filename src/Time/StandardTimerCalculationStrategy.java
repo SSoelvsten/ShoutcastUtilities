@@ -22,31 +22,31 @@ public class StandardTimerCalculationStrategy implements TimerCalculatorStrategy
     private int hourEnd;
     private int hourChange;
 
-    public StandardTimerCalculationStrategy(int secondRollover, int secondReset,
-                                            int minuteRollover, int minuteReset,
-                                            int hourRollover, int hourReset){
-        this.secondEnd = secondRollover;
-        this.secondStart = secondReset;
+    public StandardTimerCalculationStrategy(int secondStart, int secondEnd,
+                                            int minuteStart, int minuteEnd,
+                                            int hourStart, int hourEnd){
+        this.secondStart = secondStart;
+        this.secondEnd = secondEnd;
 
-        if(secondReset < secondRollover){
+        if(secondStart < secondEnd){
             this.secondChange = 1;
         } else {
             this.secondChange = -1;
         }
 
-        this.minuteEnd = minuteRollover;
-        this.minuteStart = minuteReset;
+        this.minuteStart = minuteStart;
+        this.minuteEnd = minuteEnd;
 
-        if(minuteReset < minuteRollover){
+        if(minuteStart < minuteEnd){
             this.minuteChange = 1;
         } else {
             this.minuteChange = -1;
         }
 
-        this.hourEnd = hourRollover;
-        this.hourStart = hourReset;
+        this.hourStart = hourStart;
+        this.hourEnd = hourEnd;
 
-        if(hourReset < hourRollover){
+        if(hourStart < hourEnd){
             this.hourChange = 1;
         } else {
             this.hourChange = -1;

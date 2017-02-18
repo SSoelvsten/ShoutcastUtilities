@@ -5,16 +5,16 @@ import org.junit.Test;
 
 public class TestStandardTimerCalcStrategies {
 
-    private TimerSpy timerStub;
+    private TimerSpyStub timerStub;
     private TimerCalculatorStrategy incStrat;
     private TimerCalculatorStrategy decStrat;
 
     @Before
     public void setup(){
-        this.timerStub = new TimerSpy();
-        this.incStrat = new StandardTimerCalculationStrategy(59, 0, 59, 0, 23, 0);
+        this.timerStub = new TimerSpyStub();
+        this.incStrat = new StandardTimerCalculationStrategy(0, 59, 0, 59, 0, 23);
         this.decStrat = new StopAtZeroTimerCalculationStrategyDecorator(
-                new StandardTimerCalculationStrategy(0, 59, 0, 59, 0, 23));
+                new StandardTimerCalculationStrategy(59, 0, 59, 0, 23, 0));
     }
 
     private void testStrategy(TimerCalculatorStrategy strat,

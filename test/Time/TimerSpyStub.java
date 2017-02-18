@@ -2,22 +2,21 @@ package Time;
 
 import Observer.TimerObserver;
 
-public class TimerSpy implements ModifiableTimer {
+public class TimerSpyStub implements ModifiableTimer {
 
     private int hour = 0;
     private int minute = 0;
     private int second = 0;
 
     private Thread thread;
-    private Ticker ticker;
 
-    public int set = 0;
+    public int setCalls = 0;
+    public int ticks = 0;
     private TimerCalculatorStrategy strategy;
 
     @Override
     public void start() {
-        thread = new Thread(ticker);
-        thread.start();
+        //?
     }
 
     @Override
@@ -30,7 +29,7 @@ public class TimerSpy implements ModifiableTimer {
         this.hour = hour;
         this.minute = minute;
         this.second = second;
-        this.set++;
+        this.setCalls++;
     }
 
     @Override
@@ -39,13 +38,13 @@ public class TimerSpy implements ModifiableTimer {
     }
 
     @Override
-    public void setTicker(Ticker ticker) {
-        this.ticker = ticker;
+    public void setTickrate(int msTickrate) {
+        //?
     }
 
     @Override
-    public Ticker getTicker() {
-        return ticker;
+    public boolean isRunning() {
+        return false;
     }
 
     @Override
@@ -64,12 +63,12 @@ public class TimerSpy implements ModifiableTimer {
     }
 
     @Override
-    public void subscribe(TimerObserver o) {
-        //No need to test this part?
+    public int getTickrate() {
+        return 0;
     }
 
     @Override
-    public void onTick() {
-        strategy.setNextTime(this);
+    public void subscribe(TimerObserver o) {
+        //No need to test this part?
     }
 }

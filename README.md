@@ -27,9 +27,8 @@ Link the .txt and .png files outputted into OBS and you're ready to go!
 ![Alt text](/img/0.2_example.png?raw=true "OBS using the output of the program")
 
 ## Clock (Outdated)
-In the old version (0.1) there was a small java program to output the current time of day and/or a countdown into two .txt files. This might be stressful on a harddrive, but it works.
+Both as a countdown or a clock the program can output a ticking timer a .txt file. This might be stressful on a harddrive, but it works.
 
-![Alt text](/img/0.1.2_clock.png?raw=true "The timer")
 
 ## Minimalist Changelog
 The following is a small overview of the implemented features

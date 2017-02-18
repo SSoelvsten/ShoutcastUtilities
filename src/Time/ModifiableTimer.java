@@ -31,7 +31,7 @@ public interface ModifiableTimer extends Timer {
     public void setCalculationStrategy(TimerCalculatorStrategy strategy);
 
     /**
-     * Sets the ticker
+     * Sets the tick rate
      */
-    public void setTicker(Ticker ticker);
+    public void setTickrate(int msTickrate);
 }

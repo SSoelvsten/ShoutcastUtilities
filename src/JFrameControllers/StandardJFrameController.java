@@ -1,19 +1,21 @@
 package JFrameControllers;
 
 import GameState.*;
+import Time.ModifiableTimer;
+import Time.TimerCalculatorStrategy;
 
 import javax.swing.*;
+import javax.swing.border.EtchedBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import java.util.ArrayList;
 
 /**
  * A GUI controller for the ShoutCast Utilities.
  */
 public class StandardJFrameController implements JFrameController {
-
-    //TODO: Clock will need a prototype
 
     //TODO: "Add Team" and "Add Map" buttons
 
@@ -48,10 +50,15 @@ public class StandardJFrameController implements JFrameController {
 
         teamPanels = new ArrayList<>();
         for(int i = 0; i < gameState.getTeamsAmount(); i++){
-            JPanelTeamController tcPanel = new JPanelTeamController(i, gameState);
-            teamPanels.add(tcPanel);
-            teamControllersPanel.add(tcPanel.getPanel());
-            tcPanel.onNameUpdate(gameState);
+            JPanelTeamController tc = new JPanelTeamController(i, gameState);
+            teamPanels.add(tc);
+
+            JPanel tcp = tc.getPanel();
+            addBorder(tcp);
+            teamControllersPanel.add(tc.getPanel());
+
+            //Have it already be updated with the names
+            tc.onNameUpdate(gameState);
         }
 
         JPanel meta = new JPanel(new BorderLayout());
@@ -72,12 +79,14 @@ public class StandardJFrameController implements JFrameController {
         mapPanels = new ArrayList<>();
         int i = 0;
         for(Map m : gameState.getMapsList()){
-            JPanelMapController mpc = new JPanelMapController(i, gameState);
+            JPanelMapController mc = new JPanelMapController(i, gameState);
             i++;
 
-            mapPanels.add(mpc);
-            mapControllerPanel.add(mpc.getPanel());
-            mpc.onMapUpdate(gameState);
+            mapPanels.add(mc);
+            JPanel mcp = mc.getPanel();
+            addBorder(mcp);
+            mapControllerPanel.add(mcp);
+            mc.onMapUpdate(gameState);
         }
 
         JPanel seriesPanel = new JPanel();
@@ -155,8 +164,26 @@ public class StandardJFrameController implements JFrameController {
         gameStatePanel.add(meta, BorderLayout.CENTER);
         gameStatePanel.add(mapControllerPanel, BorderLayout.SOUTH);
 
+        addBorder(gameStatePanel);
+
         frame.add(gameStatePanel, BorderLayout.CENTER);
         frame.pack();
+    }
+
+    public void addClock(ModifiableTimer timer,
+                        ArrayList<String> stratNames,
+                        ArrayList<TimerCalculatorStrategy> calcStrategies){
+        JPanelTimerController tc = new JPanelTimerController(timer, stratNames, calcStrategies);
+
+        JPanel tcp = tc.getPanel();
+        addBorder(tcp);
+
+        frame.add(tcp, BorderLayout.SOUTH);
+        frame.pack();
+    }
+
+    public void addBorder(JPanel panel){
+        panel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
     }
 
     private ActionListener createCommitActionListener(ArrayList<JPanelTeamMapController> list){

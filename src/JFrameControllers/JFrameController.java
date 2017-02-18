@@ -1,6 +1,10 @@
 package JFrameControllers;
 
 import GameState.ModifiableGameState;
+import Time.ModifiableTimer;
+import Time.TimerCalculatorStrategy;
+
+import java.util.ArrayList;
 
 public interface JFrameController {
 
@@ -11,5 +15,15 @@ public interface JFrameController {
      */
     public void addGameState(ModifiableGameState gameState);
 
-    //TODO: Clock will be added later in a addClock
+    /**
+     * Add a modifiable Timer to the interface
+     * @precondition: stratNames.size() = calcStrategies.size() > 0
+     * @param timer The timer to control
+     * @param tickrate The tiokrate with which to change the values
+     * @param stratNames The identifying names associated with the strategies
+     * @param calcStrategies The strategies to use.
+     */
+    public void addClock(ModifiableTimer timer,
+                         ArrayList<String> stratNames,
+                         ArrayList<TimerCalculatorStrategy> calcStrategies);
 }
