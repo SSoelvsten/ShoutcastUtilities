@@ -1,4 +1,4 @@
-package GameStateObserver;
+package Observer;
 
 import Format.GameStateFormattingStrategy;
 import GameState.*;

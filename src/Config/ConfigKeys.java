@@ -7,6 +7,7 @@ public abstract class ConfigKeys {
     //Setup
     public static final String team_amount = "team_amount";
     public static final String map_amount = "map_amount";
+    public static final String clock_amount = "clock_amount";
 
     //Folder
     public static final String folder_map_src = "folder_map_img_src";

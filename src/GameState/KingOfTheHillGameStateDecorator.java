@@ -1,6 +1,6 @@
 package GameState;
 
-import GameStateObserver.GameStateObserver;
+import Observer.GameStateObserver;
 
 import java.util.List;
 

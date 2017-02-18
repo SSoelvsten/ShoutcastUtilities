@@ -1,14 +1,11 @@
 package JFrameControllers;
 
 import GameState.*;
-import GameStateObserver.GameStateObserver;
-import com.sun.media.sound.InvalidFormatException;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
 /**

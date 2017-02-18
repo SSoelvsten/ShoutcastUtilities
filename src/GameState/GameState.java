@@ -1,6 +1,6 @@
 package GameState;
 
-import GameStateObserver.GameStateObserver;
+import Observer.GameStateObserver;
 
 import java.util.List;
 
@@ -70,7 +70,7 @@ public interface GameState {
     public Pause getPause();
 
     /**
-     * Lets a GameStateObserver subscribe to the GameState
+     * Lets a Observer subscribe to the GameState
      * @param o The observer subscribing
      */
     public void subscribe(GameStateObserver o);

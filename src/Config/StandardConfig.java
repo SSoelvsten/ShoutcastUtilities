@@ -15,6 +15,7 @@ public class StandardConfig implements Config {
         //Setup
         settings.put(ConfigKeys.team_amount, "2");
         settings.put(ConfigKeys.map_amount, "3");
+        settings.put(ConfigKeys.clock_amount, "1");
 
         //Folder
         settings.put(ConfigKeys.folder_map_src, "maps/");

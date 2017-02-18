@@ -1,4 +1,4 @@
-package GameStateObserver;
+package Observer;
 
 import GameState.*;
 import Config.*;
@@ -28,7 +28,11 @@ public class GameStateMapThumbnailObserver extends AbstractGameStateObserver {
         for(Map map : gameState.getMapsList()){
             i++;
 
-            String fromFile = map.getName().toLowerCase()  + "_" + map.getGameType().toLowerCase() + ".png";
+            String fromFile = map.getName().toLowerCase();
+            if(map.getGameType() != null && !map.getGameType().equals(""))
+                fromFile += "_" + map.getGameType().toLowerCase();
+            fromFile += ".png";
+
             String toFile = "map" + i + ".png";
             try{
                 fileHandler.copyFile(config.getString(ConfigKeys.folder_map_src), fromFile,

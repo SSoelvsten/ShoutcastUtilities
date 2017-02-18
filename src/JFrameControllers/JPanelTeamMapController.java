@@ -1,6 +1,6 @@
 package JFrameControllers;
 
-import GameStateObserver.GameStateObserver;
+import Observer.GameStateObserver;
 
 import javax.swing.*;
 
@@ -26,7 +26,7 @@ public interface JPanelTeamMapController extends GameStateObserver {
     /**
      * Lock the text fields in the current panel,
      * thereby disregarding the information from
-     * the GameStateObserver
+     * the Observer
      */
     public void listenToGameState(boolean value);
 }

@@ -1,7 +1,7 @@
 import Config.*;
 import Format.StandardGameStateFormattingStrategy;
 import GameState.*;
-import GameStateObserver.*;
+import Observer.*;
 import GlobalShortcuts.*;
 import InputOutput.*;
 import JFrameControllers.*;

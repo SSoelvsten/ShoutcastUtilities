@@ -1,7 +1,7 @@
 package JFrameControllers;
 
 import GameState.*;
-import GameStateObserver.AbstractGameStateObserver;
+import Observer.AbstractGameStateObserver;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

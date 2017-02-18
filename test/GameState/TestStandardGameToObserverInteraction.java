@@ -1,6 +1,6 @@
 package GameState;
 
-import GameStateObserver.*;
+import Observer.*;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,7 +1,7 @@
 package JFrameControllers;
 
 import GameState.*;
-import GameStateObserver.*;
+import Observer.*;
 
 import javax.swing.*;
 
