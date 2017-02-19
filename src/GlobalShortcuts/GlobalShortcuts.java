@@ -2,6 +2,7 @@ package GlobalShortcuts;
 
 import Config.*;
 
+import GameState.GameStateController;
 import GameState.ModifiableGameState;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
@@ -15,7 +16,7 @@ import org.jnativehook.keyboard.NativeKeyListener;
 public class GlobalShortcuts implements NativeKeyListener {
 
     //The managers to send the shortcuts to.
-    private ModifiableGameState gameState;
+    private GameStateController gameStateController;
     int team0Index;
     int team1Index;
 
@@ -37,14 +38,14 @@ public class GlobalShortcuts implements NativeKeyListener {
     /**
      * Constructor setting up connections to the objects to control with the power of shortcuts
      * @param config Config to read shortcuts from
-     * @param gameState The GameState to modify.
+     * @param gameStateController The GameState to modify.
      */
-    public GlobalShortcuts(Config config, ModifiableGameState gameState,
+    public GlobalShortcuts(Config config, GameStateController gameStateController,
                            int team0Index, int team1Index){
         super();
 
         //Connect to the managers
-        this.gameState = gameState;
+        this.gameStateController = gameStateController;
         this.team0Index = team0Index;
         this.team1Index = team1Index;
 
@@ -88,19 +89,17 @@ public class GlobalShortcuts implements NativeKeyListener {
      */
     private void executeShortcut(int keycode){
         if (keycode == incA) {
-            gameState.setTeamPoints(team0Index, gameState.getTeam(team0Index).getPoints() + 1);
+            gameStateController.changeTeamScoreBy(team0Index, 1);
         } else if (keycode == decA) {
-            if(gameState.getTeam(team0Index).getPoints() > 0)
-                gameState.setTeamPoints(team0Index, gameState.getTeam(team0Index).getPoints() - 1);
+            gameStateController.changeTeamScoreBy(team0Index, -1);
         } else if (keycode == incB) {
-            gameState.setTeamPoints(team1Index, gameState.getTeam(team1Index).getPoints() + 1);
+            gameStateController.changeTeamScoreBy(team1Index, 1);
         } else if (keycode == decB) {
-            if(gameState.getTeam(team1Index).getPoints() > 0)
-                gameState.setTeamPoints(team1Index, gameState.getTeam(team1Index).getPoints() - 1);
+            gameStateController.changeTeamScoreBy(team1Index, -1);
         } else if (keycode == swap) {
-            gameState.shiftTeams();
+            gameStateController.shiftTeams();
         } else if (keycode == unpause){
-            gameState.unpause();
+            gameStateController.unpause();
         }
     }
 

@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
 public class JPanelTeamController extends AbstractGameStateObserver implements JPanelTeamMapController {
 
     private int teamIndex;
-    private ModifiableGameState gameState;
+    private GameStateController gameStateController;
 
     private int nameLength = 10;
     private int abbreviavtionLength = 4;
@@ -27,10 +27,10 @@ public class JPanelTeamController extends AbstractGameStateObserver implements J
 
     private boolean listen = true;
 
-    public JPanelTeamController(int teamIndex, ModifiableGameState gameState){
+    public JPanelTeamController(int teamIndex, GameStateController gameStateController){
         this.teamIndex = teamIndex;
-        this.gameState = gameState;
-        gameState.subscribe(this);
+        this.gameStateController = gameStateController;
+        gameStateController.subscribe(this);
 
         nameTextField.setEditable(true);
         abbreviationTextField.setEditable(true);
@@ -47,7 +47,7 @@ public class JPanelTeamController extends AbstractGameStateObserver implements J
         panel.add(createScoreButton(-1));
         panel.add(scoreTextField);
         panel.add(createScoreButton(1));
-        scoreTextField.setText(gameState.getTeam(teamIndex).getPoints() + "");
+        scoreTextField.setText(gameStateController.getGameState().getTeam(teamIndex).getPoints() + "");
     }
 
     public JPanel getPanel(){
@@ -61,7 +61,7 @@ public class JPanelTeamController extends AbstractGameStateObserver implements J
 
     @Override
     public void commitInfo(){
-        gameState.setTeamIdentity(teamIndex, nameTextField.getText(), abbreviationTextField.getText());
+        gameStateController.setTeamIdentity(teamIndex, nameTextField.getText(), abbreviationTextField.getText());
     }
 
     private JButton createScoreButton(int change){
@@ -69,12 +69,7 @@ public class JPanelTeamController extends AbstractGameStateObserver implements J
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int currScore = gameState.getTeam(teamIndex).getPoints();
-
-                if((change < 0 && currScore > 0)
-                        || change >= 0){
-                    gameState.setTeamPoints(teamIndex, currScore + change);
-                }
+                gameStateController.changeTeamScoreBy(teamIndex, change);
             }
         });
 

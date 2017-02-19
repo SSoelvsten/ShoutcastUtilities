@@ -8,7 +8,7 @@ import javax.swing.*;
 public class JPanelMapController extends AbstractGameStateObserver implements JPanelTeamMapController {
 
     private int mapIndex;
-    private ModifiableGameState gameState;
+    private GameStateController gameStateController;
 
     private int nameLength = 12;
     private int gameTypeLength = 6;
@@ -21,10 +21,10 @@ public class JPanelMapController extends AbstractGameStateObserver implements JP
 
     private boolean listen = true;
 
-    public JPanelMapController(int mapIndex, ModifiableGameState gameState){
+    public JPanelMapController(int mapIndex, GameStateController gameStateController){
         this.mapIndex = mapIndex;
-        this.gameState = gameState;
-        gameState.subscribe(this);
+        this.gameStateController = gameStateController;
+        gameStateController.subscribe(this);
 
         nameTextField.setEditable(true);
         gameTypeTextField.setEditable(true);
@@ -48,10 +48,10 @@ public class JPanelMapController extends AbstractGameStateObserver implements JP
 
     @Override
     public void commitInfo(){
-        gameState.setMap(mapIndex,
-                new StandardMap(nameTextField.getText(),
-                                gameTypeTextField.getText(),
-                                noteTextField.getText()));
+        gameStateController.setMap(mapIndex,
+                                    nameTextField.getText(),
+                                    gameTypeTextField.getText(),
+                                    noteTextField.getText());
     }
 
     @Override

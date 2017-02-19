@@ -1,17 +1,17 @@
-import Config.*;
-import Format.MinSecTimerFormattingStrategy;
-import Format.StandardGameStateFormattingStrategy;
-import Format.TimerFormattingStrategy;
-import GameState.*;
+import AbstractFactory.MainFactory;
+import AbstractFactory.OBSStudioMainFactory;
+import Config.Config;
+import Config.ConfigKeys;
+import GameState.GameStateController;
 import Observer.*;
 import GlobalShortcuts.*;
-import InputOutput.*;
+import InputOutput.ReadWriteStrategy;
 import JFrameControllers.*;
 import Time.*;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.*;
 
 /**
@@ -21,56 +21,44 @@ public class Main {
 
     public static void main(String[] args){
         //Initialize config and validate
-        Config config = new CFGConfig(new BasicReadWriteStrategy());
-        (new StandardValidator(new StandardConfig())).ValidateConfig(config);
+        MainFactory factory = new OBSStudioMainFactory();
 
-        //Initialize the ReadWrite object
-        ReadWriteStrategy rws = new BasicReadWriteStrategy();
+        Config config = factory.createConfig();
+        (factory.createValidator()).ValidateConfig(config);
 
         //Initialize the Modifiable GameState
-        ModifiableGameState gs = new StandardGameState();
+        GameStateController gsc = factory.createGameStateController();
 
         for(int i = 0; i < config.getInteger(ConfigKeys.team_amount); i++){
-            gs.addTeam(new StandardTeam("Team " + (i + 1), "" + (i + 1), 0));
+            gsc.createTeam("Team " + (i + 1), "" + (i + 1), 0);
         }
 
         for(int i = 0; i < config.getInteger(ConfigKeys.map_amount); i++){
-            gs.setMap(i, new StandardMap("Map" + (i + 1), "Type", null));
+            gsc.setMap(i, "Map" + (i + 1), "Type", null);
         }
 
-        gs.setSeriesLength(config.getInteger(ConfigKeys.map_amount));
+        gsc.setSeriesLength(config.getInteger(ConfigKeys.map_amount));
 
         //Initialize the Timer and the strategies
-        ArrayList<String> stratNames = new ArrayList<>();
-        ArrayList<TimerCalculatorStrategy> calcStrats = new ArrayList<>();
+        List<NameCalcStrategyPair> calcStrats = factory.createTimerCalculationStrategies();
 
-        stratNames.add("Clock");
-        calcStrats.add(new StandardTimerCalculationStrategy(0,59,0,59,0,23));
-
-        stratNames.add("Countdown");
-        calcStrats.add(new StopAtZeroTimerCalculationStrategyDecorator(
-                new StandardTimerCalculationStrategy(59,0,59,0,23,0)));
-
-        ModifiableTimer timer = new StandardTimer(config.getInteger(ConfigKeys.timer_tickrate), calcStrats.get(0));
+        ModifiableTimer timer = factory.createTimer();
 
         //Initialize the various listeners
-        ReadWriteStrategy output = new PreSpaceReadWriteStrategyDecorator(rws);
+        ReadWriteStrategy output = factory.createReadWriteStrategy();
 
-        GameStateObserver fileObserver = new GameStateToTXTObserver(config,
-                new StandardGameStateFormattingStrategy(config), output);
-        gs.subscribe(fileObserver);
+        for(GameStateObserver o : factory.createGameStateObservers()){
+            gsc.subscribe(o);
+        }
 
-        GameStateObserver thumbnailObserver = new GameStateMapThumbnailObserver(config, new BasicFileHandler());
-        gs.subscribe(thumbnailObserver);
-
-        TimerObserver timerTXTObserver = new TimerToTXTObserver(1, config,
-                new MinSecTimerFormattingStrategy(config), output);
-        timer.subscribe(timerTXTObserver);
+        for(TimerObserver o : factory.createTimerObserver()){
+            timer.subscribe(o);
+        }
 
         //Start JFrame Controller
-        JFrameController frame = new StandardJFrameController();
-        frame.addGameState(gs);
-        frame.addClock(timer, stratNames, calcStrats);
+        JFrameController frame = factory.createJFrameController();
+        frame.addGameState(gsc);
+        frame.addClock(timer, calcStrats);
 
         //Start Global shortcuts
         GlobalShortcuts shortcuts = null;
@@ -82,7 +70,7 @@ public class Main {
             } catch (NativeHookException e) {
                 System.err.println("The global shortcuts could not be created");
             }
-            GlobalScreen.addNativeKeyListener(new GlobalShortcuts(config, gs, 0, 1));
+            GlobalScreen.addNativeKeyListener(new GlobalShortcuts(config, gsc, 0, 1));
         }
     }
 }

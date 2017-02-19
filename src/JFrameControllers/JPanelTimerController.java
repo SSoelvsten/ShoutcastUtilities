@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.util.List;
 
 public class JPanelTimerController implements TimerObserver {
 
@@ -25,8 +25,7 @@ public class JPanelTimerController implements TimerObserver {
     private int strategyIndex = 0;
 
     public JPanelTimerController(ModifiableTimer timer,
-                                 ArrayList<String> stratNames,
-                                 ArrayList<TimerCalculatorStrategy> calcStrategies){
+                                 List<NameCalcStrategyPair> calcStrats){
         this.timer = timer;
         timer.subscribe(this);
 
@@ -90,13 +89,13 @@ public class JPanelTimerController implements TimerObserver {
 
         panel.add(tickButton, BorderLayout.EAST);
 
-        JButton strategyButt = new JButton(stratNames.get(strategyIndex));
+        JButton strategyButt = new JButton(calcStrats.get(strategyIndex).getName());
         strategyButt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                strategyIndex = (strategyIndex + 1) % calcStrategies.size();
-                timer.setCalculationStrategy(calcStrategies.get(strategyIndex));
-                strategyButt.setText(stratNames.get(strategyIndex));
+                strategyIndex = (strategyIndex + 1) % calcStrats.size();
+                timer.setCalculationStrategy(calcStrats.get(strategyIndex).getCalculationStrategy());
+                strategyButt.setText(calcStrats.get(strategyIndex).getName());
             }
         });
 

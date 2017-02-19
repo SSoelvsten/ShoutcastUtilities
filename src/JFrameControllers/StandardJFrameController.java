@@ -1,8 +1,9 @@
 package JFrameControllers;
 
 import GameState.*;
+import GameState.Map;
 import Time.ModifiableTimer;
-import Time.TimerCalculatorStrategy;
+import Time.NameCalcStrategyPair;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
@@ -10,7 +11,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import java.util.ArrayList;
+import java.util.*;
+import java.util.List;
 
 /**
  * A GUI controller for the ShoutCast Utilities.
@@ -40,9 +42,11 @@ public class StandardJFrameController implements JFrameController {
     }
 
     @Override
-    public void addGameState(ModifiableGameState gameState) {
+    public void addGameState(GameStateController gameStateController) {
         //This will only manage one game state. So the old will
         //just be replaced with a new one
+
+        GameState gameState = gameStateController.getGameState();
 
         JPanel gameStatePanel = new JPanel(new BorderLayout());
 
@@ -50,7 +54,7 @@ public class StandardJFrameController implements JFrameController {
 
         teamPanels = new ArrayList<>();
         for(int i = 0; i < gameState.getTeamsAmount(); i++){
-            JPanelTeamController tc = new JPanelTeamController(i, gameState);
+            JPanelTeamController tc = new JPanelTeamController(i, gameStateController);
             teamPanels.add(tc);
 
             JPanel tcp = tc.getPanel();
@@ -67,7 +71,7 @@ public class StandardJFrameController implements JFrameController {
         shiftButt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gameState.shiftTeams();
+                gameStateController.shiftTeams();
             }
         });
 
@@ -79,7 +83,7 @@ public class StandardJFrameController implements JFrameController {
         mapPanels = new ArrayList<>();
         int i = 0;
         for(Map m : gameState.getMapsList()){
-            JPanelMapController mc = new JPanelMapController(i, gameState);
+            JPanelMapController mc = new JPanelMapController(i, gameStateController);
             i++;
 
             mapPanels.add(mc);
@@ -93,19 +97,10 @@ public class StandardJFrameController implements JFrameController {
         seriesPanel.add(new JLabel("Best of"));
         JTextField seriesField = new JTextField(4);
         seriesField.setText(mapPanels.size() + "");
+        seriesField.setEditable(false);
         seriesPanel.add(seriesField);
+
         JButton seriesCommit = new JButton("Commit Maps");
-        seriesCommit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try{
-                    int length = Integer.parseInt(seriesField.getText());
-                    gameState.setSeriesLength(length);
-                } catch(Exception exception) {
-                    seriesField.setText(0 + "");
-                }
-            }
-        });
         seriesCommit.addActionListener(createCommitActionListener(mapPanels));
         seriesPanel.add(seriesCommit);
 
@@ -126,7 +121,7 @@ public class StandardJFrameController implements JFrameController {
         unpauseButt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gameState.unpause();
+                gameStateController.unpause();
             }
         });
         pausePanel.add(unpauseButt, BorderLayout.WEST);
@@ -136,13 +131,11 @@ public class StandardJFrameController implements JFrameController {
             public void actionPerformed(ActionEvent e) {
                 try{
                     int id = Integer.parseInt(pauseIDField.getText());
-                    if(id < gameState.getTeamsAmount() && id >= 0){
-                        String reason = null;
-                        if(!pauseReasonField.getText().equals("")){
-                            reason = pauseReasonField.getText();
-                        }
-                        gameState.setPauseTeam(id, reason);
+                    String reason = null;
+                    if(!pauseReasonField.getText().equals("")){
+                        reason = pauseReasonField.getText();
                     }
+                    gameStateController.startPause(id, reason);
                 } catch (Exception exception) {
                     pauseIDField.setText(0 + "");
                 }
@@ -171,9 +164,8 @@ public class StandardJFrameController implements JFrameController {
     }
 
     public void addClock(ModifiableTimer timer,
-                        ArrayList<String> stratNames,
-                        ArrayList<TimerCalculatorStrategy> calcStrategies){
-        JPanelTimerController tc = new JPanelTimerController(timer, stratNames, calcStrategies);
+                        List<NameCalcStrategyPair> calcStrats){
+        JPanelTimerController tc = new JPanelTimerController(timer, calcStrats);
 
         JPanel tcp = tc.getPanel();
         addBorder(tcp);
