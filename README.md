@@ -3,18 +3,6 @@ This is a piece of software I have made to help taking care of production for a 
 
 Many thanks to Kristian 'Yurippe' Gausel for his help on the config, but also for his advice and feedback on the design.
 
-## Global shortcuts
-By using JNativeHook a keylogger is implemented, which reacts to certain key-combinations. This way you can interact with the software without having to actually defocus the game!
-
-The keybinds are rebindable, though you have to use the codes you can find in "keyReference.txt". Rebindings can be done in "config.cfg". The following are the standard bindings
-
-- ALT GR: Universal meta-key as identifier. This key has to be pressed for the others to work.
-- Numpad 7: Team Score Manager: Increase score for Team 1
-- Numpad 4: Team Score Manager: Decrease score for Team 1
-- Numpad 9: Team Score Manager: Increase score for Team 2
-- Numpad 6: Team Score Manager: Decrease score for Team 2
-- Numpad 8: Team Score Manager: Swap teams
-
 ## Game State
 A small java program to manage the .txt and .png files used for the text/pictures on an overlay during a shoutcast for both teams.
 - Team names and swapping their place
@@ -26,9 +14,21 @@ Link the .txt and .png files outputted into OBS and you're ready to go!
 
 ![Alt text](/img/0.2_example.png?raw=true "OBS using the output of the program")
 
-## Clock (Outdated)
+## Clock
 Both as a countdown or a clock the program can output a ticking timer a .txt file. This might be stressful on a harddrive, but it works.
 
+## Global shortcuts
+By using JNativeHook a keylogger is implemented, which reacts to certain key-combinations. This way you can interact with the software without having to actually defocus the game!
+
+The keybinds are rebindable, though you have to use the codes you can find in "keyReference.txt". Rebindings can be done in "config.cfg". The following are the standard bindings
+
+- ALT GR: Universal meta-key as identifier. This key has to be pressed for the others to work.
+- Numpad 7: Increase score for Team 1
+- Numpad 4: Decrease score for Team 1
+- Numpad 9: Increase score for Team 2
+- Numpad 6: Decrease score for Team 2
+- Numpad 8: Swas teams
+- Numpad 5: Unpause
 
 ## Minimalist Changelog
 The following is a small overview of the implemented features
@@ -55,5 +55,8 @@ The following is a small overview of the implemented features
 ### 0.2.0
 - Remade everything with TDD and proper compositional design.
 
-### 0.2.1 (WIP)
+### 0.2.1
 - Adding a clock/countdown back in.
+- Unpause global shortcut
+- Further design changes and code cleaning
+- Fixing bugs

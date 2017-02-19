@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import java.util.List;
 
 public class JPanelTimerController implements TimerObserver {
@@ -49,7 +50,7 @@ public class JPanelTimerController implements TimerObserver {
 
         panel.add(valuesPanel, BorderLayout.SOUTH);
 
-        JButton startStopButt = new JButton("Start/Stop");
+        JButton startStopButt = new JButton("Start / Stop");
         startStopButt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -72,7 +73,7 @@ public class JPanelTimerController implements TimerObserver {
             }
         });
 
-        panel.add(startStopButt, BorderLayout.CENTER);
+        panel.add(startStopButt, BorderLayout.NORTH);
 
         JButton tickButton = new JButton("Set Tickrate");
         tickButton.addActionListener(new ActionListener() {
@@ -89,17 +90,30 @@ public class JPanelTimerController implements TimerObserver {
 
         panel.add(tickButton, BorderLayout.EAST);
 
-        JButton strategyButt = new JButton(calcStrats.get(strategyIndex).getName());
+        JButton strategyButt = new JButton("Type: " + calcStrats.get(strategyIndex).getName());
         strategyButt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 strategyIndex = (strategyIndex + 1) % calcStrats.size();
                 timer.setCalculationStrategy(calcStrats.get(strategyIndex).getCalculationStrategy());
-                strategyButt.setText(calcStrats.get(strategyIndex).getName());
+                strategyButt.setText("Type: " +  calcStrats.get(strategyIndex).getName());
             }
         });
 
-        panel.add(strategyButt, BorderLayout.WEST);
+        panel.add(strategyButt, BorderLayout.CENTER);
+
+        JButton currTimeButt = new JButton("System clock");
+        currTimeButt.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Date date = new Date();
+                secondField.setText(date.getSeconds() + "");
+                minuteField.setText(date.getMinutes() + "");
+                hourField.setText(date.getHours() + "");
+            }
+        });
+
+        panel.add(currTimeButt, BorderLayout.WEST);
     }
 
     public JPanel getPanel(){
