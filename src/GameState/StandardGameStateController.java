@@ -24,7 +24,7 @@ public class StandardGameStateController implements GameStateController {
 
     @Override
     public boolean setTeamScoreTo(int teamIndex, int newScore) {
-        if(newScore >= 0){
+        if(teamIndex < gs.getTeamsAmount() && newScore >= 0){
             gs.setTeamPoints(teamIndex, newScore);
             return true;
         } else {
@@ -34,14 +34,15 @@ public class StandardGameStateController implements GameStateController {
 
     @Override
     public boolean changeTeamScoreBy(int teamIndex, int change) {
-        int newScore = gs.getTeam(teamIndex).getPoints() + change;
+        if(teamIndex < gs.getTeamsAmount()){
+            int newScore = gs.getTeam(teamIndex).getPoints() + change;
 
-        if(teamIndex < gs.getTeamsAmount() && newScore >= 0){
-            gs.setTeamPoints(teamIndex, newScore);
-            return true;
-        } else {
-            return false;
+            if(newScore >= 0){
+                gs.setTeamPoints(teamIndex, newScore);
+                return true;
+            }
         }
+        return false;
     }
 
     @Override

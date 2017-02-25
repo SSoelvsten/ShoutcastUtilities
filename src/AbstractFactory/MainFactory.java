@@ -2,6 +2,7 @@ package AbstractFactory;
 
 import Config.*;
 import GameState.GameStateController;
+import GlobalShortcuts.Command;
 import InputOutput.ReadWriteStrategy;
 import JFrameControllers.JFrameController;
 import Observer.GameStateObserver;
@@ -35,4 +36,10 @@ public interface MainFactory {
     public Set<TimerObserver> createTimerObserver();
 
     public JFrameController createJFrameController();
+
+    public Command createValueChangeCommand(GameStateController controller, int teamIndex, int change);
+
+    public Command createUnpauseCommand(GameStateController controller);
+
+    public Command createShiftCommand(GameStateController controller);
 }

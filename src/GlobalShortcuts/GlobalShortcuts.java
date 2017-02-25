@@ -7,6 +7,8 @@ import GameState.ModifiableGameState;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
 
+import java.util.HashMap;
+
 /**
  * A class handling the listening on all global shortcuts, such that you can commit changes,
  * without having to focus on the program. This is technically a keylogger, so take it as it is.
@@ -28,26 +30,18 @@ public class GlobalShortcuts implements NativeKeyListener {
     private int modifier2;
     private boolean modifier2B;
 
-    private int incA;
-    private int decA;
-    private int incB;
-    private int decB;
-    private int swap;
-    private int unpause;
+    //Commands assigned
+    private HashMap<Integer, Command> commands = new HashMap<>();
 
     /**
      * Constructor setting up connections to the objects to control with the power of shortcuts
      * @param config Config to read shortcuts from
-     * @param gameStateController The GameState to modify.
      */
-    public GlobalShortcuts(Config config, GameStateController gameStateController,
-                           int team0Index, int team1Index){
+    public GlobalShortcuts(Config config){
         super();
 
         //Connect to the managers
         this.gameStateController = gameStateController;
-        this.team0Index = team0Index;
-        this.team1Index = team1Index;
 
         numberOfModifiers = config.getInteger(ConfigKeys.number_modifiers);
 
@@ -56,13 +50,10 @@ public class GlobalShortcuts implements NativeKeyListener {
 
         modifier2 = config.getInteger(ConfigKeys.modifier2_key);
         modifier2B = false;
+    }
 
-        incA = config.getInteger(ConfigKeys.team_0_increment_key);
-        decA = config.getInteger(ConfigKeys.team_0_decrement_key);
-        incB = config.getInteger(ConfigKeys.team_1_increment_key);
-        decB = config.getInteger(ConfigKeys.team_1_decrement_key);
-        swap = config.getInteger(ConfigKeys.swap_teams_key);
-        unpause = config.getInteger(ConfigKeys.unpause_key);
+    public void addCommand(int key, Command command){
+        commands.put(key, command);
     }
 
     /**
@@ -78,28 +69,10 @@ public class GlobalShortcuts implements NativeKeyListener {
         if (numberOfModifiers == 2 && modifier1B && modifier2B
                 || numberOfModifiers == 1 && modifier1B
                 || numberOfModifiers == 0) {
-            executeShortcut(e.getKeyCode());
-        }
-    }
 
-    /**
-     * Check if the key pressed corresponds to an action
-     * @precondition: Enough modifier keys are pressed
-     * @param keycode The key pressed, which is handled by the framework
-     */
-    private void executeShortcut(int keycode){
-        if (keycode == incA) {
-            gameStateController.changeTeamScoreBy(team0Index, 1);
-        } else if (keycode == decA) {
-            gameStateController.changeTeamScoreBy(team0Index, -1);
-        } else if (keycode == incB) {
-            gameStateController.changeTeamScoreBy(team1Index, 1);
-        } else if (keycode == decB) {
-            gameStateController.changeTeamScoreBy(team1Index, -1);
-        } else if (keycode == swap) {
-            gameStateController.shiftTeams();
-        } else if (keycode == unpause){
-            gameStateController.unpause();
+            //Execute the command, if anything is assigned to that key
+            if(commands.containsKey(e.getKeyCode()))
+                commands.get(e.getKeyCode()).execute();
         }
     }
 

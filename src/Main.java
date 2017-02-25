@@ -70,7 +70,22 @@ public class Main {
             } catch (NativeHookException e) {
                 System.err.println("The global shortcuts could not be created");
             }
-            GlobalScreen.addNativeKeyListener(new GlobalShortcuts(config, gsc, 0, 1));
+            GlobalShortcuts gs = new GlobalShortcuts(config);
+
+            gs.addCommand(config.getInteger(ConfigKeys.team_0_increment_key),
+                    factory.createValueChangeCommand(gsc, 0, 1));
+            gs.addCommand(config.getInteger(ConfigKeys.team_0_decrement_key),
+                    factory.createValueChangeCommand(gsc, 0, -1));
+            gs.addCommand(config.getInteger(ConfigKeys.team_1_increment_key),
+                    factory.createValueChangeCommand(gsc, 1, 1));
+            gs.addCommand(config.getInteger(ConfigKeys.team_1_decrement_key),
+                    factory.createValueChangeCommand(gsc, 1, -1));
+            gs.addCommand(config.getInteger(ConfigKeys.swap_teams_key),
+                    factory.createShiftCommand(gsc));
+            gs.addCommand(config.getInteger(ConfigKeys.unpause_key),
+                    factory.createUnpauseCommand(gsc));
+
+            GlobalScreen.addNativeKeyListener(gs);
         }
     }
 }

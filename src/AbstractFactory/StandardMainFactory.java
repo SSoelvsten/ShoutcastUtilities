@@ -5,6 +5,10 @@ import Format.MinSecTimerFormattingStrategy;
 import Format.StandardGameStateFormattingStrategy;
 import GameState.GameStateController;
 import GameState.StandardGameStateController;
+import GlobalShortcuts.Command;
+import GlobalShortcuts.ShiftCommand;
+import GlobalShortcuts.UnpauseCommand;
+import GlobalShortcuts.ValueChangeCommand;
 import InputOutput.*;
 import JFrameControllers.JFrameController;
 import JFrameControllers.StandardJFrameController;
@@ -79,5 +83,20 @@ public class StandardMainFactory implements MainFactory {
     @Override
     public JFrameController createJFrameController() {
         return new StandardJFrameController();
+    }
+
+    @Override
+    public Command createValueChangeCommand(GameStateController controller, int teamIndex, int change) {
+        return new ValueChangeCommand(controller, teamIndex, change);
+    }
+
+    @Override
+    public Command createUnpauseCommand(GameStateController controller) {
+        return new UnpauseCommand(controller);
+    }
+
+    @Override
+    public Command createShiftCommand(GameStateController controller) {
+        return new ShiftCommand(controller);
     }
 }
