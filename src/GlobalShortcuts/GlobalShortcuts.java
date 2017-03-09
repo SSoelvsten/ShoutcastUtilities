@@ -17,11 +17,6 @@ import java.util.HashMap;
  */
 public class GlobalShortcuts implements NativeKeyListener {
 
-    //The managers to send the shortcuts to.
-    private GameStateController gameStateController;
-    int team0Index;
-    int team1Index;
-
     //Flags for keys
     private int numberOfModifiers;
 
@@ -39,9 +34,6 @@ public class GlobalShortcuts implements NativeKeyListener {
      */
     public GlobalShortcuts(Config config){
         super();
-
-        //Connect to the managers
-        this.gameStateController = gameStateController;
 
         numberOfModifiers = config.getInteger(ConfigKeys.number_modifiers);
 
@@ -66,9 +58,9 @@ public class GlobalShortcuts implements NativeKeyListener {
         if (e.getKeyCode() == modifier2) { modifier2B = true; }
 
         //Check if enough modifiers are currently pressed
-        if (numberOfModifiers == 2 && modifier1B && modifier2B
-                || numberOfModifiers == 1 && modifier1B
-                || numberOfModifiers == 0) {
+        if ((numberOfModifiers == 2 && modifier1B && modifier2B)
+                || (numberOfModifiers == 1 && (modifier1B || modifier2B))
+                || (numberOfModifiers == 0)) {
 
             //Execute the command, if anything is assigned to that key
             if(commands.containsKey(e.getKeyCode()))
@@ -81,8 +73,8 @@ public class GlobalShortcuts implements NativeKeyListener {
      * @param e The key pressed, which is handled by the framework
      */
     public void nativeKeyReleased(NativeKeyEvent e){
-        if (e.getKeyCode() == NativeKeyEvent.VC_ALT_L) { modifier1B = false; }
-        if (e.getKeyCode() == NativeKeyEvent.VC_ALT_L) { modifier2B = false; }
+        if (e.getKeyCode() == modifier1) { modifier1B = false; }
+        if (e.getKeyCode() == modifier2) { modifier2B = false; }
     }
 
     /**
